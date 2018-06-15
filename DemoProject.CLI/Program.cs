@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using DemoProject.DLL;
+using DemoProject.DLL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -29,7 +31,17 @@ namespace DemoProject.CLI
 
       using (var context = new EFContext(optionsBuilder.Options))
       {
+        context.InfoObjects.Add(new InfoObject
+        {
+          Content = "Test <b>info</b> object",
+          Type = InfoObjectType.Text,
+          Discount = new Discount { Title = "Test discount" }
+        });
+        context.SaveChanges();
 
+        var obj = context.InfoObjects.Include(x => x.Discount).First();
+
+        Console.WriteLine($"{obj.Discount.Title}({obj.Type.ToString()}): {obj.Content}");
       }
 
       Console.ReadLine();

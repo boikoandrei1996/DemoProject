@@ -14,8 +14,8 @@ namespace DemoProject.DLL.Models
 
   public enum InfoObjectType : int
   {
-    HTML,
-    Text,
-    Image
+    HTML = 1,
+    Text = 2,
+    Image = 3
   }
 }

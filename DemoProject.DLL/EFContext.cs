@@ -100,6 +100,10 @@ namespace DemoProject.DLL
 
     private void DiscountInit(ModelBuilder builder)
     {
+      builder.Entity<Discount>()
+        .HasIndex(x => x.Title)
+        .IsUnique();
+
       builder.Entity<Discount>().Property(x => x.Title)
         .IsRequired()
         .HasMaxLength(100);

@@ -17,6 +17,8 @@ namespace DemoProject.DLL.Models
 
     public DateTime? DateOfApproved { get; set; }
 
+    public DateTime? DateOfRejected { get; set; }
+
     public DateTime? DateOfClosed { get; set; }
 
     [DataType(DataType.Currency)]

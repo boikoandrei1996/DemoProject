@@ -23,7 +23,6 @@ namespace DemoProject.DLL.Models
     public MenuItem MenuItem { get; set; }
 
     public ICollection<ShopItemDetail> Details { get; set; }
-
     public ICollection<CartShopItem> CartShopItems { get; set; }
   }
 }

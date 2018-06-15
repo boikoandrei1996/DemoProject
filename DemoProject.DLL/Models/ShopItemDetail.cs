@@ -5,8 +5,10 @@ namespace DemoProject.DLL.Models
 {
   public class ShopItemDetail : BaseEntity
   {
+    // Ex. Big, small, medium
     public string Kind { get; set; }
 
+    // Ex. 0.5kg, 1 litr
     public string Quantity { get; set; }
 
     [DataType(DataType.Currency)]
