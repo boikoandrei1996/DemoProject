@@ -3,6 +3,8 @@ using DemoProject.DLL;
 using DemoProject.DLL.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DemoProject.WebApi.Infrastructure
@@ -11,18 +13,25 @@ namespace DemoProject.WebApi.Infrastructure
   {
     public static void ApplyMigrationAndDatabaseSeed(this IApplicationBuilder app)
     {
-      try
+      using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
       {
-        using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+        try
         {
           var context = scope.ServiceProvider.GetService<EFContext>();
+          var databaseCreator = context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+          var isDatabaseExisted = databaseCreator.Exists();
+
           context.Database.Migrate();
-          scope.ServiceProvider.GetService<ISeedService<EFContext>>().SeedDatabase(context);
+
+          if (!isDatabaseExisted)
+          {
+            scope.ServiceProvider.GetService<ISeedService<EFContext>>().SeedDatabase(context);
+          }
         }
-      }
-      catch (Exception ex)
-      {
-        // TODO: Log here. "Failed to migrate or seed database."
+        catch (Exception ex)
+        {
+          // TODO: Log here. "Failed to migrate or seed database."
+        }
       }
     }
   }

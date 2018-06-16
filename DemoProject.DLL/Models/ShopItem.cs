@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using DemoProject.DLL.Infrastructure;
+using Newtonsoft.Json;
 
 namespace DemoProject.DLL.Models
 {
@@ -15,6 +17,7 @@ namespace DemoProject.DLL.Models
     
     public string Description { get; set; }
 
+    [JsonConverter(typeof(ImageJsonConverter))]
     public byte[] Image { get; set; }
 
     public string ImageContentType { get; set; }

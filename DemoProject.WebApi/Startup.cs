@@ -1,4 +1,5 @@
 ﻿using DemoProject.DLL;
+using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Services;
 using DemoProject.WebApi.Infrastructure;
@@ -24,6 +25,11 @@ namespace DemoProject.WebApi
       services
         .AddDbContext<EFContext>(options =>
           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+      services.AddTransient<IFileReadingService, JsonReadingService>(serviceProvider =>
+      {
+        return new JsonReadingService(@"C:\Users\BoikoAndrei1996\Documents\Visual Studio 2017\Projects\DemoProject\DemoProject.DLL\StaticContent\InitData");
+      });
 
       services.AddTransient<ISeedService<EFContext>, SeedService>();
 

@@ -1,0 +1,269 @@
+﻿[
+  {
+    "Text": "Пицца",
+    "Icon": "icon-placeholder.png",
+    "IconContentType": "image/png",
+    "Items": [
+      {
+        "Title": "Пицца #1",
+        "Description": "Состав пиццы #1",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большая",
+            "Quantity": "1 кг",
+            "Price": 11
+          },
+
+          {
+            "Kind": "Средняя",
+            "Quantity": "800 г",
+            "Price": 9.5
+          },
+
+          {
+            "Kind": "Маленькая",
+            "Quantity": "450 г",
+            "Price": 7
+          }
+        ]
+      },
+
+      {
+        "Title": "Пицца #2",
+        "Description": "Состав пиццы #2",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большая",
+            "Quantity": "1 кг",
+            "Price": 12
+          },
+
+          {
+            "Kind": "Маленькая",
+            "Quantity": "450 г",
+            "Price": 7.5
+          }
+        ]
+      },
+
+      {
+        "Title": "Пицца #3",
+        "Description": "Состав пиццы #3",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большая",
+            "Quantity": "1 кг",
+            "Price": 13
+          },
+
+          {
+            "Kind": "Средняя",
+            "Quantity": "800 г",
+            "Price": 10.5
+          },
+
+          {
+            "Kind": "Маленькая",
+            "Quantity": "450 г",
+            "Price": 7.5
+          }
+        ]
+      },
+
+      {
+        "Title": "Пицца #4",
+        "Description": "Состав пиццы #4",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большая",
+            "Quantity": "1 кг",
+            "Price": 14
+          },
+
+          {
+            "Kind": "Маленькая",
+            "Quantity": "450 г",
+            "Price": 8
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "Text": "Суши",
+    "Icon": "icon-placeholder.png",
+    "IconContentType": "image/png",
+    "Items": [
+      {
+        "Title": "Суши #1",
+        "Description": "Состав суши #1",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большой сет",
+            "Quantity": "1 кг",
+            "Price": 12
+          },
+
+          {
+            "Kind": "Маленький сет",
+            "Quantity": "450 г",
+            "Price": 6
+          }
+        ]
+      },
+
+      {
+        "Title": "Суши #2",
+        "Description": "Состав суши #2",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большой сет",
+            "Quantity": "1 кг",
+            "Price": 14
+          },
+
+          {
+            "Kind": "Маленький сет",
+            "Quantity": "450г",
+            "Price": 7
+          }
+        ]
+      },
+
+      {
+        "Title": "Суши #3",
+        "Description": "Состав суши #3",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большой сет",
+            "Quantity": "1100 г",
+            "Price": 15.5
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "Text": "Десерты",
+    "Icon": "icon-placeholder.png",
+    "IconContentType": "image/png",
+    "Items": [
+      {
+        "Title": "Пирог #1",
+        "Description": "Состав пирога #1",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Пирог",
+            "Quantity": "1 кг",
+            "Price": 20
+          },
+
+          {
+            "Kind": "Порция",
+            "Quantity": "100 г",
+            "Price": 2.5
+          }
+        ]
+      },
+
+      {
+        "Title": "Пирог #2",
+        "Description": "Состав пирога #2",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Пирог",
+            "Quantity": "1 кг",
+            "Price": 22
+          },
+
+          {
+            "Kind": "Порция",
+            "Quantity": "100 г",
+            "Price": 2.5
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "Text": "Напитки",
+    "Icon": "icon-placeholder.png",
+    "IconContentType": "image/png",
+    "Items": [
+      {
+        "Title": "Напиток #1",
+        "Description": "Напиток #1 описание",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большая",
+            "Quantity": "2 л",
+            "Price": 2.6
+          },
+
+          {
+            "Kind": "Маленькая",
+            "Quantity": "0.5",
+            "Price": 1
+          }
+        ]
+      },
+
+      {
+        "Title": "Напиток #2",
+        "Description": "Напиток #2 описание",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Большая",
+            "Quantity": "2 л",
+            "Price": 2.8
+          },
+
+          {
+            "Kind": "Маленькая",
+            "Quantity": "0.5",
+            "Price": 1.1
+          }
+        ]
+      },
+
+      {
+        "Title": "Напиток #3",
+        "Description": "Напиток #3 описание",
+        "Image": "image-placeholder.png",
+        "ImageContentType": "image/png",
+        "Details": [
+          {
+            "Kind": "Порция",
+            "Quantity": "1 чашка",
+            "Price": 1.5
+          }
+        ]
+      }
+    ]
+  }
+]

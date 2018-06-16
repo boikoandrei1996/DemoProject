@@ -56,7 +56,8 @@ namespace DemoProject.DLL
         .HasMaxLength(255);
 
       builder.Entity<ShopItem>().Property(x => x.Image)
-        .IsRequired();
+        .IsRequired()
+        .HasColumnType("image");
 
       builder.Entity<ShopItem>().Property(x => x.ImageContentType)
         .IsRequired()
@@ -85,7 +86,8 @@ namespace DemoProject.DLL
         .HasMaxLength(100);
 
       builder.Entity<MenuItem>().Property(x => x.Icon)
-        .IsRequired();
+        .IsRequired()
+        .HasColumnType("image");
 
       builder.Entity<MenuItem>().Property(x => x.IconContentType)
         .IsRequired()
