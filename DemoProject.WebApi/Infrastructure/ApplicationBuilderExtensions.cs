@@ -1,11 +1,11 @@
 ﻿using System;
 using DemoProject.DLL;
-using DemoProject.DLL.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace DemoProject.WebApi.Infrastructure
 {
@@ -25,12 +25,16 @@ namespace DemoProject.WebApi.Infrastructure
 
           if (!isDatabaseExisted)
           {
-            scope.ServiceProvider.GetService<ISeedService<EFContext>>().SeedDatabase(context);
+            scope.ServiceProvider.GetService<SeedService>().SeedDatabase(context);
           }
         }
         catch (Exception ex)
         {
-          // TODO: Log here. "Failed to migrate or seed database."
+          var logger = scope.ServiceProvider.GetService<ILogger<Startup>>();
+          if (logger != null && logger.IsEnabled(LogLevel.Error))
+          {
+            logger.LogError(ex, "Failed to migrate or seed database.");
+          }
         }
       }
     }

@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DemoProject.DLL;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace DemoProject.DLL.Services
+namespace DemoProject.WebApi.Infrastructure
 {
-  public class SeedService : ISeedService<EFContext>
+  public class SeedService
   {
     private readonly IFileReadingService _fileReader;
     private readonly ILogger _logger;

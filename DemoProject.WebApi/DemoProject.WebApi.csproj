@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Content Remove="wwwroot\Files\Discounts.json" />
+    <Content Remove="wwwroot\Files\MenuItems.json" />
+    <Content Remove="wwwroot\Images\icon-placeholder.png" />
+    <Content Remove="wwwroot\Images\image-placeholder.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,6 +17,13 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Files\Discounts.json" />
+    <None Include="wwwroot\Files\MenuItems.json" />
+    <None Include="wwwroot\Images\icon-placeholder.png" />
+    <None Include="wwwroot\Images\image-placeholder.png" />
   </ItemGroup>
 
   <ItemGroup>

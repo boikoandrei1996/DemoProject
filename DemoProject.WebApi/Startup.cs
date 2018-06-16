@@ -1,4 +1,5 @@
-﻿using DemoProject.DLL;
+﻿using System.IO;
+using DemoProject.DLL;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Services;
@@ -14,10 +15,12 @@ namespace DemoProject.WebApi
   public class Startup
   {
     public IConfiguration Configuration { get; }
+    public IHostingEnvironment Environment { get; }
 
-    public Startup(IConfiguration configuration)
+    public Startup(IConfiguration configuration, IHostingEnvironment environment)
     {
       Configuration = configuration;
+      Environment = environment;
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -28,17 +31,17 @@ namespace DemoProject.WebApi
 
       services.AddTransient<IFileReadingService, JsonReadingService>(serviceProvider =>
       {
-        return new JsonReadingService(@"C:\Users\BoikoAndrei1996\Documents\Visual Studio 2017\Projects\DemoProject\DemoProject.DLL\StaticContent\InitData");
+        return new JsonReadingService(Path.Combine(Environment.WebRootPath, "Files"));
       });
 
-      services.AddTransient<ISeedService<EFContext>, SeedService>();
+      services.AddTransient<SeedService>();
 
       services.AddMvc();
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app)
     {
-      if (env.IsDevelopment())
+      if (Environment.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
       }
