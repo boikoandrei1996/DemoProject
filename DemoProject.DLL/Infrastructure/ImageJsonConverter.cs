@@ -13,8 +13,7 @@ namespace DemoProject.DLL.Infrastructure
 
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
-      string basePath = @"C:\Users\BoikoAndrei1996\Documents\Visual Studio 2017\Projects\DemoProject\DemoProject.DLL\StaticContent\Img";
-      string path = Path.Combine(basePath, reader.Value.ToString());
+      string path = Path.Combine(Directory.GetCurrentDirectory(), reader.Value.ToString());
 
       return File.ReadAllBytes(path);
     }
