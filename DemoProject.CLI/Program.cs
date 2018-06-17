@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using DemoProject.DLL;
 using DemoProject.DLL.Models;
+using DemoProject.DLL.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -16,18 +17,17 @@ namespace DemoProject.CLI
     {
       using (var context = GetContext())
       {
-        context.Orders.Add(new Order
+        using (var service = new DiscountService(context))
         {
-          Name = "Test name",
-          Address = "Test address",
-          Mobile = "123456789",
-          TotalPrice = 123.45m,
-          Cart = new Cart()
-        });
-        context.SaveChanges();
+          var entities = service.GetDiscountsAsync().GetAwaiter().GetResult();
 
-        Console.WriteLine(DateTime.UtcNow);
-        Console.WriteLine(context.Orders.Last().DateOfCreation);
+          foreach (var entity in entities)
+          {
+            Console.WriteLine($"{entity.Id}. {entity.Title}");
+            entity.Items.Select(x => x.Content).ToList().ForEach(x => Console.Write(x + ","));
+            Console.WriteLine();
+          }
+        }
       }
 
       Console.ReadLine();

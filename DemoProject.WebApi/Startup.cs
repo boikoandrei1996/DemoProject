@@ -1,7 +1,10 @@
 ﻿using System.IO;
 using DemoProject.DLL;
+using DemoProject.DLL.Interfaces;
+using DemoProject.DLL.Services;
 using DemoProject.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,11 +34,17 @@ namespace DemoProject.WebApi
         return new SeedService(Path.Combine(Environment.WebRootPath, "Files"));
       });
 
+      services.AddTransient<IDiscountService, DiscountService>();
+
       services.AddMvc();
+
+      // services.AddCors();
     }
 
     public void Configure(IApplicationBuilder app)
     {
+      // app.UseCors(builder => builder.AllowAnyOrigin());
+
       if (Environment.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();

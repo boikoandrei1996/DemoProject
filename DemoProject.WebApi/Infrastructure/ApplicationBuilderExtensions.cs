@@ -17,7 +17,7 @@ namespace DemoProject.WebApi.Infrastructure
       {
         try
         {
-          var context = scope.ServiceProvider.GetService<EFContext>();
+          var context = scope.ServiceProvider.GetRequiredService<EFContext>();
           var databaseCreator = context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
           var isDatabaseExisted = databaseCreator.Exists();
 
@@ -25,7 +25,7 @@ namespace DemoProject.WebApi.Infrastructure
 
           if (!isDatabaseExisted)
           {
-            scope.ServiceProvider.GetService<SeedService>().SeedDatabase(context);
+            scope.ServiceProvider.GetRequiredService<SeedService>().SeedDatabase(context);
           }
         }
         catch (Exception ex)
