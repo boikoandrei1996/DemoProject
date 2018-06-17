@@ -114,7 +114,7 @@ namespace DemoProject.DLL
     private void OrderInit(ModelBuilder builder)
     {
       builder.Entity<Order>().Property(x => x.DateOfCreation)
-        .HasDefaultValueSql("GETDATE()");
+        .HasDefaultValueSql("GETUTCDATE()");
 
       builder.Entity<Order>().Property(x => x.Name)
         .IsRequired()

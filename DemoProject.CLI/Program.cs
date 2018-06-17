@@ -14,6 +14,27 @@ namespace DemoProject.CLI
 
     public static void Main(string[] args)
     {
+      using (var context = GetContext())
+      {
+        context.Orders.Add(new Order
+        {
+          Name = "Test name",
+          Address = "Test address",
+          Mobile = "123456789",
+          TotalPrice = 123.45m,
+          Cart = new Cart()
+        });
+        context.SaveChanges();
+
+        Console.WriteLine(DateTime.UtcNow);
+        Console.WriteLine(context.Orders.Last().DateOfCreation);
+      }
+
+      Console.ReadLine();
+    }
+
+    private static EFContext GetContext()
+    {
       var builder = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
         .AddJsonFile("appsettings.json");
@@ -29,22 +50,7 @@ namespace DemoProject.CLI
       var optionsBuilder = new DbContextOptionsBuilder<EFContext>();
       optionsBuilder.UseSqlServer(connectionString);
 
-      using (var context = new EFContext(optionsBuilder.Options))
-      {
-        context.InfoObjects.Add(new InfoObject
-        {
-          Content = "Test <b>info</b> object",
-          Type = InfoObjectType.Text,
-          Discount = new Discount { Title = "Test discount" }
-        });
-        context.SaveChanges();
-
-        var obj = context.InfoObjects.Include(x => x.Discount).First();
-
-        Console.WriteLine($"{obj.Discount.Title}({obj.Type.ToString()}): {obj.Content}");
-      }
-
-      Console.ReadLine();
+      return new EFContext(optionsBuilder.Options);
     }
   }
 }
