@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using DemoProject.DLL;
-using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace DemoProject.WebApi.Infrastructure
 {
   public class SeedService
   {
-    private readonly IFileReadingService _fileReader;
+    private readonly string _dirPath;
     private readonly ILogger _logger;
 
-    public SeedService(IFileReadingService fileReader) : this(fileReader, null) { }
+    public SeedService(string dirPath) : this(dirPath, null) { }
 
-    public SeedService(IFileReadingService fileReader, ILogger logger)
+    public SeedService(string dirPath, ILogger logger)
     {
-      _fileReader = fileReader;
+      _dirPath = dirPath;
       _logger = logger;
     }
 
@@ -28,11 +31,32 @@ namespace DemoProject.WebApi.Infrastructure
 
     public async Task SeedDatabaseAsync(EFContext context)
     {
-      var menuItems = await _fileReader.LoadAsync<List<MenuItem>>("MenuItems.json");
+      var menuItems = await this.LoadAsync<List<MenuItem>>("MenuItems.json");
       await this.SaveToDbAsync(context, menuItems);
 
-      var discounts = await _fileReader.LoadAsync<List<Discount>>("Discounts.json");
+      var discounts = await this.LoadAsync<List<Discount>>("Discounts.json");
       await this.SaveToDbAsync(context, discounts);
+    }
+
+    private async Task<T> LoadAsync<T>(string fileName)
+    {
+      try
+      {
+        string path = Path.Combine(_dirPath, fileName);
+
+        string json = await File.ReadAllTextAsync(path, Encoding.UTF8);
+
+        return JsonConvert.DeserializeObject<T>(json);
+      }
+      catch (Exception ex)
+      {
+        if (_logger != null && _logger.IsEnabled(LogLevel.Error))
+        {
+          _logger.LogError(ex, $"{nameof(LoadAsync)} exception: type: \"{ex.GetType()}\" message: \"{ex.Message}\"");
+        }
+
+        return default(T);
+      }
     }
 
     private async Task SaveToDbAsync<T>(EFContext context, IEnumerable<T> entities)

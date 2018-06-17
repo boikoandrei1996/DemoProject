@@ -1,8 +1,5 @@
 ﻿using System.IO;
 using DemoProject.DLL;
-using DemoProject.DLL.Infrastructure;
-using DemoProject.DLL.Interfaces;
-using DemoProject.DLL.Services;
 using DemoProject.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,12 +26,10 @@ namespace DemoProject.WebApi
         .AddDbContext<EFContext>(options =>
           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-      services.AddTransient<IFileReadingService, JsonReadingService>(serviceProvider =>
+      services.AddTransient<SeedService>(serviceProvider =>
       {
-        return new JsonReadingService(Path.Combine(Environment.WebRootPath, "Files"));
+        return new SeedService(Path.Combine(Environment.WebRootPath, "Files"));
       });
-
-      services.AddTransient<SeedService>();
 
       services.AddMvc();
     }
