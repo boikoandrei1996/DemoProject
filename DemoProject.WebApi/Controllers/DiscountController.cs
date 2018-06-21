@@ -29,7 +29,7 @@ namespace DemoProject.WebApi.Controllers
       return entities.Select(x => DiscountViewModel.Map(x));
     }
 
-    // GET api/discount/id
+    // GET api/discount/{id}
     [HttpGet("{id}")]
     public async Task<DiscountViewModel> GetOne(Guid id)
     {
@@ -47,15 +47,30 @@ namespace DemoProject.WebApi.Controllers
       return _discountService.AddAsync(entity);
     }
 
-    // DELETE api/discount/delete/id
+    // DELETE api/discount/delete/{id}
     [HttpDelete("delete/{id}")]
     public Task<IdentityResult> Delete(Guid id)
     {
       return _discountService.DeleteAsync(id);
     }
 
+    // POST api/discount/{id}/infoobject/add
+    [HttpPost("{id}/infoobject/add")]
+    public Task<IdentityResult> AddInfoObject(Guid id, [FromBody]InfoObjectAddModel apiEntity)
+    {
+      var entity = InfoObjectAddModel.Map(apiEntity);
 
-    // PUT api/discount/update/id
+      return _discountService.AddInfoObjectAsync(id, entity);
+    }
+
+    // DELETE api/discount/{id}/infoobject/{objectId}/delete
+    [HttpDelete("{discountId}/infoobject/{infoObjectId}/delete")]
+    public Task<IdentityResult> DeleteInfoObjectFromDiscount(Guid discountId, Guid infoObjectId)
+    {
+      return _discountService.DeleteInfoObjectFromDiscountAsync(discountId, infoObjectId);
+    }
+
+    // PUT api/discount/update/{id}
     [HttpPut("update/{id}")]
     public IdentityResult Put(Guid id, [FromBody]Discount discount)
     {

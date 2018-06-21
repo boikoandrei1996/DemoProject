@@ -51,9 +51,9 @@ namespace DemoProject.DLL.Services
       return _context.SaveChangesSafeAsync(nameof(AddAsync));
     }
 
-    public async Task<IdentityResult> DeleteAsync(Guid id)
+    public async Task<IdentityResult> DeleteAsync(Guid discountId)
     {
-      var discount = await _context.Discounts.FirstOrDefaultAsync(x => x.Id == id);
+      var discount = await _context.Discounts.FirstOrDefaultAsync(x => x.Id == discountId);
       if (discount == null)
       {
         return IdentityResult.Success;
@@ -62,6 +62,37 @@ namespace DemoProject.DLL.Services
       _context.Discounts.Remove(discount);
 
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
+    }
+
+    public async Task<IdentityResult> AddInfoObjectAsync(Guid discountId, InfoObject infoObject)
+    {
+      if (infoObject == null)
+      {
+        return IdentityResultFactory.FailedResult(nameof(this.AddInfoObjectAsync), "InfoObject reference is null.");
+      }
+
+      var discount = await _context.Discounts.Include(x => x.Items).FirstOrDefaultAsync(x => x.Id == discountId);
+      if (discount == null)
+      {
+        return IdentityResultFactory.FailedResult(nameof(this.AddInfoObjectAsync), $"Discount '{discountId}' is not found.");
+      }
+
+      discount.Items.Add(infoObject);
+
+      return await _context.SaveChangesSafeAsync(nameof(AddInfoObjectAsync));
+    }
+
+    public async Task<IdentityResult> DeleteInfoObjectFromDiscountAsync(Guid discountId, Guid infoObjectId)
+    {
+      var infoObject = await _context.InfoObjects.FirstOrDefaultAsync(x => x.DiscountId == discountId && x.Id == infoObjectId);
+      if (infoObject == null)
+      {
+        return IdentityResult.Success;
+      }
+
+      _context.InfoObjects.Remove(infoObject);
+
+      return await _context.SaveChangesSafeAsync(nameof(DeleteInfoObjectFromDiscountAsync));
     }
 
     public void Dispose()
