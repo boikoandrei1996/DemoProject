@@ -38,26 +38,26 @@ namespace DemoProject.WebApi.Controllers
       return entity;
     }
 
-    // POST api/discount
-    [HttpPost]
+    // POST api/discount/add
+    [HttpPost("add")]
     public Task<IdentityResult> Post([FromBody]Discount discount)
     {
-      var result = _discountService.AddOrUpdateAsync(discount);
+      var result = _discountService.AddAsync(discount);
 
       return result;
     }
 
-    // PUT api/discount/id
-    [HttpPut("{id}")]
+    // PUT api/discount/update/id
+    [HttpPut("update/{id}")]
     public Task<IdentityResult> Put(Guid id, [FromBody]Discount discount)
     {
-      var result = _discountService.AddOrUpdateAsync(discount);
+      var result = _discountService.UpdateAsync(id, discount);
 
       return result;
     }
 
-    // DELETE api/discount/id
-    [HttpDelete("{id}")]
+    // DELETE api/discount/delete/id
+    [HttpDelete("delete/{id}")]
     public Task<IdentityResult> Delete(Guid id)
     {
       var result = _discountService.DeleteAsync(id);

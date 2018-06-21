@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace DemoProject.WebApi
 {
@@ -36,7 +37,9 @@ namespace DemoProject.WebApi
 
       services.AddTransient<IDiscountService, DiscountService>();
 
-      services.AddMvc();
+      services
+        .AddMvc()
+        .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
       // services.AddCors();
     }
