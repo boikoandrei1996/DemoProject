@@ -11,8 +11,7 @@ namespace DemoProject.DLL.Interfaces
   {
     Task<List<Discount>> GetDiscountsAsync(Expression<Func<Discount, bool>> filter = null);
     Task<Discount> FindByAsync(Expression<Func<Discount, bool>> filter);
-    Task<IdentityResult> DeleteAsync(Guid id);
     Task<IdentityResult> AddAsync(Discount discount);
-    Task<IdentityResult> UpdateAsync(Guid id, Discount discount);
+    Task<IdentityResult> DeleteAsync(Guid id);
   }
 }
