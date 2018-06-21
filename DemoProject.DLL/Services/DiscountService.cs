@@ -7,6 +7,7 @@ using DemoProject.DLL.Extensions;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
+using DemoProject.DLL.Models.Pages;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,29 @@ namespace DemoProject.DLL.Services
       }
 
       return query.Include(x => x.Items).ToListAsync();
+    }
+
+    public async Task<DiscountPage> GetPageDiscountsAsync(int pageIndex, int pageSize, Expression<Func<Discount, bool>> filter = null)
+    {
+      var query = _context.Discounts.AsNoTracking();
+
+      if (filter != null)
+      {
+        query = query.Where(filter);
+      }
+
+      var totalCount = await query.CountAsync();
+
+      var page = new DiscountPage
+      {
+        CurrentPage = pageIndex,
+        PageSize = pageSize,
+        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
+      };
+
+      page.Records = await query.Skip((pageIndex - 1) * pageSize).Take(pageSize).Include(x => x.Items).ToListAsync();
+
+      return page;
     }
 
     public Task<Discount> FindByAsync(Expression<Func<Discount, bool>> filter)

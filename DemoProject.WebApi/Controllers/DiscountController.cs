@@ -22,11 +22,20 @@ namespace DemoProject.WebApi.Controllers
 
     // GET api/discount/all
     [HttpGet("all")]
-    public async Task<IEnumerable<DiscountViewModel>> GetAll()
+    public async Task<IEnumerable<DiscountViewModel>> GetAll([FromQuery]int? page)
     {
       var entities = await _discountService.GetDiscountsAsync();
 
       return entities.Select(x => DiscountViewModel.Map(x));
+    }
+
+    // GET api/discount/page/{index}
+    [HttpGet("page/index")]
+    public async Task<DiscountPageModel> GetPages(int? index)
+    {
+      var page = await _discountService.GetPageDiscountsAsync(index ?? 1, 2);
+
+      return DiscountPageModel.Map(page);
     }
 
     // GET api/discount/{id}
