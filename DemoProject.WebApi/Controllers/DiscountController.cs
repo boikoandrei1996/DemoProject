@@ -30,7 +30,7 @@ namespace DemoProject.WebApi.Controllers
     }
 
     // GET api/discount/page/{index}
-    [HttpGet("page/index")]
+    [HttpGet("page/{index}")]
     public async Task<DiscountPageModel> GetPages(int? index)
     {
       var page = await _discountService.GetPageDiscountsAsync(index ?? 1, 2);
