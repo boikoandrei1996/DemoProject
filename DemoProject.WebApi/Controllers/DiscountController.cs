@@ -22,7 +22,7 @@ namespace DemoProject.WebApi.Controllers
 
     // GET api/discount/all
     [HttpGet("all")]
-    public async Task<IEnumerable<DiscountViewModel>> GetAll([FromQuery]int? page)
+    public async Task<IEnumerable<DiscountViewModel>> GetAll()
     {
       var entities = await _discountService.GetDiscountsAsync();
 
@@ -30,7 +30,7 @@ namespace DemoProject.WebApi.Controllers
     }
 
     // GET api/discount/page/{index}
-    [HttpGet("page/{index}")]
+    [HttpGet("page/{index:int?}")]
     public async Task<DiscountPageModel> GetPages(int? index)
     {
       var page = await _discountService.GetPageDiscountsAsync(index ?? 1, 2);
@@ -39,7 +39,7 @@ namespace DemoProject.WebApi.Controllers
     }
 
     // GET api/discount/{id}
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<DiscountViewModel> GetOne(Guid id)
     {
       var entity = await _discountService.FindByAsync(x => x.Id == id);
@@ -56,31 +56,32 @@ namespace DemoProject.WebApi.Controllers
       return _discountService.AddAsync(entity);
     }
 
-    // DELETE api/discount/delete/{id}
-    [HttpDelete("delete/{id}")]
+    // DELETE api/discount/{id}/delete
+    [HttpDelete("{id:guid}/delete")]
     public Task<IdentityResult> Delete(Guid id)
     {
       return _discountService.DeleteAsync(id);
     }
 
     // POST api/discount/{id}/infoobject/add
-    [HttpPost("{id}/infoobject/add")]
+    [HttpPost("{id:guid}/infoobject/add")]
     public Task<IdentityResult> AddInfoObject(Guid id, [FromBody]InfoObjectAddModel apiEntity)
     {
       var entity = InfoObjectAddModel.Map(apiEntity);
+      entity.DiscountId = id;
 
-      return _discountService.AddInfoObjectAsync(id, entity);
+      return _discountService.AddInfoObjectAsync(entity);
     }
 
-    // DELETE api/discount/{id}/infoobject/{objectId}/delete
-    [HttpDelete("{discountId}/infoobject/{infoObjectId}/delete")]
+    // DELETE api/discount/{discountId}/infoobject/{infoObjectId}/delete
+    [HttpDelete("{discountId:guid}/infoobject/{infoObjectId:guid}/delete")]
     public Task<IdentityResult> DeleteInfoObjectFromDiscount(Guid discountId, Guid infoObjectId)
     {
       return _discountService.DeleteInfoObjectFromDiscountAsync(discountId, infoObjectId);
     }
 
     // PUT api/discount/update/{id}
-    [HttpPut("update/{id}")]
+    [HttpPut("update/{id:guid}")]
     public IdentityResult Put(Guid id, [FromBody]Discount discount)
     {
       return IdentityResult.Success;

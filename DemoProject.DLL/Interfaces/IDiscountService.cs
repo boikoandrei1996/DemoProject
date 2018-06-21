@@ -17,7 +17,7 @@ namespace DemoProject.DLL.Interfaces
     Task<IdentityResult> AddAsync(Discount discount);
     Task<IdentityResult> DeleteAsync(Guid discountId);
 
-    Task<IdentityResult> AddInfoObjectAsync(Guid discountId, InfoObject infoObject);
+    Task<IdentityResult> AddInfoObjectAsync(InfoObject infoObject);
     Task<IdentityResult> DeleteInfoObjectFromDiscountAsync(Guid discountId, Guid infoObjectId);
   }
 }

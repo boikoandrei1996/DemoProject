@@ -88,20 +88,14 @@ namespace DemoProject.DLL.Services
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
     }
 
-    public async Task<IdentityResult> AddInfoObjectAsync(Guid discountId, InfoObject infoObject)
+    public async Task<IdentityResult> AddInfoObjectAsync(InfoObject infoObject)
     {
       if (infoObject == null)
       {
         return IdentityResultFactory.FailedResult(nameof(this.AddInfoObjectAsync), "InfoObject reference is null.");
       }
 
-      var discount = await _context.Discounts.Include(x => x.Items).FirstOrDefaultAsync(x => x.Id == discountId);
-      if (discount == null)
-      {
-        return IdentityResultFactory.FailedResult(nameof(this.AddInfoObjectAsync), $"Discount '{discountId}' is not found.");
-      }
-
-      discount.Items.Add(infoObject);
+      _context.InfoObjects.Add(infoObject);
 
       return await _context.SaveChangesSafeAsync(nameof(AddInfoObjectAsync));
     }

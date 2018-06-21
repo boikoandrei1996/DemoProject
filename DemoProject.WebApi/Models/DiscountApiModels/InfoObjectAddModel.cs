@@ -5,7 +5,6 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
 {
   public class InfoObjectAddModel
   {
-    public Guid DiscountId { get; set; }
     public string Content { get; set; }
     public string Type { get; set; }
 
@@ -13,7 +12,6 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
     {
       return new InfoObject
       {
-        DiscountId = model.DiscountId,
         Content = model.Content,
         Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true)
       };
