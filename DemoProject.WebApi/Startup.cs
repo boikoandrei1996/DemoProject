@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace DemoProject.WebApi
 {
@@ -41,6 +42,24 @@ namespace DemoProject.WebApi
         .AddMvc()
         .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
+      services.AddSwaggerGen(x =>
+      {
+        x.SwaggerDoc("v1", new Info
+        {
+          Version = "v1",
+          Title = "DemoProject API",
+          Description = "Pet's project",
+          Contact = new Contact
+          {
+            Name = "Andrei Boika",
+            Email = "BoikoAndrei1996@gmail.com"
+          }
+        });
+
+        x.IncludeXmlComments(Path.Combine(Environment.ContentRootPath, @"bin\Debug\netcoreapp2.0\DemoProject.WebApi.xml"));
+        x.DescribeAllEnumsAsStrings();
+      });
+
       // services.AddCors();
     }
 
@@ -56,6 +75,12 @@ namespace DemoProject.WebApi
       app.ApplyMigrationAndDatabaseSeed();
 
       app.UseMvc();
+
+      app.UseSwagger();
+      app.UseSwaggerUI(x =>
+      {
+        x.SwaggerEndpoint("/swagger/v1/swagger.json", "DemoProject API v1");
+      });
     }
   }
 }
