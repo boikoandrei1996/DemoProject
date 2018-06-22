@@ -26,7 +26,7 @@ namespace DemoProject.WebApi.Controllers
     {
       var entities = await _discountService.GetDiscountsAsync();
 
-      return entities.Select(x => DiscountViewModel.Map(x));
+      return entities.Select(DiscountViewModel.Map);
     }
 
     // GET api/discount/page/{index}
