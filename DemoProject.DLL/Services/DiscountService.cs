@@ -88,16 +88,17 @@ namespace DemoProject.DLL.Services
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
     }
 
-    public async Task<IdentityResult> AddInfoObjectAsync(InfoObject infoObject)
+    public Task<IdentityResult> AddInfoObjectAsync(InfoObject infoObject)
     {
       if (infoObject == null)
       {
-        return IdentityResultFactory.FailedResult(nameof(this.AddInfoObjectAsync), "InfoObject reference is null.");
+        return Task.Run(() => 
+          IdentityResultFactory.FailedResult(nameof(this.AddInfoObjectAsync), "InfoObject reference is null."));
       }
 
       _context.InfoObjects.Add(infoObject);
 
-      return await _context.SaveChangesSafeAsync(nameof(AddInfoObjectAsync));
+      return _context.SaveChangesSafeAsync(nameof(AddInfoObjectAsync));
     }
 
     public async Task<IdentityResult> DeleteInfoObjectFromDiscountAsync(Guid discountId, Guid infoObjectId)

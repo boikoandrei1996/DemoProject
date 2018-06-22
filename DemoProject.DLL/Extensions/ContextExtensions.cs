@@ -22,15 +22,15 @@ namespace DemoProject.DLL.Extensions
       }
       catch (DbUpdateConcurrencyException ex)
       {
-        return IdentityResultFactory.FailedResult(code, ex.Message);
+        return IdentityResultFactory.FailedResult(code, ex.InnerException.Message);
       }
       catch (DbUpdateException ex)
       {
-        return IdentityResultFactory.FailedResult(code, ex.Message);
+        return IdentityResultFactory.FailedResult(code, ex.InnerException.Message);
       }
       catch (Exception ex)
       {
-        return IdentityResultFactory.FailedResult(code, ex.Message);
+        return IdentityResultFactory.FailedResult(code, ex.InnerException.Message);
       }
     }
   }
