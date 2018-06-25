@@ -13,6 +13,9 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   public class DiscountController : Controller
   {
+    private const int DEFAULT_PAGE_INDEX = 1;
+    private const int DEFAULT_PAGE_SIZE = 2;
+
     private readonly IDiscountService _discountService;
 
     public DiscountController(IDiscountService discountService)
@@ -29,11 +32,13 @@ namespace DemoProject.WebApi.Controllers
       return entities.Select(DiscountViewModel.Map);
     }
 
-    // GET api/discount/page/{index}
+    // GET api/discount/page/{index}?pageSize={}
     [HttpGet("page/{index:int?}")]
-    public async Task<DiscountPageModel> GetPage(int? index)
+    public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
     {
-      var page = await _discountService.GetPageDiscountsAsync(index ?? 1, 2);
+      var page = await _discountService.GetPageDiscountsAsync(
+        index >= 1 ? index.Value : DEFAULT_PAGE_INDEX, 
+        pageSize >= 1 ? pageSize.Value : DEFAULT_PAGE_SIZE);
 
       return DiscountPageModel.Map(page);
     }
