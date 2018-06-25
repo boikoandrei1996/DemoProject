@@ -31,6 +31,11 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
 
     public static DiscountPageModel Map(DiscountPage model)
     {
+      if (model == null)
+      {
+        return null;
+      }
+
       return new DiscountPageModel
       {
         CurrentPage = model.CurrentPage,

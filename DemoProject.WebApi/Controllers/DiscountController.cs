@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
 using DemoProject.WebApi.Models.DiscountApiModels;
@@ -32,12 +33,12 @@ namespace DemoProject.WebApi.Controllers
       return entities.Select(DiscountViewModel.Map);
     }
 
-    // GET api/discount/page/{index}?pageSize={}
+    // GET api/discount/page/{index}
     [HttpGet("page/{index:int?}")]
     public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _discountService.GetPageDiscountsAsync(
-        index >= 1 ? index.Value : DEFAULT_PAGE_INDEX, 
+        index >= 1 ? index.Value : DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : DEFAULT_PAGE_SIZE);
 
       return DiscountPageModel.Map(page);
@@ -56,6 +57,11 @@ namespace DemoProject.WebApi.Controllers
     [HttpPost("add")]
     public Task<IdentityResult> Add([FromBody]DiscountAddModel apiEntity)
     {
+      if (!ModelState.IsValid)
+      {
+        return Task.Run(() => IdentityResultFactory.FailedResult(ModelState));
+      }
+
       var entity = DiscountAddModel.Map(apiEntity);
 
       return _discountService.AddAsync(entity);
@@ -72,6 +78,11 @@ namespace DemoProject.WebApi.Controllers
     [HttpPost("{id:guid}/infoobject/add")]
     public Task<IdentityResult> AddInfoObject(Guid id, [FromBody]InfoObjectAddModel apiEntity)
     {
+      if (!ModelState.IsValid)
+      {
+        return Task.Run(() => IdentityResultFactory.FailedResult(ModelState));
+      }
+
       var entity = InfoObjectAddModel.Map(apiEntity);
       entity.DiscountId = id;
 
@@ -94,9 +105,12 @@ namespace DemoProject.WebApi.Controllers
 
     protected override void Dispose(bool disposing)
     {
-      base.Dispose(disposing);
+      if (disposing)
+      {
+        _discountService.Dispose();
+      }
 
-      _discountService.Dispose();
+      base.Dispose(disposing);
     }
   }
 }

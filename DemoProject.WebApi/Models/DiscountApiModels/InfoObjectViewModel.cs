@@ -12,6 +12,11 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
 
     public static InfoObjectViewModel Map(InfoObject model)
     {
+      if (model == null)
+      {
+        return null;
+      }
+
       return new InfoObjectViewModel
       {
         Id = model.Id,

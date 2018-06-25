@@ -13,6 +13,11 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
 
     public static DiscountViewModel Map(Discount model)
     {
+      if (model == null)
+      {
+        return null;
+      }
+
       return new DiscountViewModel
       {
         Id = model.Id,
