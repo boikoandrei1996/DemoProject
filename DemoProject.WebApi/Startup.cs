@@ -40,7 +40,11 @@ namespace DemoProject.WebApi
 
       services
         .AddMvc()
-        .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+        .AddJsonOptions(x =>
+        {
+          x.SerializerSettings.Formatting = Formatting.Indented;
+          x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
 
       services.AddSwaggerGen(x =>
       {
