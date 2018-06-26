@@ -31,7 +31,7 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
     {
       var model = (InfoObjectAddModel)validationContext.ObjectInstance;
 
-      if (Enum.TryParse<InfoObjectType>(model.Type, true, out InfoObjectType temp))
+      if (Enum.TryParse(model.Type, true, out InfoObjectType temp))
       {
         yield return ValidationResult.Success;
       }
