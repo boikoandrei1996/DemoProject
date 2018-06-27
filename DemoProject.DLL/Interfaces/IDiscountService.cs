@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Models;
 using DemoProject.DLL.Models.Pages;
-using Microsoft.AspNetCore.Identity;
 
 namespace DemoProject.DLL.Interfaces
 {
@@ -14,10 +14,10 @@ namespace DemoProject.DLL.Interfaces
     Task<DiscountPage> GetPageDiscountsAsync(int pageIndex, int pageSize, Expression<Func<Discount, bool>> filter = null);
     Task<Discount> FindByAsync(Expression<Func<Discount, bool>> filter);
 
-    Task<IdentityResult> AddAsync(Discount discount);
-    Task<IdentityResult> DeleteAsync(Guid discountId);
+    Task<ServiceResult> AddAsync(Discount discount);
+    Task<ServiceResult> DeleteAsync(Guid discountId);
 
-    Task<IdentityResult> AddInfoObjectAsync(InfoObject infoObject);
-    Task<IdentityResult> DeleteInfoObjectFromDiscountAsync(Guid discountId, Guid infoObjectId);
+    Task<ServiceResult> AddInfoObjectAsync(InfoObject infoObject);
+    Task<ServiceResult> DeleteInfoObjectFromDiscountAsync(Guid discountId, Guid infoObjectId);
   }
 }

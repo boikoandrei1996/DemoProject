@@ -8,7 +8,6 @@ using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
 using DemoProject.DLL.Models.Pages;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DLL.Services
@@ -59,15 +58,20 @@ namespace DemoProject.DLL.Services
 
     public Task<Discount> FindByAsync(Expression<Func<Discount, bool>> filter)
     {
+      if (filter == null)
+      {
+        throw new ArgumentNullException(nameof(filter));
+      }
+
       return _context.Discounts.AsNoTracking().Include(x => x.Items).FirstOrDefaultAsync(filter);
     }
 
-    public Task<IdentityResult> AddAsync(Discount discount)
+    public Task<ServiceResult> AddAsync(Discount discount)
     {
       if (discount == null)
       {
         return Task.Run(() =>
-          IdentityResultFactory.FailedResult(nameof(this.AddAsync), "Discount reference is null."));
+          ServiceResultFactory.InvalidModelErrorResult("Discount reference is null."));
       }
 
       _context.Discounts.Add(discount);
@@ -75,12 +79,12 @@ namespace DemoProject.DLL.Services
       return _context.SaveChangesSafeAsync(nameof(AddAsync));
     }
 
-    public async Task<IdentityResult> DeleteAsync(Guid discountId)
+    public async Task<ServiceResult> DeleteAsync(Guid discountId)
     {
       var discount = await _context.Discounts.FirstOrDefaultAsync(x => x.Id == discountId);
       if (discount == null)
       {
-        return IdentityResult.Success;
+        return ServiceResultFactory.Success;
       }
 
       _context.Discounts.Remove(discount);
@@ -88,12 +92,12 @@ namespace DemoProject.DLL.Services
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
     }
 
-    public Task<IdentityResult> AddInfoObjectAsync(InfoObject infoObject)
+    public Task<ServiceResult> AddInfoObjectAsync(InfoObject infoObject)
     {
       if (infoObject == null)
       {
         return Task.Run(() => 
-          IdentityResultFactory.FailedResult(nameof(this.AddInfoObjectAsync), "InfoObject reference is null."));
+          ServiceResultFactory.InvalidModelErrorResult("InfoObject reference is null."));
       }
 
       _context.InfoObjects.Add(infoObject);
@@ -101,12 +105,12 @@ namespace DemoProject.DLL.Services
       return _context.SaveChangesSafeAsync(nameof(AddInfoObjectAsync));
     }
 
-    public async Task<IdentityResult> DeleteInfoObjectFromDiscountAsync(Guid discountId, Guid infoObjectId)
+    public async Task<ServiceResult> DeleteInfoObjectFromDiscountAsync(Guid discountId, Guid infoObjectId)
     {
       var infoObject = await _context.InfoObjects.FirstOrDefaultAsync(x => x.DiscountId == discountId && x.Id == infoObjectId);
       if (infoObject == null)
       {
-        return IdentityResult.Success;
+        return ServiceResultFactory.Success;
       }
 
       _context.InfoObjects.Remove(infoObject);

@@ -6,7 +6,6 @@ using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
 using DemoProject.WebApi.Models.DiscountApiModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -55,11 +54,11 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/discount/add
     [HttpPost("add")]
-    public Task<IdentityResult> Add([FromBody]DiscountAddModel apiEntity)
+    public Task<ServiceResult> Add([FromBody]DiscountAddModel apiEntity)
     {
       if (!ModelState.IsValid)
       {
-        return Task.Run(() => IdentityResultFactory.FailedResult(ModelState));
+        return Task.Run(() => ServiceResultFactory.InvalidModelErrorResult(ModelState));
       }
 
       var entity = DiscountAddModel.Map(apiEntity);
@@ -69,18 +68,18 @@ namespace DemoProject.WebApi.Controllers
 
     // DELETE api/discount/{id}/delete
     [HttpDelete("{id:guid}/delete")]
-    public Task<IdentityResult> Delete(Guid id)
+    public Task<ServiceResult> Delete(Guid id)
     {
       return _discountService.DeleteAsync(id);
     }
 
     // POST api/discount/{id}/infoobject/add
     [HttpPost("{id:guid}/infoobject/add")]
-    public Task<IdentityResult> AddInfoObject(Guid id, [FromBody]InfoObjectAddModel apiEntity)
+    public Task<ServiceResult> AddInfoObject(Guid id, [FromBody]InfoObjectAddModel apiEntity)
     {
       if (!ModelState.IsValid)
       {
-        return Task.Run(() => IdentityResultFactory.FailedResult(ModelState));
+        return Task.Run(() => ServiceResultFactory.InvalidModelErrorResult(ModelState));
       }
 
       var entity = InfoObjectAddModel.Map(apiEntity);
@@ -91,16 +90,16 @@ namespace DemoProject.WebApi.Controllers
 
     // DELETE api/discount/{discountId}/infoobject/{infoObjectId}/delete
     [HttpDelete("{discountId:guid}/infoobject/{infoObjectId:guid}/delete")]
-    public Task<IdentityResult> DeleteInfoObjectFromDiscount(Guid discountId, Guid infoObjectId)
+    public Task<ServiceResult> DeleteInfoObjectFromDiscount(Guid discountId, Guid infoObjectId)
     {
       return _discountService.DeleteInfoObjectFromDiscountAsync(discountId, infoObjectId);
     }
 
     // PUT api/discount/update/{id}
     [HttpPut("update/{id:guid}")]
-    public IdentityResult Put(Guid id, [FromBody]Discount discount)
+    public ServiceResult Put(Guid id, [FromBody]Discount discount)
     {
-      return IdentityResult.Success;
+      return ServiceResultFactory.Success;
     }
 
     protected override void Dispose(bool disposing)
