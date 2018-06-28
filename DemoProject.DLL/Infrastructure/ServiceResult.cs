@@ -25,9 +25,9 @@ namespace DemoProject.DLL.Infrastructure
   public enum ServiceResultKey : int
   {
     Success = 0,
-    DbError = 1,
-    InvalidModelError = 2,
-    ServerError = 3
+    BadRequest = 1,
+    NotFound = 2,
+    InternalServerError = 3
   }
 
   public class ServiceError

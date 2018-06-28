@@ -70,8 +70,7 @@ namespace DemoProject.DLL.Services
     {
       if (discount == null)
       {
-        return Task.Run(() =>
-          ServiceResultFactory.InvalidModelErrorResult("Discount reference is null."));
+        throw new ArgumentNullException(nameof(discount));
       }
 
       _context.Discounts.Add(discount);
@@ -96,8 +95,7 @@ namespace DemoProject.DLL.Services
     {
       if (infoObject == null)
       {
-        return Task.Run(() => 
-          ServiceResultFactory.InvalidModelErrorResult("InfoObject reference is null."));
+        throw new ArgumentNullException(nameof(infoObject));
       }
 
       _context.InfoObjects.Add(infoObject);

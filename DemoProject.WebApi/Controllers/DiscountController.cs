@@ -58,7 +58,7 @@ namespace DemoProject.WebApi.Controllers
     {
       if (!ModelState.IsValid)
       {
-        return Task.Run(() => ServiceResultFactory.InvalidModelErrorResult(ModelState));
+        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
       }
 
       var entity = DiscountAddModel.Map(apiEntity);
@@ -79,7 +79,7 @@ namespace DemoProject.WebApi.Controllers
     {
       if (!ModelState.IsValid)
       {
-        return Task.Run(() => ServiceResultFactory.InvalidModelErrorResult(ModelState));
+        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
       }
 
       var entity = InfoObjectAddModel.Map(apiEntity);

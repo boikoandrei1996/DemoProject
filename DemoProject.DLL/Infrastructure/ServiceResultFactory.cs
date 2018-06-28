@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace DemoProject.DLL.Infrastructure
 {
@@ -11,33 +9,30 @@ namespace DemoProject.DLL.Infrastructure
       get { return new ServiceResult(ServiceResultKey.Success); }
     }
 
-    public static ServiceResult ServerErrorResult(string description)
+    public static ServiceResult NotFound
     {
-      return new ServiceResult(ServiceResultKey.ServerError, new ServiceError
+      get { return new ServiceResult(ServiceResultKey.NotFound); }
+    }
+
+    public static ServiceResult InternalServerErrorResult(string message)
+    {
+      return new ServiceResult(ServiceResultKey.InternalServerError, new ServiceError
+      {
+        Description = message
+      });
+    }
+
+    public static ServiceResult BadRequestResult(string description)
+    {
+      return new ServiceResult(ServiceResultKey.BadRequest, new ServiceError
       {
         Description = description
       });
     }
 
-    public static ServiceResult DbErrorResult(string description)
+    public static ServiceResult BadRequestResult(ModelStateDictionary modelState)
     {
-      return new ServiceResult(ServiceResultKey.DbError, new ServiceError
-      {
-        Description = description
-      });
-    }
-
-    public static ServiceResult InvalidModelErrorResult(string description)
-    {
-      return new ServiceResult(ServiceResultKey.InvalidModelError, new ServiceError
-      {
-        Description = description
-      });
-    }
-
-    public static ServiceResult InvalidModelErrorResult(ModelStateDictionary modelState)
-    {
-      var result = new ServiceResult(ServiceResultKey.ServerError);
+      var result = new ServiceResult(ServiceResultKey.BadRequest);
 
       foreach (var field in modelState)
       {
