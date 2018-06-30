@@ -14,6 +14,11 @@ namespace DemoProject.DLL.Infrastructure
       get { return new ServiceResult(ServiceResultKey.NotFound); }
     }
 
+    public static ServiceResult InternalServerError
+    {
+      get { return new ServiceResult(ServiceResultKey.InternalServerError); }
+    }
+
     public static ServiceResult InternalServerErrorResult(string message)
     {
       return new ServiceResult(ServiceResultKey.InternalServerError, new ServiceError

@@ -39,7 +39,9 @@ namespace DemoProject.WebApi
       services.AddTransient<IDiscountService, DiscountService>();
 
       services
-        .AddMvc()
+        .AddMvc(x =>
+        {
+        })
         .AddJsonOptions(x =>
         {
           x.SerializerSettings.Formatting = Formatting.Indented;

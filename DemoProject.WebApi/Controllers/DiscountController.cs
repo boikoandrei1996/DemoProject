@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
+using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Models.DiscountApiModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
 {
   [Route("api/[controller]")]
+  [HandleServiceResult]
   public class DiscountController : Controller
   {
     private const int DEFAULT_PAGE_INDEX = 1;
