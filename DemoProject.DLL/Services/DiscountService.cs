@@ -21,6 +21,26 @@ namespace DemoProject.DLL.Services
       _context = context;
     }
 
+    public Task<bool> ExistDiscountAsync(Expression<Func<Discount, bool>> filter)
+    {
+      if (filter == null)
+      {
+        throw new ArgumentNullException(nameof(filter));
+      }
+
+      return _context.Discounts.AnyAsync(filter);
+    }
+
+    public Task<bool> ExistInfoObjectAsync(Expression<Func<InfoObject, bool>> filter)
+    {
+      if (filter == null)
+      {
+        throw new ArgumentNullException(nameof(filter));
+      }
+
+      return _context.InfoObjects.AnyAsync(filter);
+    }
+
     public Task<List<Discount>> GetDiscountsAsync(Expression<Func<Discount, bool>> filter = null)
     {
       var query = _context.Discounts.AsNoTracking();
@@ -78,6 +98,18 @@ namespace DemoProject.DLL.Services
       return _context.SaveChangesSafeAsync(nameof(AddAsync));
     }
 
+    public Task<ServiceResult> UpdateAsync(Discount discount)
+    {
+      if (discount == null)
+      {
+        throw new ArgumentNullException(nameof(discount));
+      }
+
+      _context.Discounts.Update(discount);
+
+      return _context.SaveChangesSafeAsync(nameof(UpdateAsync));
+    }
+
     public async Task<ServiceResult> DeleteAsync(Guid discountId)
     {
       var discount = await _context.Discounts.FirstOrDefaultAsync(x => x.Id == discountId);
@@ -103,9 +135,21 @@ namespace DemoProject.DLL.Services
       return _context.SaveChangesSafeAsync(nameof(AddInfoObjectAsync));
     }
 
-    public async Task<ServiceResult> DeleteInfoObjectFromDiscountAsync(Guid discountId, Guid infoObjectId)
+    public Task<ServiceResult> UpdateInfoObjectAsync(InfoObject infoObject)
     {
-      var infoObject = await _context.InfoObjects.FirstOrDefaultAsync(x => x.DiscountId == discountId && x.Id == infoObjectId);
+      if (infoObject == null)
+      {
+        throw new ArgumentNullException(nameof(infoObject));
+      }
+
+      _context.InfoObjects.Update(infoObject);
+
+      return _context.SaveChangesSafeAsync(nameof(UpdateInfoObjectAsync));
+    }
+
+    public async Task<ServiceResult> DeleteInfoObjectAsync(Guid infoObjectId)
+    {
+      var infoObject = await _context.InfoObjects.FirstOrDefaultAsync(x => x.Id == infoObjectId);
       if (infoObject == null)
       {
         return ServiceResultFactory.Success;
@@ -113,7 +157,7 @@ namespace DemoProject.DLL.Services
 
       _context.InfoObjects.Remove(infoObject);
 
-      return await _context.SaveChangesSafeAsync(nameof(DeleteInfoObjectFromDiscountAsync));
+      return await _context.SaveChangesSafeAsync(nameof(DeleteInfoObjectAsync));
     }
 
     public void Dispose()

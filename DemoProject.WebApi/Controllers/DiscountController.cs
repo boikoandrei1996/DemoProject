@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
-using DemoProject.DLL.Models;
 using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Models.DiscountApiModels;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +12,10 @@ namespace DemoProject.WebApi.Controllers
 {
   [Route("api/[controller]")]
   [HandleServiceResult]
+  /*[ProducesResponseType(StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status404NotFound)]
+  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ServiceError>))]*/
   public class DiscountController : Controller
   {
     private const int DEFAULT_PAGE_INDEX = 1;
@@ -77,31 +80,74 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/discount/{id}/infoobject/add
     [HttpPost("{id:guid}/infoobject/add")]
-    public Task<ServiceResult> AddInfoObject(Guid id, [FromBody]InfoObjectAddModel apiEntity)
+    public async Task<ServiceResult> AddInfoObject(Guid id, [FromBody]InfoObjectAddModel apiEntity)
     {
       if (!ModelState.IsValid)
       {
-        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
+        return ServiceResultFactory.BadRequestResult(ModelState);
+      }
+
+      if (await _discountService.ExistDiscountAsync(x => x.Id == id) == false)
+      {
+        return ServiceResultFactory.NotFound;
       }
 
       var entity = InfoObjectAddModel.Map(apiEntity);
       entity.DiscountId = id;
 
-      return _discountService.AddInfoObjectAsync(entity);
+      return await _discountService.AddInfoObjectAsync(entity);
     }
 
-    // DELETE api/discount/{discountId}/infoobject/{infoObjectId}/delete
-    [HttpDelete("{discountId:guid}/infoobject/{infoObjectId:guid}/delete")]
-    public Task<ServiceResult> DeleteInfoObjectFromDiscount(Guid discountId, Guid infoObjectId)
+    // DELETE api/discount/infoobject/{id}/delete
+    [HttpDelete("infoobject/{id:guid}/delete")]
+    public Task<ServiceResult> DeleteInfoObjectFromDiscount(Guid id)
     {
-      return _discountService.DeleteInfoObjectFromDiscountAsync(discountId, infoObjectId);
+      return _discountService.DeleteInfoObjectAsync(id);
     }
 
-    // PUT api/discount/update/{id}
-    [HttpPut("update/{id:guid}")]
-    public ServiceResult Put(Guid id, [FromBody]Discount discount)
+    // PUT api/discount/{id}/update
+    [HttpPut("{id:guid}/update")]
+    public async Task<ServiceResult> EditDiscount(Guid id, [FromBody]DiscountEditModel apiEntity)
     {
-      return ServiceResultFactory.Success;
+      if (!ModelState.IsValid)
+      {
+        return ServiceResultFactory.BadRequestResult(ModelState);
+      }
+
+      if (await _discountService.ExistDiscountAsync(x => x.Id == id) == false)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      var entity = DiscountEditModel.Map(apiEntity);
+      entity.Id = id;
+
+      return await _discountService.UpdateAsync(entity);
+    }
+
+    // PUT api/discount/infoobject/{id}/update
+    [HttpPut("{id:guid}/update")]
+    public async Task<ServiceResult> EditInfoObject(Guid id, [FromBody]InfoObjectEditModel apiEntity)
+    {
+      if (!ModelState.IsValid)
+      {
+        return ServiceResultFactory.BadRequestResult(ModelState);
+      }
+
+      if (await _discountService.ExistInfoObjectAsync(x => x.Id == id) == false)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      if (await _discountService.ExistDiscountAsync(x => x.Id == apiEntity.DiscountId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult("Discount not found.");
+      }
+
+      var entity = InfoObjectEditModel.Map(apiEntity);
+      entity.Id = id;
+
+      return await _discountService.UpdateInfoObjectAsync(entity);
     }
 
     protected override void Dispose(bool disposing)
