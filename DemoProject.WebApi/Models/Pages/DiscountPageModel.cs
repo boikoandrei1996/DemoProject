@@ -2,7 +2,7 @@
 using System.Linq;
 using DemoProject.DLL.Pages;
 
-namespace DemoProject.WebApi.Models.DiscountApiModels
+namespace DemoProject.WebApi.Models.Pages
 {
   /// <summary>
   /// Page of discounts.

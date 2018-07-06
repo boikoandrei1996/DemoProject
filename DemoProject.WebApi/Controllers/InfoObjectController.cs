@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
-using DemoProject.WebApi.Infrastructure;
+using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.InfoObjectApiModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,16 +26,30 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/infoobject
     [HttpPost]
-    public async Task<ServiceResult> Add([FromBody]InfoObjectAddModel apiEntity)
+    public Task<ServiceResult> Add([FromBody]InfoObjectAddModel apiEntity)
     {
       if (!ModelState.IsValid)
       {
-        return ServiceResultFactory.BadRequestResult(ModelState);
+        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
       }
 
       var entity = InfoObjectAddModel.Map(apiEntity);
 
-      return await _infoObjectService.AddAsync(entity);
+      return _infoObjectService.AddAsync(entity);
+    }
+
+    // PUT api/infoobject/{id}
+    [HttpPut("{id:guid}")]
+    public Task<ServiceResult> Edit(Guid id, [FromBody]InfoObjectEditModel apiEntity)
+    {
+      if (!ModelState.IsValid)
+      {
+        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
+      }
+
+      var entity = InfoObjectEditModel.Map(apiEntity, id);
+
+      return _infoObjectService.UpdateAsync(entity);
     }
 
     // DELETE api/infoobject/{id}
@@ -43,20 +57,6 @@ namespace DemoProject.WebApi.Controllers
     public Task<ServiceResult> Delete(Guid id)
     {
       return _infoObjectService.DeleteAsync(id);
-    }
-
-    // PUT api/infoobject/{id}
-    [HttpPut("{id:guid}")]
-    public async Task<ServiceResult> Edit(Guid id, [FromBody]InfoObjectEditModel apiEntity)
-    {
-      if (!ModelState.IsValid)
-      {
-        return ServiceResultFactory.BadRequestResult(ModelState);
-      }
-
-      var entity = InfoObjectEditModel.Map(apiEntity, id);
-
-      return await _infoObjectService.UpdateAsync(entity);
     }
 
     protected override void Dispose(bool disposing)

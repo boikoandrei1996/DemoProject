@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
-using DemoProject.WebApi.Infrastructure;
+using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.DiscountApiModels;
+using DemoProject.WebApi.Models.Pages;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -72,13 +73,6 @@ namespace DemoProject.WebApi.Controllers
       return _discountService.AddAsync(entity);
     }
 
-    // DELETE api/discount/{id}
-    [HttpDelete("{id:guid}")]
-    public Task<ServiceResult> Delete(Guid id)
-    {
-      return _discountService.DeleteAsync(id);
-    }
-
     // PUT api/discount/{id}
     [HttpPut("{id:guid}")]
     public Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
@@ -91,6 +85,13 @@ namespace DemoProject.WebApi.Controllers
       var entity = DiscountEditModel.Map(apiEntity, id);
 
       return _discountService.UpdateAsync(entity);
+    }
+
+    // DELETE api/discount/{id}
+    [HttpDelete("{id:guid}")]
+    public Task<ServiceResult> Delete(Guid id)
+    {
+      return _discountService.DeleteAsync(id);
     }
 
     protected override void Dispose(bool disposing)

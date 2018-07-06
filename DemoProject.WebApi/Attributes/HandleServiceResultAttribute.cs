@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
+using DemoProject.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace DemoProject.WebApi.Infrastructure
+namespace DemoProject.WebApi.Attributes
 {
   public class HandleServiceResultAttribute : TypeFilterAttribute
   {
