@@ -98,13 +98,12 @@ namespace DemoProject.DLL.Services
       if (await _context.Discounts.AnyAsync(x => x.Id == model.Id))
       {
         _context.Discounts.Update(model);
+        return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
       }
       else
       {
         return ServiceResultFactory.NotFound;
       }
-
-      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)

@@ -50,13 +50,12 @@ namespace DemoProject.DLL.Services
       if (await _context.InfoObjects.AnyAsync(x => x.Id == model.Id))
       {
         _context.InfoObjects.Update(model);
+        return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
       }
       else
       {
         return ServiceResultFactory.NotFound;
       }
-
-      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)

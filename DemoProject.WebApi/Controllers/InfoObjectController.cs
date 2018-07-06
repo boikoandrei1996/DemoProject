@@ -16,14 +16,11 @@ namespace DemoProject.WebApi.Controllers
   [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ServiceError>))]*/
   public class InfoObjectController : Controller
   {
-    private readonly IDiscountService _discountService;
     private readonly IInfoObjectService _infoObjectService;
 
     public InfoObjectController(
-      IDiscountService discountService,
       IInfoObjectService infoObjectService)
     {
-      _discountService = discountService;
       _infoObjectService = infoObjectService;
     }
 
@@ -66,7 +63,6 @@ namespace DemoProject.WebApi.Controllers
     {
       if (disposing)
       {
-        _discountService.Dispose();
         _infoObjectService.Dispose();
       }
 
