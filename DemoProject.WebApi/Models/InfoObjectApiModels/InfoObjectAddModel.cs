@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
 
-namespace DemoProject.WebApi.Models.DiscountApiModels
+namespace DemoProject.WebApi.Models.InfoObjectApiModels
 {
   public class InfoObjectAddModel : IValidatableObject
   {
@@ -12,6 +12,8 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
 
     [Required]
     public string Type { get; set; }
+
+    public Guid DiscountId { get; set; }
 
     public static InfoObject Map(InfoObjectAddModel model)
     {
@@ -23,7 +25,8 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
       return new InfoObject
       {
         Content = model.Content,
-        Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true)
+        Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true),
+        DiscountId = model.DiscountId
       };
     }
 

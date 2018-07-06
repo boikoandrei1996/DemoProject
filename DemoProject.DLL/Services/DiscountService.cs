@@ -21,26 +21,6 @@ namespace DemoProject.DLL.Services
       _context = context;
     }
 
-    public Task<bool> ExistDiscountAsync(Expression<Func<Discount, bool>> filter)
-    {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
-
-      return _context.Discounts.AnyAsync(filter);
-    }
-
-    public Task<bool> ExistInfoObjectAsync(Expression<Func<InfoObject, bool>> filter)
-    {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
-
-      return _context.InfoObjects.AnyAsync(filter);
-    }
-
     public Task<List<Discount>> GetDiscountsAsync(Expression<Func<Discount, bool>> filter = null)
     {
       var query = _context.Discounts.AsNoTracking();
@@ -86,33 +66,43 @@ namespace DemoProject.DLL.Services
       return _context.Discounts.AsNoTracking().Include(x => x.Items).FirstOrDefaultAsync(filter);
     }
 
-    public Task<ServiceResult> AddAsync(Discount discount)
+    public Task<bool> ExistAsync(Expression<Func<Discount, bool>> filter)
     {
-      if (discount == null)
+      if (filter == null)
       {
-        throw new ArgumentNullException(nameof(discount));
+        throw new ArgumentNullException(nameof(filter));
       }
 
-      _context.Discounts.Add(discount);
+      return _context.Discounts.AnyAsync(filter);
+    }
+
+    public Task<ServiceResult> AddAsync(Discount model)
+    {
+      if (model == null)
+      {
+        throw new ArgumentNullException(nameof(model));
+      }
+
+      _context.Discounts.Add(model);
 
       return _context.SaveChangesSafeAsync(nameof(AddAsync));
     }
 
-    public Task<ServiceResult> UpdateAsync(Discount discount)
+    public Task<ServiceResult> UpdateAsync(Discount model)
     {
-      if (discount == null)
+      if (model == null)
       {
-        throw new ArgumentNullException(nameof(discount));
+        throw new ArgumentNullException(nameof(model));
       }
 
-      _context.Discounts.Update(discount);
+      _context.Discounts.Update(model);
 
       return _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
-    public async Task<ServiceResult> DeleteAsync(Guid discountId)
+    public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var discount = await _context.Discounts.FirstOrDefaultAsync(x => x.Id == discountId);
+      var discount = await _context.Discounts.FirstOrDefaultAsync(x => x.Id == id);
       if (discount == null)
       {
         return ServiceResultFactory.Success;
@@ -121,43 +111,6 @@ namespace DemoProject.DLL.Services
       _context.Discounts.Remove(discount);
 
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
-    }
-
-    public Task<ServiceResult> AddInfoObjectAsync(InfoObject infoObject)
-    {
-      if (infoObject == null)
-      {
-        throw new ArgumentNullException(nameof(infoObject));
-      }
-
-      _context.InfoObjects.Add(infoObject);
-
-      return _context.SaveChangesSafeAsync(nameof(AddInfoObjectAsync));
-    }
-
-    public Task<ServiceResult> UpdateInfoObjectAsync(InfoObject infoObject)
-    {
-      if (infoObject == null)
-      {
-        throw new ArgumentNullException(nameof(infoObject));
-      }
-
-      _context.InfoObjects.Update(infoObject);
-
-      return _context.SaveChangesSafeAsync(nameof(UpdateInfoObjectAsync));
-    }
-
-    public async Task<ServiceResult> DeleteInfoObjectAsync(Guid infoObjectId)
-    {
-      var infoObject = await _context.InfoObjects.FirstOrDefaultAsync(x => x.Id == infoObjectId);
-      if (infoObject == null)
-      {
-        return ServiceResultFactory.Success;
-      }
-
-      _context.InfoObjects.Remove(infoObject);
-
-      return await _context.SaveChangesSafeAsync(nameof(DeleteInfoObjectAsync));
     }
 
     public void Dispose()

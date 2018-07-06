@@ -23,7 +23,8 @@ namespace DemoProject.WebApi.Controllers
 
     private readonly IDiscountService _discountService;
 
-    public DiscountController(IDiscountService discountService)
+    public DiscountController(
+      IDiscountService discountService)
     {
       _discountService = discountService;
     }
@@ -57,8 +58,8 @@ namespace DemoProject.WebApi.Controllers
       return DiscountViewModel.Map(entity);
     }
 
-    // POST api/discount/add
-    [HttpPost("add")]
+    // POST api/discount
+    [HttpPost]
     public Task<ServiceResult> Add([FromBody]DiscountAddModel apiEntity)
     {
       if (!ModelState.IsValid)
@@ -71,50 +72,23 @@ namespace DemoProject.WebApi.Controllers
       return _discountService.AddAsync(entity);
     }
 
-    // DELETE api/discount/{id}/delete
-    [HttpDelete("{id:guid}/delete")]
+    // DELETE api/discount/{id}
+    [HttpDelete("{id:guid}")]
     public Task<ServiceResult> Delete(Guid id)
     {
       return _discountService.DeleteAsync(id);
     }
 
-    // POST api/discount/{id}/infoobject/add
-    [HttpPost("{id:guid}/infoobject/add")]
-    public async Task<ServiceResult> AddInfoObject(Guid id, [FromBody]InfoObjectAddModel apiEntity)
+    // PUT api/discount/{id}
+    [HttpPut("{id:guid}")]
+    public async Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
     {
       if (!ModelState.IsValid)
       {
         return ServiceResultFactory.BadRequestResult(ModelState);
       }
 
-      if (await _discountService.ExistDiscountAsync(x => x.Id == id) == false)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      var entity = InfoObjectAddModel.Map(apiEntity);
-      entity.DiscountId = id;
-
-      return await _discountService.AddInfoObjectAsync(entity);
-    }
-
-    // DELETE api/discount/infoobject/{id}/delete
-    [HttpDelete("infoobject/{id:guid}/delete")]
-    public Task<ServiceResult> DeleteInfoObjectFromDiscount(Guid id)
-    {
-      return _discountService.DeleteInfoObjectAsync(id);
-    }
-
-    // PUT api/discount/{id}/update
-    [HttpPut("{id:guid}/update")]
-    public async Task<ServiceResult> EditDiscount(Guid id, [FromBody]DiscountEditModel apiEntity)
-    {
-      if (!ModelState.IsValid)
-      {
-        return ServiceResultFactory.BadRequestResult(ModelState);
-      }
-
-      if (await _discountService.ExistDiscountAsync(x => x.Id == id) == false)
+      if (await _discountService.ExistAsync(x => x.Id == id) == false)
       {
         return ServiceResultFactory.NotFound;
       }
@@ -123,31 +97,6 @@ namespace DemoProject.WebApi.Controllers
       entity.Id = id;
 
       return await _discountService.UpdateAsync(entity);
-    }
-
-    // PUT api/discount/infoobject/{id}/update
-    [HttpPut("{id:guid}/update")]
-    public async Task<ServiceResult> EditInfoObject(Guid id, [FromBody]InfoObjectEditModel apiEntity)
-    {
-      if (!ModelState.IsValid)
-      {
-        return ServiceResultFactory.BadRequestResult(ModelState);
-      }
-
-      if (await _discountService.ExistInfoObjectAsync(x => x.Id == id) == false)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      if (await _discountService.ExistDiscountAsync(x => x.Id == apiEntity.DiscountId) == false)
-      {
-        return ServiceResultFactory.BadRequestResult("Discount not found.");
-      }
-
-      var entity = InfoObjectEditModel.Map(apiEntity);
-      entity.Id = id;
-
-      return await _discountService.UpdateInfoObjectAsync(entity);
     }
 
     protected override void Dispose(bool disposing)

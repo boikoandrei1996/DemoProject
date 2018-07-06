@@ -37,6 +37,7 @@ namespace DemoProject.WebApi
       });
 
       services.AddTransient<IDiscountService, DiscountService>();
+      services.AddTransient<IInfoObjectService, InfoObjectService>();
 
       services
         .AddMvc(x =>
