@@ -15,7 +15,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
 
     public Guid DiscountId { get; set; }
 
-    public static InfoObject Map(InfoObjectEditModel model)
+    public static InfoObject Map(InfoObjectEditModel model, Guid id)
     {
       if (model == null)
       {
@@ -24,9 +24,10 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
 
       return new InfoObject
       {
+        Id = id,
+        DiscountId = model.DiscountId,
         Content = model.Content,
-        Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true),
-        DiscountId = model.DiscountId
+        Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true)
       };
     }
 

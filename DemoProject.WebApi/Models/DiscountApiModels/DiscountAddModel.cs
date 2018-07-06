@@ -12,8 +12,6 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
     [MaxLength(100)]
     public string Title { get; set; }
 
-    public ICollection<InfoObjectAddModel> Items { get; set; } = new List<InfoObjectAddModel>();
-
     public static Discount Map(DiscountAddModel model)
     {
       if (model == null)
@@ -23,8 +21,7 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
 
       return new Discount
       {
-        Title = model.Title,
-        Items = model.Items.Select(x => InfoObjectAddModel.Map(x)).ToList()
+        Title = model.Title
       };
     }
   }

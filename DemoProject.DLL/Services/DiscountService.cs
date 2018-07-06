@@ -88,16 +88,23 @@ namespace DemoProject.DLL.Services
       return _context.SaveChangesSafeAsync(nameof(AddAsync));
     }
 
-    public Task<ServiceResult> UpdateAsync(Discount model)
+    public async Task<ServiceResult> UpdateAsync(Discount model)
     {
       if (model == null)
       {
         throw new ArgumentNullException(nameof(model));
       }
 
-      _context.Discounts.Update(model);
+      if (await _context.Discounts.AnyAsync(x => x.Id == model.Id))
+      {
+        _context.Discounts.Update(model);
+      }
+      else
+      {
+        return ServiceResultFactory.NotFound;
+      }
 
-      return _context.SaveChangesSafeAsync(nameof(UpdateAsync));
+      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)

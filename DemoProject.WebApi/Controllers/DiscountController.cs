@@ -81,22 +81,16 @@ namespace DemoProject.WebApi.Controllers
 
     // PUT api/discount/{id}
     [HttpPut("{id:guid}")]
-    public async Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
+    public Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
     {
       if (!ModelState.IsValid)
       {
-        return ServiceResultFactory.BadRequestResult(ModelState);
+        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
       }
 
-      if (await _discountService.ExistAsync(x => x.Id == id) == false)
-      {
-        return ServiceResultFactory.NotFound;
-      }
+      var entity = DiscountEditModel.Map(apiEntity, id);
 
-      var entity = DiscountEditModel.Map(apiEntity);
-      entity.Id = id;
-
-      return await _discountService.UpdateAsync(entity);
+      return _discountService.UpdateAsync(entity);
     }
 
     protected override void Dispose(bool disposing)

@@ -40,16 +40,23 @@ namespace DemoProject.DLL.Services
       return _context.SaveChangesSafeAsync(nameof(AddAsync));
     }
 
-    public Task<ServiceResult> UpdateAsync(InfoObject model)
+    public async Task<ServiceResult> UpdateAsync(InfoObject model)
     {
       if (model == null)
       {
         throw new ArgumentNullException(nameof(model));
       }
 
-      _context.InfoObjects.Update(model);
+      if (await _context.InfoObjects.AnyAsync(x => x.Id == model.Id))
+      {
+        _context.InfoObjects.Update(model);
+      }
+      else
+      {
+        return ServiceResultFactory.NotFound;
+      }
 
-      return _context.SaveChangesSafeAsync(nameof(UpdateAsync));
+      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)

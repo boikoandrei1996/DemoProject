@@ -36,11 +36,6 @@ namespace DemoProject.WebApi.Controllers
         return ServiceResultFactory.BadRequestResult(ModelState);
       }
 
-      if (await _discountService.ExistAsync(x => x.Id == apiEntity.DiscountId) == false)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
       var entity = InfoObjectAddModel.Map(apiEntity);
 
       return await _infoObjectService.AddAsync(entity);
@@ -62,18 +57,7 @@ namespace DemoProject.WebApi.Controllers
         return ServiceResultFactory.BadRequestResult(ModelState);
       }
 
-      if (await _infoObjectService.ExistAsync(x => x.Id == id) == false)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      if (await _discountService.ExistAsync(x => x.Id == apiEntity.DiscountId) == false)
-      {
-        return ServiceResultFactory.BadRequestResult("Discount not found.");
-      }
-
-      var entity = InfoObjectEditModel.Map(apiEntity);
-      entity.Id = id;
+      var entity = InfoObjectEditModel.Map(apiEntity, id);
 
       return await _infoObjectService.UpdateAsync(entity);
     }
