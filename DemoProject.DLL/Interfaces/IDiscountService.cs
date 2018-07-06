@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Models;
-using DemoProject.DLL.Models.Pages;
+using DemoProject.DLL.Pages;
 
 namespace DemoProject.DLL.Interfaces
 {

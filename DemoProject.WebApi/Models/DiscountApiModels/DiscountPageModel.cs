@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DemoProject.DLL.Models.Pages;
+using DemoProject.DLL.Pages;
 
 namespace DemoProject.WebApi.Models.DiscountApiModels
 {
