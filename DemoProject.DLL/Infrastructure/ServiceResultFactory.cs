@@ -27,10 +27,11 @@ namespace DemoProject.DLL.Infrastructure
       });
     }
 
-    public static ServiceResult BadRequestResult(string description)
+    public static ServiceResult BadRequestResult(string code, string description)
     {
       return new ServiceResult(ServiceResultKey.BadRequest, new ServiceError
       {
+        Code = code
         Description = description
       });
     }

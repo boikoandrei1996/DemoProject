@@ -28,16 +28,20 @@ namespace DemoProject.DLL.Services
       return _context.InfoObjects.AnyAsync(filter);
     }
 
-    public Task<ServiceResult> AddAsync(InfoObject model)
+    public async Task<ServiceResult> AddAsync(InfoObject model)
     {
       if (model == null)
       {
         throw new ArgumentNullException(nameof(model));
       }
 
-      _context.InfoObjects.Add(model);
+      if (await _context.Discounts.AnyAsync(x => x.Id == model.DiscountId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(model.DiscountId), $"Discount not found with id: '{model.DiscountId}'.");
+      }
 
-      return _context.SaveChangesSafeAsync(nameof(AddAsync));
+      _context.InfoObjects.Add(model);
+      return await _context.SaveChangesSafeAsync(nameof(AddAsync));
     }
 
     public async Task<ServiceResult> UpdateAsync(InfoObject model)
@@ -47,15 +51,17 @@ namespace DemoProject.DLL.Services
         throw new ArgumentNullException(nameof(model));
       }
 
-      if (await _context.InfoObjects.AnyAsync(x => x.Id == model.Id))
-      {
-        _context.InfoObjects.Update(model);
-        return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
-      }
-      else
+      if (await _context.InfoObjects.AnyAsync(x => x.Id == model.Id) == false)
       {
         return ServiceResultFactory.NotFound;
       }
+      else if (await _context.Discounts.AnyAsync(x => x.Id == model.DiscountId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(model.DiscountId), $"Discount not found with id: '{model.DiscountId}'.");
+      }
+
+      _context.InfoObjects.Update(model);
+      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)

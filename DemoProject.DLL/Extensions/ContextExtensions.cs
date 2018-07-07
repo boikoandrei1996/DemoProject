@@ -21,11 +21,11 @@ namespace DemoProject.DLL.Extensions
       }
       catch (DbUpdateConcurrencyException ex)
       {
-        return ServiceResultFactory.BadRequestResult(ex.InnerException.Message);
+        return ServiceResultFactory.BadRequestResult(string.Empty, ex.InnerException.Message);
       }
       catch (DbUpdateException ex)
       {
-        return ServiceResultFactory.BadRequestResult(ex.InnerException.Message);
+        return ServiceResultFactory.BadRequestResult(string.Empty, ex.InnerException.Message);
       }
       catch (Exception ex)
       {

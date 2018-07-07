@@ -84,7 +84,6 @@ namespace DemoProject.DLL.Services
       }
 
       _context.Discounts.Add(model);
-
       return _context.SaveChangesSafeAsync(nameof(AddAsync));
     }
 
@@ -95,15 +94,13 @@ namespace DemoProject.DLL.Services
         throw new ArgumentNullException(nameof(model));
       }
 
-      if (await _context.Discounts.AnyAsync(x => x.Id == model.Id))
-      {
-        _context.Discounts.Update(model);
-        return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
-      }
-      else
+      if (await _context.Discounts.AnyAsync(x => x.Id == model.Id) == false)
       {
         return ServiceResultFactory.NotFound;
       }
+
+      _context.Discounts.Update(model);
+      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
