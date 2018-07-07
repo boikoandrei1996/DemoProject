@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace DemoProject.WebApi.Attributes
 {
+
+  /// <summary>
+  /// Need for using DI in HandleServiceResultInnerAttribute.
+  /// </summary>
   public class HandleServiceResultAttribute : TypeFilterAttribute
   {
     public HandleServiceResultAttribute() : base(typeof(HandleServiceResultInnerAttribute))

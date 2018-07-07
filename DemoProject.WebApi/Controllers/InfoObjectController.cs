@@ -26,13 +26,9 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/infoobject
     [HttpPost]
+    [ValidateModelState]
     public Task<ServiceResult> Add([FromBody]InfoObjectAddModel apiEntity)
     {
-      if (!ModelState.IsValid)
-      {
-        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
-      }
-
       var entity = InfoObjectAddModel.Map(apiEntity);
 
       return _infoObjectService.AddAsync(entity);
@@ -40,13 +36,9 @@ namespace DemoProject.WebApi.Controllers
 
     // PUT api/infoobject/{id}
     [HttpPut("{id:guid}")]
+    [ValidateModelState]
     public Task<ServiceResult> Edit(Guid id, [FromBody]InfoObjectEditModel apiEntity)
     {
-      if (!ModelState.IsValid)
-      {
-        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
-      }
-
       var entity = InfoObjectEditModel.Map(apiEntity, id);
 
       return _infoObjectService.UpdateAsync(entity);

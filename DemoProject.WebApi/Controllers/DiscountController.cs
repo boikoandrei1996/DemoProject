@@ -61,13 +61,9 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/discount
     [HttpPost]
+    [ValidateModelState]
     public Task<ServiceResult> Add([FromBody]DiscountAddModel apiEntity)
     {
-      if (!ModelState.IsValid)
-      {
-        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
-      }
-
       var entity = DiscountAddModel.Map(apiEntity);
 
       return _discountService.AddAsync(entity);
@@ -75,13 +71,9 @@ namespace DemoProject.WebApi.Controllers
 
     // PUT api/discount/{id}
     [HttpPut("{id:guid}")]
+    [ValidateModelState]
     public Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
     {
-      if (!ModelState.IsValid)
-      {
-        return Task.Run(() => ServiceResultFactory.BadRequestResult(ModelState));
-      }
-
       var entity = DiscountEditModel.Map(apiEntity, id);
 
       return _discountService.UpdateAsync(entity);
