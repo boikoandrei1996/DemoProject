@@ -13,6 +13,7 @@ namespace DemoProject.WebApi.Controllers
 {
   [Route("api/[controller]")]
   [HandleServiceResult]
+  [ValidateModelState]
   /*[ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status404NotFound)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -61,7 +62,6 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/discount
     [HttpPost]
-    [ValidateModelState]
     public Task<ServiceResult> Add([FromBody]DiscountAddModel apiEntity)
     {
       var entity = DiscountAddModel.Map(apiEntity);
@@ -71,7 +71,6 @@ namespace DemoProject.WebApi.Controllers
 
     // PUT api/discount/{id}
     [HttpPut("{id:guid}")]
-    [ValidateModelState]
     public Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
     {
       var entity = DiscountEditModel.Map(apiEntity, id);

@@ -18,6 +18,10 @@ namespace DemoProject.WebApi.Attributes
       {
         type = (instance as InfoObjectAddModel).Type;
       }
+      else
+      {
+        throw new InvalidCastException(nameof(EnumRangeValidationAttribute));
+      }
 
       return type;
     }
