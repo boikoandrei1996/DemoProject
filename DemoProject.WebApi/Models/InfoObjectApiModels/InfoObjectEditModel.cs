@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
+using DemoProject.WebApi.Attributes;
 
 namespace DemoProject.WebApi.Models.InfoObjectApiModels
 {
@@ -11,6 +11,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     public string Content { get; set; }
 
     [Required]
+    [EnumRangeValidation]
     public string Type { get; set; }
 
     public Guid DiscountId { get; set; }
@@ -29,21 +30,6 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
         Content = model.Content,
         Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true)
       };
-    }
-
-    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-      var model = (InfoObjectEditModel)validationContext.ObjectInstance;
-
-      if (Enum.TryParse(model.Type, true, out InfoObjectType temp))
-      {
-        yield return ValidationResult.Success;
-      }
-      else
-      {
-        var allowableValues = String.Join(", ", Enum.GetNames(typeof(InfoObjectType)));
-        yield return new ValidationResult($"The {nameof(Type)} field should be in range of [{allowableValues}].", new[] { nameof(Type) });
-      }
     }
   }
 }
