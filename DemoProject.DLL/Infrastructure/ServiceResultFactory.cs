@@ -31,7 +31,7 @@ namespace DemoProject.DLL.Infrastructure
     {
       return new ServiceResult(ServiceResultKey.BadRequest, new ServiceError
       {
-        Code = code
+        Code = code,
         Description = description
       });
     }
