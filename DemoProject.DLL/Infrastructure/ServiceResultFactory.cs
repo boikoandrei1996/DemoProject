@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using System;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace DemoProject.DLL.Infrastructure
 {
@@ -17,6 +18,11 @@ namespace DemoProject.DLL.Infrastructure
     public static ServiceResult InternalServerError
     {
       get { return new ServiceResult(ServiceResultKey.InternalServerError); }
+    }
+
+    public static ServiceResult EntityCreatedResult(Guid modelId)
+    {
+      return new ServiceResult(ServiceResultKey.ModelCreated, modelId);
     }
 
     public static ServiceResult InternalServerErrorResult(string message)

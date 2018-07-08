@@ -9,7 +9,23 @@ namespace DemoProject.DLL.Extensions
   {
     public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context)
     {
-      return ContextExtensions.SaveChangesSafeAsync(context, string.Empty);
+      return context.SaveChangesSafeAsync(string.Empty);
+    }
+
+    public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, Guid modelId)
+    {
+      return context.SaveChangesSafeAsync(string.Empty, modelId);
+    }
+
+    public static async Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, string code, Guid modelId)
+    {
+      var result = await context.SaveChangesSafeAsync(code);
+      if (result.Key == ServiceResultKey.Success)
+      {
+        result = ServiceResultFactory.EntityCreatedResult(modelId);
+      }
+
+      return result;
     }
 
     public static async Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, string code)

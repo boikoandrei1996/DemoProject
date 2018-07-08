@@ -84,7 +84,7 @@ namespace DemoProject.DLL.Services
       }
 
       _context.Discounts.Add(model);
-      return _context.SaveChangesSafeAsync(nameof(AddAsync));
+      return _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
     }
 
     public async Task<ServiceResult> UpdateAsync(Discount model)

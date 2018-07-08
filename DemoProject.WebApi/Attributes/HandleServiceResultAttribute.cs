@@ -54,6 +54,8 @@ namespace DemoProject.WebApi.Attributes
       {
         case ServiceResultKey.Success:
           return new OkResult();
+        case ServiceResultKey.ModelCreated:
+          return new OkObjectResult(result.ModelId);
         case ServiceResultKey.NotFound:
           return new NotFoundResult();
         case ServiceResultKey.InternalServerError:

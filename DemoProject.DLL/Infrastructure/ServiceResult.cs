@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DemoProject.DLL.Infrastructure
 {
@@ -17,9 +18,17 @@ namespace DemoProject.DLL.Infrastructure
       }
     }
 
+    public ServiceResult(ServiceResultKey key, Guid modelId)
+    {
+      Key = key;
+      ModelId = modelId;
+    }
+
     public ServiceResultKey Key { get; }
 
     public ICollection<ServiceError> Errors { get; }
+
+    public Guid ModelId { get; }
   }
 
   public enum ServiceResultKey : int
@@ -27,7 +36,8 @@ namespace DemoProject.DLL.Infrastructure
     Success = 0,
     BadRequest = 1,
     NotFound = 2,
-    InternalServerError = 3
+    InternalServerError = 3,
+    ModelCreated = 4
   }
 
   public class ServiceError

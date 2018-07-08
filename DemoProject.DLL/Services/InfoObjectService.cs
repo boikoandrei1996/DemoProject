@@ -37,11 +37,11 @@ namespace DemoProject.DLL.Services
 
       if (await _context.Discounts.AnyAsync(x => x.Id == model.DiscountId) == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.DiscountId), $"Discount not found with id: '{model.DiscountId}'.");
+        return ServiceResultFactory.BadRequestResult(nameof(model.DiscountId), this.GetErrorMessage(model.DiscountId));
       }
 
       _context.InfoObjects.Add(model);
-      return await _context.SaveChangesSafeAsync(nameof(AddAsync));
+      return await _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
     }
 
     public async Task<ServiceResult> UpdateAsync(InfoObject model)
@@ -57,7 +57,7 @@ namespace DemoProject.DLL.Services
       }
       else if (await _context.Discounts.AnyAsync(x => x.Id == model.DiscountId) == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.DiscountId), $"Discount not found with id: '{model.DiscountId}'.");
+        return ServiceResultFactory.BadRequestResult(nameof(model.DiscountId), this.GetErrorMessage(model.DiscountId));
       }
 
       _context.InfoObjects.Update(model);
@@ -80,6 +80,11 @@ namespace DemoProject.DLL.Services
     public void Dispose()
     {
       _context.Dispose();
+    }
+
+    private string GetErrorMessage(Guid id)
+    {
+      return $"Discount not found with id: '{id}'.";
     }
   }
 }
