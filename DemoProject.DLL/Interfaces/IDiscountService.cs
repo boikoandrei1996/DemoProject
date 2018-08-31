@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.DLL.Models;
-using DemoProject.DLL.Pages;
+using DemoProject.DLL.Models.Pages;
 
 namespace DemoProject.DLL.Interfaces
 {

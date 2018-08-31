@@ -7,7 +7,7 @@ using DemoProject.DLL.Extensions;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
-using DemoProject.DLL.Pages;
+using DemoProject.DLL.Models.Pages;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DLL.Services

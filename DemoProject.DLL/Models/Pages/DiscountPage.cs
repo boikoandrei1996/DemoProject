@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using DemoProject.DLL.Models;
 
-namespace DemoProject.DLL.Pages
+namespace DemoProject.DLL.Models.Pages
 {
   public class DiscountPage
   {

@@ -4,7 +4,6 @@ using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Services;
 using DemoProject.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +18,9 @@ namespace DemoProject.WebApi
     public IConfiguration Configuration { get; }
     public IHostingEnvironment Environment { get; }
 
-    public Startup(IConfiguration configuration, IHostingEnvironment environment)
+    public Startup(
+      IConfiguration configuration, 
+      IHostingEnvironment environment)
     {
       Configuration = configuration;
       Environment = environment;
