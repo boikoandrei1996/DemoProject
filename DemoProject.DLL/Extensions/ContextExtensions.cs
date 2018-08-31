@@ -20,12 +20,10 @@ namespace DemoProject.DLL.Extensions
     public static async Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, string code, Guid modelId)
     {
       var result = await context.SaveChangesSafeAsync(code);
-      if (result.Key == ServiceResultKey.Success)
-      {
-        result = ServiceResultFactory.EntityCreatedResult(modelId);
-      }
 
-      return result;
+      return result.Key == ServiceResultKey.Success ?
+        ServiceResultFactory.EntityCreatedResult(modelId) :
+        result;
     }
 
     public static async Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, string code)

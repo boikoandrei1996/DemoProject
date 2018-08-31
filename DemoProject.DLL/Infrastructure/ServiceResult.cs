@@ -39,16 +39,4 @@ namespace DemoProject.DLL.Infrastructure
     InternalServerError = 3,
     ModelCreated = 4
   }
-
-  public class ServiceError
-  {
-    public ServiceError()
-    {
-      Code = string.Empty;
-      Description = string.Empty;
-    }
-
-    public string Code { get; set; }
-    public string Description { get; set; }
-  }
 }
