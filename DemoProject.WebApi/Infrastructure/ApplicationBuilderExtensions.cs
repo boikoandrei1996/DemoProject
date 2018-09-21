@@ -1,6 +1,7 @@
 ﻿using System;
 using DemoProject.DLL;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -37,6 +38,13 @@ namespace DemoProject.WebApi.Infrastructure
           }
         }
       }
+    }
+
+    public static void SetupDefaultPage(this IApplicationBuilder app, string url)
+    {
+      var options = new RewriteOptions();
+      options.AddRedirect("^$", url);
+      app.UseRewriter(options);
     }
   }
 }

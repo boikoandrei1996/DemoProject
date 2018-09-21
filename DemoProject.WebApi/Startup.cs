@@ -19,7 +19,7 @@ namespace DemoProject.WebApi
     public IHostingEnvironment Environment { get; }
 
     public Startup(
-      IConfiguration configuration, 
+      IConfiguration configuration,
       IHostingEnvironment environment)
     {
       Configuration = configuration;
@@ -64,7 +64,7 @@ namespace DemoProject.WebApi
           }
         });
 
-        x.IncludeXmlComments(Path.Combine(Environment.ContentRootPath, @"bin\Debug\netcoreapp2.0\DemoProject.WebApi.xml"));
+        // x.IncludeXmlComments(Path.Combine(Environment.ContentRootPath, @"bin\Debug\netcoreapp2.0\DemoProject.WebApi.xml"));
         x.DescribeAllEnumsAsStrings();
       });
 
@@ -79,6 +79,8 @@ namespace DemoProject.WebApi
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.SetupDefaultPage("swagger/index.html");
 
       app.ApplyMigrationAndDatabaseSeed();
 
