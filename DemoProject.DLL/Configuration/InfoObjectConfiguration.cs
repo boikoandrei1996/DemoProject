@@ -10,6 +10,9 @@ namespace DemoProject.DLL.Configuration
     {
       builder.Property(x => x.Content)
         .IsRequired();
+
+      builder.Property(x => x.SubOrder)
+        .IsRequired();
     }
   }
 }

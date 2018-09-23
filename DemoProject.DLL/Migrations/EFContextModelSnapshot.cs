@@ -126,6 +126,8 @@ namespace DemoProject.DLL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Order");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100);
@@ -147,6 +149,8 @@ namespace DemoProject.DLL.Migrations
                         .IsRequired();
 
                     b.Property<Guid>("DiscountId");
+
+                    b.Property<int>("SubOrder");
 
                     b.Property<int>("Type");
 

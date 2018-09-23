@@ -8,6 +8,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     public Guid Id { get; set; }
     public string Content { get; set; }
     public string Type { get; set; }
+    public int SubOrder { get; set; }
     public Guid DiscountId { get; set; }
 
     public static InfoObjectViewModel Map(InfoObject model)
@@ -22,6 +23,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
         Id = model.Id,
         DiscountId = model.DiscountId,
         Content = model.Content,
+        SubOrder = model.SubOrder,
         Type = model.Type.ToString()
       };
     }

@@ -7,6 +7,8 @@ namespace DemoProject.DLL.Models
     public string Content { get; set; }
 
     public InfoObjectType Type { get; set; }
+
+    public int SubOrder { get; set; }
     
     public Guid DiscountId { get; set; }
     public Discount Discount { get; set; }

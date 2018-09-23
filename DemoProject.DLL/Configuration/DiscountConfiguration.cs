@@ -15,6 +15,9 @@ namespace DemoProject.DLL.Configuration
       builder.Property(x => x.Title)
         .IsRequired()
         .HasMaxLength(100);
+
+      builder.Property(x => x.Order)
+        .IsRequired();
     }
   }
 }

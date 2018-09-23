@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
-using DemoProject.WebApi.Models.InfoObjectApiModels;
 
 namespace DemoProject.WebApi.Models.DiscountApiModels
 {
@@ -11,6 +8,9 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
     [Required]
     [MaxLength(100)]
     public string Title { get; set; }
+
+    [Required]
+    public int Order { get; set; }
 
     public static Discount Map(DiscountAddModel model)
     {
@@ -21,7 +21,8 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
 
       return new Discount
       {
-        Title = model.Title
+        Title = model.Title,
+        Order = model.Order
       };
     }
   }

@@ -21,7 +21,7 @@ namespace DemoProject.DLL.Services
       _context = context;
     }
 
-    public Task<List<Discount>> GetDiscountsAsync(Expression<Func<Discount, bool>> filter = null)
+    public async Task<List<Discount>> GetDiscountsAsync(Expression<Func<Discount, bool>> filter = null)
     {
       var query = _context.Discounts.AsNoTracking();
 
@@ -30,7 +30,13 @@ namespace DemoProject.DLL.Services
         query = query.Where(filter);
       }
 
-      return query.Include(x => x.Items).ToListAsync();
+      var items = await query.Include(x => x.Items).OrderBy(x => x.Order).ToListAsync();
+      foreach (var item in items)
+      {
+        item.Items = item.Items.OrderBy(x => x.SubOrder).ToList();
+      }
+
+      return items;
     }
 
     public async Task<DiscountPage> GetPageDiscountsAsync(int pageIndex, int pageSize, Expression<Func<Discount, bool>> filter = null)
@@ -51,7 +57,17 @@ namespace DemoProject.DLL.Services
         TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
       };
 
-      page.Records = await query.Skip((pageIndex - 1) * pageSize).Take(pageSize).Include(x => x.Items).ToListAsync();
+      var records = await query
+        .OrderBy(x => x.Order)
+        .Skip((pageIndex - 1) * pageSize)
+        .Take(pageSize).Include(x => x.Items)
+        .ToListAsync();
+      foreach (var record in records)
+      {
+        record.Items = record.Items.OrderBy(x => x.SubOrder).ToList();
+      }
+
+      page.Records = records;
 
       return page;
     }

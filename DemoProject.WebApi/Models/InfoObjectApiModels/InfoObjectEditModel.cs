@@ -14,6 +14,9 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     [EnumRangeValidation]
     public string Type { get; set; }
 
+    [Required]
+    public int SubOrder { get; set; }
+
     public Guid DiscountId { get; set; }
 
     public static InfoObject Map(InfoObjectEditModel model, Guid id)
@@ -28,6 +31,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
         Id = id,
         DiscountId = model.DiscountId,
         Content = model.Content,
+        SubOrder = model.SubOrder,
         Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true)
       };
     }

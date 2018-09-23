@@ -1,5 +1,6 @@
 ﻿using System;
 using DemoProject.DLL;
+using DemoProject.DLL.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +25,9 @@ namespace DemoProject.WebApi.Infrastructure
 
           context.Database.Migrate();
 
-          if (!isDatabaseExisted)
+          // if (!isDatabaseExisted)
           {
+            context.ClearDatabase();
             scope.ServiceProvider.GetRequiredService<SeedService>().SeedDatabase(context);
           }
         }

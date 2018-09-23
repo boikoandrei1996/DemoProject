@@ -1,58 +1,71 @@
 ﻿[
   {
     "Title": "Скидочная программа #1",
+    "Order": 1,
     "Items": [
       {
         "Content": "Пункт #1",
-        "Type": 2
+        "Type": 2,
+        "SubOrder": 1
       },
       {
         "Content": "Пункт #2",
-        "Type": 2
+        "Type": 2,
+        "SubOrder": 2
       },
       {
         "Content": "Пункт #3",
-        "Type": 2
+        "Type": 2,
+        "SubOrder": 3
       },
       {
         "Content": "Пункт #4",
-        "Type": 2
+        "Type": 2,
+        "SubOrder": 4
       }
     ]
   },
 
   {
     "Title": "Скидочная программа #2",
+    "Order": 2,
     "Items": [
       {
         "Content": "<b>Пункт #1</b>",
-        "Type": 1
-      },
-      {
-        "Content": "<b>Пункт #2</b>",
-        "Type": 1
+        "Type": 1,
+        "SubOrder": 1
       },
       {
         "Content": "<b>Пункт #3</b>",
-        "Type": 1
+        "Type": 1,
+        "SubOrder": 3
+      },
+      {
+        "Content": "<b>Пункт #2</b>",
+        "Type": 1,
+        "SubOrder": 2
       }
     ]
   },
 
   {
     "Title": "Скидочная программа #3",
+    "Order": 3,
     "Items": [
       {
         "Content": "Пункт #1",
-        "Type": 2
+        "Type": 2,
+        "SubOrder": 1
       },
       {
         "Content": "<b>Пункт #2</b>",
-        "Type": 1
+        "Type": 1,
+        "SubOrder": 2
       },
       {
         "Content": "Пункт #3",
-        "Type": 2
+        "Type": 2,
+        "SubOrder": 3
       }
     ]
   }

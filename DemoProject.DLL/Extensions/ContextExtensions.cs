@@ -7,6 +7,18 @@ namespace DemoProject.DLL.Extensions
 {
   public static class ContextExtensions
   {
+    public static void ClearDatabase(this EFContext context)
+    {
+      context.Carts.DeleteFromQuery();
+      context.CartShopItems.DeleteFromQuery();
+      context.Discounts.DeleteFromQuery();
+      context.InfoObjects.DeleteFromQuery();
+      context.MenuItems.DeleteFromQuery();
+      context.Orders.DeleteFromQuery();
+      context.ShopItemDetails.DeleteFromQuery();
+      context.ShopItems.DeleteFromQuery();
+    }
+
     public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context)
     {
       return context.SaveChangesSafeAsync(string.Empty);

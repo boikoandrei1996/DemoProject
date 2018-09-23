@@ -11,6 +11,8 @@ namespace DemoProject.DLL.Models
 
     public string Title { get; set; }
 
+    public int Order { get; set; }
+
     public ICollection<InfoObject> Items { get; set; }
   }
 }

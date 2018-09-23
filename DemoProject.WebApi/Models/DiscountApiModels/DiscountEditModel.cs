@@ -10,6 +10,9 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
     [MaxLength(100)]
     public string Title { get; set; }
 
+    [Required]
+    public int Order { get; set; }
+
     public static Discount Map(DiscountEditModel model, Guid id)
     {
       if (model == null)
@@ -20,7 +23,8 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
       return new Discount
       {
         Id = id,
-        Title = model.Title
+        Title = model.Title,
+        Order = model.Order
       };
     }
   }
