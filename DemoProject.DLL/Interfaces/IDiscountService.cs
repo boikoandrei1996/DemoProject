@@ -12,5 +12,6 @@ namespace DemoProject.DLL.Interfaces
     Task<List<Discount>> GetDiscountsAsync(Expression<Func<Discount, bool>> filter = null);
     Task<DiscountPage> GetPageDiscountsAsync(int pageIndex, int pageSize, Expression<Func<Discount, bool>> filter = null);
     Task<Discount> FindByAsync(Expression<Func<Discount, bool>> filter);
+    Task<ChangeHistory> GetHistoryRecordAsync();
   }
 }

@@ -41,6 +41,8 @@ namespace DemoProject.DLL.Services
       }
 
       _context.InfoObjects.Add(model);
+      _context.History.Add(ChangeHistory.Create(TableNames.InfoObjects));
+
       return await _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
     }
 
@@ -61,6 +63,8 @@ namespace DemoProject.DLL.Services
       }
 
       _context.InfoObjects.Update(model);
+      _context.History.Add(ChangeHistory.Create(TableNames.InfoObjects));
+
       return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
@@ -73,6 +77,7 @@ namespace DemoProject.DLL.Services
       }
 
       _context.InfoObjects.Remove(infoObject);
+      _context.History.Add(ChangeHistory.Create(TableNames.InfoObjects));
 
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
     }

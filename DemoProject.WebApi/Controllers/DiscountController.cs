@@ -31,6 +31,15 @@ namespace DemoProject.WebApi.Controllers
       _discountService = discountService;
     }
 
+    // GET api/discount/history
+    [HttpGet("history")]
+    public async Task<ChangeHistoryViewModel> GetHistoryRecord()
+    {
+      var entity = await _discountService.GetHistoryRecordAsync();
+
+      return ChangeHistoryViewModel.Map(entity);
+    }
+
     // GET api/discount/all
     [HttpGet("all")]
     public async Task<IEnumerable<DiscountViewModel>> GetAll()

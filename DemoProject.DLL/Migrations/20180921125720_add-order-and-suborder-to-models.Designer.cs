@@ -4,18 +4,20 @@ using DemoProject.DLL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DemoProject.DLL.Migrations
 {
     [DbContext(typeof(EFContext))]
-    partial class EFContextModelSnapshot : ModelSnapshot
+    [Migration("20180921125720_add-order-and-suborder-to-models")]
+    partial class addorderandsubordertomodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -119,21 +121,6 @@ namespace DemoProject.DLL.Migrations
                     b.HasIndex("ShopItemId");
 
                     b.ToTable("CartShopItems");
-                });
-
-            modelBuilder.Entity("DemoProject.DLL.Models.ChangeHistory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("TableName")
-                        .IsRequired();
-
-                    b.Property<DateTime>("TimeOfChange");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("History");
                 });
 
             modelBuilder.Entity("DemoProject.DLL.Models.Discount", b =>

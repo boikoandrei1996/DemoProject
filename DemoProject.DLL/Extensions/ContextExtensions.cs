@@ -17,6 +17,7 @@ namespace DemoProject.DLL.Extensions
       context.Orders.DeleteFromQuery();
       context.ShopItemDetails.DeleteFromQuery();
       context.ShopItems.DeleteFromQuery();
+      context.History.DeleteFromQuery();
     }
 
     public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context)

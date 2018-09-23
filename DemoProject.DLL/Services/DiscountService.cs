@@ -82,6 +82,12 @@ namespace DemoProject.DLL.Services
       return _context.Discounts.AsNoTracking().Include(x => x.Items).FirstOrDefaultAsync(filter);
     }
 
+    public Task<ChangeHistory> GetHistoryRecordAsync()
+    {
+      return _context.History
+        .LastOrDefaultAsync(x => x.TableName == TableNames.Discounts || x.TableName == TableNames.InfoObjects);
+    }
+
     public Task<bool> ExistAsync(Expression<Func<Discount, bool>> filter)
     {
       if (filter == null)
@@ -100,6 +106,8 @@ namespace DemoProject.DLL.Services
       }
 
       _context.Discounts.Add(model);
+      _context.History.Add(ChangeHistory.Create(TableNames.Discounts));
+
       return _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
     }
 
@@ -116,6 +124,8 @@ namespace DemoProject.DLL.Services
       }
 
       _context.Discounts.Update(model);
+      _context.History.Add(ChangeHistory.Create(TableNames.Discounts));
+
       return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
@@ -128,6 +138,7 @@ namespace DemoProject.DLL.Services
       }
 
       _context.Discounts.Remove(discount);
+      _context.History.Add(ChangeHistory.Create(TableNames.Discounts));
 
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
     }

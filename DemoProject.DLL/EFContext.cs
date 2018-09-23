@@ -20,6 +20,7 @@ namespace DemoProject.DLL
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartShopItem> CartShopItems { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<ChangeHistory> History { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -37,6 +38,7 @@ namespace DemoProject.DLL
       builder.ApplyConfiguration(new InfoObjectConfiguration());
       builder.ApplyConfiguration(new DiscountConfiguration());
       builder.ApplyConfiguration(new OrderConfiguration());
+      builder.ApplyConfiguration(new ChangeHistoryConfiguration());
     }
   }
 }
