@@ -12,17 +12,18 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
     [Required]
     public int Order { get; set; }
 
-    public static Discount Map(DiscountAddModel model)
+    public static ContentGroup Map(DiscountAddModel model)
     {
       if (model == null)
       {
         return null;
       }
 
-      return new Discount
+      return new ContentGroup
       {
         Title = model.Title,
-        Order = model.Order
+        Order = model.Order,
+        GroupName = GroupName.Discount
       };
     }
   }

@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Files\AboutUs.json" />
+    <Content Remove="wwwroot\Files\Delivery.json" />
     <Content Remove="wwwroot\Files\Discounts.json" />
     <Content Remove="wwwroot\Files\MenuItems.json" />
     <Content Remove="wwwroot\Images\icon-placeholder.png" />
@@ -28,6 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Files\AboutUs.json" />
+    <None Include="wwwroot\Files\Delivery.json" />
     <None Include="wwwroot\Files\Discounts.json" />
     <None Include="wwwroot\Files\MenuItems.json" />
     <None Include="wwwroot\Images\icon-placeholder.png" />

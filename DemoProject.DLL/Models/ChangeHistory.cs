@@ -15,11 +15,28 @@ namespace DemoProject.DLL.Models
         TimeOfChange = DateTime.UtcNow
       };
     }
+
+    public static string GetTableNameByGroupName(GroupName groupName)
+    {
+      switch (groupName)
+      {
+        case GroupName.Discount:
+          return TableNames.Discount;
+        case GroupName.Delivery:
+          return TableNames.Delivery;
+        case GroupName.AboutUs:
+          return TableNames.AboutUs;
+        default:
+          throw new NotImplementedException(nameof(GroupName));
+      }
+    }
   }
 
   public static class TableNames
   {
-    public static readonly string Discounts = "Discounts";
-    public static readonly string InfoObjects = "InfoObjects";
+    public static readonly string Discount = "Discount";
+    public static readonly string Delivery = "Delivery";
+    public static readonly string AboutUs = "AboutUs";
+    public static readonly string InfoObject = "InfoObject";
   }
 }

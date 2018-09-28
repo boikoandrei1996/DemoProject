@@ -17,9 +17,9 @@ namespace DemoProject.CLI
     {
       using (var context = GetContext())
       {
-        using (var service = new DiscountService(context))
+        using (var service = new ContentGroupService(context))
         {
-          var entities = service.GetDiscountsAsync().GetAwaiter().GetResult();
+          var entities = service.GetListAsync(GroupName.Discount).GetAwaiter().GetResult();
 
           foreach (var entity in entities)
           {

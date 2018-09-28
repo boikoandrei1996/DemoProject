@@ -1,37 +1,28 @@
 ﻿[
   {
-    "Title": "Скидочная программа #1",
-    "GroupName": 1,
+    "GroupName": 2,
     "Order": 1,
     "Items": [
       {
-        "Content": "Пункт #1",
+        "Content": "Информация о доставке #1",
         "Type": 2,
         "SubOrder": 1
       },
       {
-        "Content": "Пункт #2",
+        "Content": "Информация о доставке #2",
         "Type": 2,
         "SubOrder": 2
       },
       {
-        "Content": "Пункт #3",
+        "Content": "Информация о доставке #3",
         "Type": 2,
         "SubOrder": 3
       },
       {
-        "Content": "Пункт #4",
+        "Content": "Информация о доставке #4",
         "Type": 2,
         "SubOrder": 4
-      }
-    ]
-  },
-
-  {
-    "Title": "Скидочная программа #2",
-    "GroupName": 1,
-    "Order": 2,
-    "Items": [
+      },
       {
         "Content": "<b>Пункт #1</b>",
         "Type": 1,
@@ -51,9 +42,8 @@
   },
 
   {
-    "Title": "Скидочная программа #3",
-    "GroupName": 1,
-    "Order": 3,
+    "GroupName": 2,
+    "Order": 2,
     "Items": [
       {
         "Content": "Пункт #1",

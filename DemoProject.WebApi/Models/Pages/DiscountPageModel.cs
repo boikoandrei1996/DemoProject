@@ -30,7 +30,7 @@ namespace DemoProject.WebApi.Models.Pages
     /// </summary>
     public ICollection<DiscountViewModel> Records { get; set; } = new List<DiscountViewModel>();
 
-    public static DiscountPageModel Map(DiscountPage model)
+    public static DiscountPageModel Map(ContentGroupPage model)
     {
       if (model == null)
       {

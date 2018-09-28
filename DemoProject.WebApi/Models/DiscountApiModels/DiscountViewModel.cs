@@ -13,7 +13,7 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
     public int Order { get; set; }
     public ICollection<InfoObjectViewModel> Items { get; set; } = new List<InfoObjectViewModel>();
 
-    public static DiscountViewModel Map(Discount model)
+    public static DiscountViewModel Map(ContentGroup model)
     {
       if (model == null)
       {

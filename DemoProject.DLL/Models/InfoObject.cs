@@ -5,13 +5,10 @@ namespace DemoProject.DLL.Models
   public class InfoObject : BaseEntity
   {
     public string Content { get; set; }
-
     public InfoObjectType Type { get; set; }
-
     public int SubOrder { get; set; }
-    
-    public Guid DiscountId { get; set; }
-    public Discount Discount { get; set; }
+    public Guid ContentGroupId { get; set; }
+    public ContentGroup ContentGroup { get; set; }
   }
 
   /// <summary>

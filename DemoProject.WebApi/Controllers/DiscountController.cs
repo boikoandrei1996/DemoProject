@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
+using DemoProject.DLL.Models;
 using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.DiscountApiModels;
 using DemoProject.WebApi.Models.Pages;
+using DemoProject.WebApi.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -23,19 +25,19 @@ namespace DemoProject.WebApi.Controllers
     private const int DEFAULT_PAGE_INDEX = 1;
     private const int DEFAULT_PAGE_SIZE = 2;
 
-    private readonly IDiscountService _discountService;
+    private readonly IContentGroupService _contentGroupService;
 
     public DiscountController(
-      IDiscountService discountService)
+      IContentGroupService contentGroupService)
     {
-      _discountService = discountService;
+      _contentGroupService = contentGroupService;
     }
 
     // GET api/discount/history
     [HttpGet("history")]
     public async Task<ChangeHistoryViewModel> GetHistoryRecord()
     {
-      var entity = await _discountService.GetHistoryRecordAsync();
+      var entity = await _contentGroupService.GetHistoryRecordAsync(GroupName.Discount);
 
       return ChangeHistoryViewModel.Map(entity);
     }
@@ -44,7 +46,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("all")]
     public async Task<IEnumerable<DiscountViewModel>> GetAll()
     {
-      var entities = await _discountService.GetDiscountsAsync();
+      var entities = await _contentGroupService.GetListAsync(GroupName.Discount);
 
       return entities.Select(DiscountViewModel.Map);
     }
@@ -53,7 +55,8 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("page/{index:int?}")]
     public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
     {
-      var page = await _discountService.GetPageDiscountsAsync(
+      var page = await _contentGroupService.GetPageAsync(
+        GroupName.Discount,
         index >= 1 ? index.Value : DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : DEFAULT_PAGE_SIZE);
 
@@ -64,7 +67,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("{id:guid}")]
     public async Task<DiscountViewModel> GetOne(Guid id)
     {
-      var entity = await _discountService.FindByAsync(x => x.Id == id);
+      var entity = await _contentGroupService.FindByAsync(GroupName.Discount, x => x.Id == id);
 
       return DiscountViewModel.Map(entity);
     }
@@ -75,7 +78,7 @@ namespace DemoProject.WebApi.Controllers
     {
       var entity = DiscountAddModel.Map(apiEntity);
 
-      return _discountService.AddAsync(entity);
+      return _contentGroupService.AddAsync(entity);
     }
 
     // PUT api/discount/{id}
@@ -84,21 +87,21 @@ namespace DemoProject.WebApi.Controllers
     {
       var entity = DiscountEditModel.Map(apiEntity, id);
 
-      return _discountService.UpdateAsync(entity);
+      return _contentGroupService.UpdateAsync(entity);
     }
 
     // DELETE api/discount/{id}
     [HttpDelete("{id:guid}")]
     public Task<ServiceResult> Delete(Guid id)
     {
-      return _discountService.DeleteAsync(id);
+      return _contentGroupService.DeleteAsync(id);
     }
 
     protected override void Dispose(bool disposing)
     {
       if (disposing)
       {
-        _discountService.Dispose();
+        _contentGroupService.Dispose();
       }
 
       base.Dispose(disposing);

@@ -11,7 +11,7 @@ namespace DemoProject.DLL.Extensions
     {
       context.Carts.DeleteFromQuery();
       context.CartShopItems.DeleteFromQuery();
-      context.Discounts.DeleteFromQuery();
+      context.ContentGroups.DeleteFromQuery();
       context.InfoObjects.DeleteFromQuery();
       context.MenuItems.DeleteFromQuery();
       context.Orders.DeleteFromQuery();

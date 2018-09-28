@@ -1,7 +1,7 @@
 ﻿using System;
 using DemoProject.DLL.Models;
 
-namespace DemoProject.WebApi.Models.DiscountApiModels
+namespace DemoProject.WebApi.Models.Shared
 {
   public class ChangeHistoryViewModel
   {

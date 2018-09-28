@@ -9,7 +9,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     public string Content { get; set; }
     public string Type { get; set; }
     public int SubOrder { get; set; }
-    public Guid DiscountId { get; set; }
+    public Guid ContentGroupId { get; set; }
 
     public static InfoObjectViewModel Map(InfoObject model)
     {
@@ -21,7 +21,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
       return new InfoObjectViewModel
       {
         Id = model.Id,
-        DiscountId = model.DiscountId,
+        ContentGroupId = model.ContentGroupId,
         Content = model.Content,
         SubOrder = model.SubOrder,
         Type = model.Type.ToString()

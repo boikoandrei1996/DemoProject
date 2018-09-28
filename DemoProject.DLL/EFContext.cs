@@ -8,12 +8,10 @@ namespace DemoProject.DLL
 {
   public class EFContext : IdentityDbContext<AppUser, AppRole, Guid>
   {
-    public EFContext(DbContextOptions<EFContext> options) : base(options)
-    {
-    }
+    public EFContext(DbContextOptions<EFContext> options) : base(options) { }
 
     public DbSet<InfoObject> InfoObjects { get; set; }
-    public DbSet<Discount> Discounts { get; set; }
+    public DbSet<ContentGroup> ContentGroups { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
     public DbSet<ShopItem> ShopItems { get; set; }
     public DbSet<ShopItemDetail> ShopItemDetails { get; set; }
@@ -36,7 +34,7 @@ namespace DemoProject.DLL
       builder.ApplyConfiguration(new CartShopItemConfiguration());
       builder.ApplyConfiguration(new MenuItemConfiguration());
       builder.ApplyConfiguration(new InfoObjectConfiguration());
-      builder.ApplyConfiguration(new DiscountConfiguration());
+      builder.ApplyConfiguration(new ContentGroupConfiguration());
       builder.ApplyConfiguration(new OrderConfiguration());
       builder.ApplyConfiguration(new ChangeHistoryConfiguration());
     }

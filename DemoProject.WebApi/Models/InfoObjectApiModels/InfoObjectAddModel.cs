@@ -17,7 +17,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     [Required]
     public int SubOrder { get; set; }
 
-    public Guid DiscountId { get; set; }
+    public Guid ContentGroupId { get; set; }
 
     public static InfoObject Map(InfoObjectAddModel model)
     {
@@ -31,7 +31,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
         Content = model.Content,
         Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true),
         SubOrder = model.SubOrder,
-        DiscountId = model.DiscountId
+        ContentGroupId = model.ContentGroupId
       };
     }
   }

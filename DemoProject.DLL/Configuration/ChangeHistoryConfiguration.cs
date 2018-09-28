@@ -11,10 +11,6 @@ namespace DemoProject.DLL.Configuration
       builder
         .Property(x => x.TableName)
         .IsRequired();
-
-      builder
-        .Property(x => x.TimeOfChange)
-        .IsRequired();
     }
   }
 }

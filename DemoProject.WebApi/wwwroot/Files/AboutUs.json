@@ -1,7 +1,7 @@
 ﻿[
   {
-    "Title": "Скидочная программа #1",
-    "GroupName": 1,
+    "Title": "Информация о нас #1",
+    "GroupName": 3,
     "Order": 1,
     "Items": [
       {
@@ -18,18 +18,13 @@
         "Content": "Пункт #3",
         "Type": 2,
         "SubOrder": 3
-      },
-      {
-        "Content": "Пункт #4",
-        "Type": 2,
-        "SubOrder": 4
       }
     ]
   },
 
   {
-    "Title": "Скидочная программа #2",
-    "GroupName": 1,
+    "Title": "Информация о нас #2",
+    "GroupName": 3,
     "Order": 2,
     "Items": [
       {
@@ -51,8 +46,8 @@
   },
 
   {
-    "Title": "Скидочная программа #3",
-    "GroupName": 1,
+    "Title": "Информация о нас #3",
+    "GroupName": 3,
     "Order": 3,
     "Items": [
       {

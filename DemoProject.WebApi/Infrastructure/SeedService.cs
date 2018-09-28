@@ -34,8 +34,14 @@ namespace DemoProject.WebApi.Infrastructure
       var menuItems = await this.LoadAsync<List<MenuItem>>("MenuItems.json");
       await this.SaveToDbAsync(context, menuItems);
 
-      var discounts = await this.LoadAsync<List<Discount>>("Discounts.json");
+      var discounts = await this.LoadAsync<List<ContentGroup>>("Discounts.json");
       await this.SaveToDbAsync(context, discounts);
+
+      var delivery = await this.LoadAsync<List<ContentGroup>>("Delivery.json");
+      await this.SaveToDbAsync(context, delivery);
+
+      var aboutUs = await this.LoadAsync<List<ContentGroup>>("AboutUs.json");
+      await this.SaveToDbAsync(context, aboutUs);
     }
 
     private async Task<T> LoadAsync<T>(string fileName)

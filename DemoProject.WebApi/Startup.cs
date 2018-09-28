@@ -37,7 +37,7 @@ namespace DemoProject.WebApi
         return new SeedService(Path.Combine(Environment.WebRootPath, "Files"));
       });
 
-      services.AddTransient<IDiscountService, DiscountService>();
+      services.AddTransient<IContentGroupService, ContentGroupService>();
       services.AddTransient<IInfoObjectService, InfoObjectService>();
 
       services

@@ -35,13 +35,13 @@ namespace DemoProject.DLL.Services
         throw new ArgumentNullException(nameof(model));
       }
 
-      if (await _context.Discounts.AnyAsync(x => x.Id == model.DiscountId) == false)
+      if (await _context.ContentGroups.AnyAsync(x => x.Id == model.ContentGroupId) == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.DiscountId), this.GetErrorMessage(model.DiscountId));
+        return ServiceResultFactory.BadRequestResult(nameof(model.ContentGroupId), this.GetErrorMessage(model.ContentGroupId));
       }
 
       _context.InfoObjects.Add(model);
-      _context.History.Add(ChangeHistory.Create(TableNames.InfoObjects));
+      _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
 
       return await _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
     }
@@ -57,13 +57,13 @@ namespace DemoProject.DLL.Services
       {
         return ServiceResultFactory.NotFound;
       }
-      else if (await _context.Discounts.AnyAsync(x => x.Id == model.DiscountId) == false)
+      else if (await _context.ContentGroups.AnyAsync(x => x.Id == model.ContentGroupId) == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.DiscountId), this.GetErrorMessage(model.DiscountId));
+        return ServiceResultFactory.BadRequestResult(nameof(model.ContentGroupId), this.GetErrorMessage(model.ContentGroupId));
       }
 
       _context.InfoObjects.Update(model);
-      _context.History.Add(ChangeHistory.Create(TableNames.InfoObjects));
+      _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
 
       return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
@@ -77,7 +77,7 @@ namespace DemoProject.DLL.Services
       }
 
       _context.InfoObjects.Remove(infoObject);
-      _context.History.Add(ChangeHistory.Create(TableNames.InfoObjects));
+      _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
 
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
     }
