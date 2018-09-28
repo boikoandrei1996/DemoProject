@@ -6,7 +6,7 @@ using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
 using DemoProject.WebApi.Attributes;
-using DemoProject.WebApi.Models.DiscountApiModels;
+using DemoProject.WebApi.Models.AboutUsApiModels;
 using DemoProject.WebApi.Models.Pages;
 using DemoProject.WebApi.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -16,78 +16,74 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  /*[ProducesResponseType(StatusCodes.Status200OK)]
-  [ProducesResponseType(StatusCodes.Status404NotFound)]
-  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ServiceError>))]*/
-  public class DiscountController : Controller
+  public class AboutController : Controller
   {
     private readonly IContentGroupService _contentGroupService;
 
-    public DiscountController(
+    public AboutController(
       IContentGroupService contentGroupService)
     {
       _contentGroupService = contentGroupService;
     }
 
-    // GET api/discount/history
+    // GET api/about/history
     [HttpGet("history")]
     public async Task<ChangeHistoryViewModel> GetHistoryRecord()
     {
-      var entity = await _contentGroupService.GetHistoryRecordAsync(GroupName.Discount);
+      var entity = await _contentGroupService.GetHistoryRecordAsync(GroupName.AboutUs);
 
       return ChangeHistoryViewModel.Map(entity);
     }
 
-    // GET api/discount/all
+    // GET api/about/all
     [HttpGet("all")]
-    public async Task<IEnumerable<DiscountViewModel>> GetAll()
+    public async Task<IEnumerable<AboutUsViewModel>> GetAll()
     {
-      var entities = await _contentGroupService.GetListAsync(GroupName.Discount);
+      var entities = await _contentGroupService.GetListAsync(GroupName.AboutUs);
 
-      return entities.Select(DiscountViewModel.Map);
+      return entities.Select(AboutUsViewModel.Map);
     }
 
-    // GET api/discount/page/{index}
+    // GET api/about/page/{index}
     [HttpGet("page/{index:int?}")]
     public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _contentGroupService.GetPageAsync(
-        GroupName.Discount,
+        GroupName.AboutUs,
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
       return DiscountPageModel.Map(page);
     }
 
-    // GET api/discount/{id}
+    // GET api/about/{id}
     [HttpGet("{id:guid}")]
-    public async Task<DiscountViewModel> GetOne(Guid id)
+    public async Task<AboutUsViewModel> GetOne(Guid id)
     {
-      var entity = await _contentGroupService.FindByAsync(GroupName.Discount, x => x.Id == id);
+      var entity = await _contentGroupService.FindByAsync(GroupName.AboutUs, x => x.Id == id);
 
-      return DiscountViewModel.Map(entity);
+      return AboutUsViewModel.Map(entity);
     }
 
-    // POST api/discount
+    // POST api/about
     [HttpPost]
-    public Task<ServiceResult> Add([FromBody]DiscountAddModel apiEntity)
+    public Task<ServiceResult> Add([FromBody]AboutUsAddModel apiEntity)
     {
-      var entity = DiscountAddModel.Map(apiEntity);
+      var entity = AboutUsAddModel.Map(apiEntity);
 
       return _contentGroupService.AddAsync(entity);
     }
 
-    // PUT api/discount/{id}
+    // PUT api/about/{id}
     [HttpPut("{id:guid}")]
-    public Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
+    public Task<ServiceResult> Edit(Guid id, [FromBody]AboutUsEditModel apiEntity)
     {
-      var entity = DiscountEditModel.Map(apiEntity, id);
+      var entity = AboutUsEditModel.Map(apiEntity, id);
 
       return _contentGroupService.UpdateAsync(entity);
     }
 
-    // DELETE api/discount/{id}
+    // DELETE api/about/{id}
     [HttpDelete("{id:guid}")]
     public Task<ServiceResult> Delete(Guid id)
     {

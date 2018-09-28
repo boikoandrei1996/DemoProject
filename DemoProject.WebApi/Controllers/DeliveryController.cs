@@ -6,7 +6,7 @@ using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
 using DemoProject.WebApi.Attributes;
-using DemoProject.WebApi.Models.DiscountApiModels;
+using DemoProject.WebApi.Models.DeliveryApiModels;
 using DemoProject.WebApi.Models.Pages;
 using DemoProject.WebApi.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -16,78 +16,74 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  /*[ProducesResponseType(StatusCodes.Status200OK)]
-  [ProducesResponseType(StatusCodes.Status404NotFound)]
-  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ServiceError>))]*/
-  public class DiscountController : Controller
+  public class DeliveryController : Controller
   {
     private readonly IContentGroupService _contentGroupService;
 
-    public DiscountController(
+    public DeliveryController(
       IContentGroupService contentGroupService)
     {
       _contentGroupService = contentGroupService;
     }
 
-    // GET api/discount/history
+    // GET api/delivery/history
     [HttpGet("history")]
     public async Task<ChangeHistoryViewModel> GetHistoryRecord()
     {
-      var entity = await _contentGroupService.GetHistoryRecordAsync(GroupName.Discount);
+      var entity = await _contentGroupService.GetHistoryRecordAsync(GroupName.Delivery);
 
       return ChangeHistoryViewModel.Map(entity);
     }
 
-    // GET api/discount/all
+    // GET api/delivery/all
     [HttpGet("all")]
-    public async Task<IEnumerable<DiscountViewModel>> GetAll()
+    public async Task<IEnumerable<DeliveryViewModel>> GetAll()
     {
-      var entities = await _contentGroupService.GetListAsync(GroupName.Discount);
+      var entities = await _contentGroupService.GetListAsync(GroupName.Delivery);
 
-      return entities.Select(DiscountViewModel.Map);
+      return entities.Select(DeliveryViewModel.Map);
     }
 
-    // GET api/discount/page/{index}
+    // GET api/delivery/page/{index}
     [HttpGet("page/{index:int?}")]
     public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _contentGroupService.GetPageAsync(
-        GroupName.Discount,
+        GroupName.Delivery,
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
       return DiscountPageModel.Map(page);
     }
 
-    // GET api/discount/{id}
+    // GET api/delivery/{id}
     [HttpGet("{id:guid}")]
-    public async Task<DiscountViewModel> GetOne(Guid id)
+    public async Task<DeliveryViewModel> GetOne(Guid id)
     {
-      var entity = await _contentGroupService.FindByAsync(GroupName.Discount, x => x.Id == id);
+      var entity = await _contentGroupService.FindByAsync(GroupName.Delivery, x => x.Id == id);
 
-      return DiscountViewModel.Map(entity);
+      return DeliveryViewModel.Map(entity);
     }
 
-    // POST api/discount
+    // POST api/delivery
     [HttpPost]
-    public Task<ServiceResult> Add([FromBody]DiscountAddModel apiEntity)
+    public Task<ServiceResult> Add([FromBody]DeliveryAddModel apiEntity)
     {
-      var entity = DiscountAddModel.Map(apiEntity);
+      var entity = DeliveryAddModel.Map(apiEntity);
 
       return _contentGroupService.AddAsync(entity);
     }
 
-    // PUT api/discount/{id}
+    // PUT api/delivery/{id}
     [HttpPut("{id:guid}")]
-    public Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
+    public Task<ServiceResult> Edit(Guid id, [FromBody]DeliveryEditModel apiEntity)
     {
-      var entity = DiscountEditModel.Map(apiEntity, id);
+      var entity = DeliveryEditModel.Map(apiEntity, id);
 
       return _contentGroupService.UpdateAsync(entity);
     }
 
-    // DELETE api/discount/{id}
+    // DELETE api/delivery/{id}
     [HttpDelete("{id:guid}")]
     public Task<ServiceResult> Delete(Guid id)
     {
