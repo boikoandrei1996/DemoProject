@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +14,7 @@ namespace DemoProject.WebApi.Infrastructure
 {
   public static class ApplicationBuilderExtensions
   {
-    public static void ApplyMigrationAndDatabaseSeed(this IApplicationBuilder app)
+    public static void ApplyMigrationAndDatabaseSeed(this IApplicationBuilder app, bool isDatabaseRestore)
     {
       using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
       {
@@ -25,7 +26,7 @@ namespace DemoProject.WebApi.Infrastructure
 
           context.Database.Migrate();
 
-          if (!isDatabaseExisted)
+          if (!isDatabaseExisted || isDatabaseRestore)
           {
             context.ClearDatabase();
             scope.ServiceProvider.GetRequiredService<SeedService>().SeedDatabase(context);

@@ -82,7 +82,8 @@ namespace DemoProject.WebApi
 
       app.SetupDefaultPage("swagger/index.html");
 
-      app.ApplyMigrationAndDatabaseSeed();
+      var isDatabaseRestore = Configuration.GetValue("DatabaseConfig:ShouldBeRestored", false);
+      app.ApplyMigrationAndDatabaseSeed(isDatabaseRestore);
 
       app.UseMvc();
 
