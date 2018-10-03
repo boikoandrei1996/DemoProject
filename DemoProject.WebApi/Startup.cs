@@ -39,6 +39,7 @@ namespace DemoProject.WebApi
 
       services.AddTransient<IContentGroupService, ContentGroupService>();
       services.AddTransient<IInfoObjectService, InfoObjectService>();
+      services.AddTransient<IMenuItemService, MenuItemService>();
 
       services
         .AddMvc(x =>
