@@ -4,11 +4,6 @@ namespace DemoProject.DLL.Models
 {
   public class Cart : BaseEntity
   {
-    public Cart()
-    {
-      CartShopItems = new List<CartShopItem>();
-    }
-    
-    public ICollection<CartShopItem> CartShopItems { get; set; }
+    public ICollection<CartShopItem> CartShopItems { get; set; } = new List<CartShopItem>();
   }
 }

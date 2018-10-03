@@ -6,11 +6,6 @@ namespace DemoProject.DLL.Models
 {
   public class MenuItem : BaseEntity
   {
-    public MenuItem()
-    {
-      Items = new List<ShopItem>();
-    }
-
     public int Order { get; set; }
 
     public string Text { get; set; }
@@ -20,6 +15,6 @@ namespace DemoProject.DLL.Models
 
     public string IconContentType { get; set; }
 
-    public ICollection<ShopItem> Items { get; set; }
+    public ICollection<ShopItem> Items { get; set; } = new List<ShopItem>();
   }
 }
