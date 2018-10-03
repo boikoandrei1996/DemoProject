@@ -1,5 +1,6 @@
 ﻿[
   {
+    "Order": 1,
     "Text": "Пицца",
     "Icon": "wwwroot/Images/icon-placeholder.png",
     "IconContentType": "image/png",
@@ -99,6 +100,7 @@
   },
 
   {
+    "Order": 2,
     "Text": "Суши",
     "Icon": "wwwroot/Images/icon-placeholder.png",
     "IconContentType": "image/png",
@@ -160,6 +162,7 @@
   },
 
   {
+    "Order": 3,
     "Text": "Десерты",
     "Icon": "wwwroot/Images/icon-placeholder.png",
     "IconContentType": "image/png",
@@ -207,6 +210,7 @@
   },
 
   {
+    "Order": 4,
     "Text": "Напитки",
     "Icon": "wwwroot/Images/icon-placeholder.png",
     "IconContentType": "image/png",

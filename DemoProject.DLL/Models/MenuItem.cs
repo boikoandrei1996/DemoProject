@@ -11,6 +11,8 @@ namespace DemoProject.DLL.Models
       Items = new List<ShopItem>();
     }
 
+    public int Order { get; set; }
+
     public string Text { get; set; }
 
     [JsonConverter(typeof(ImageJsonConverter))]
