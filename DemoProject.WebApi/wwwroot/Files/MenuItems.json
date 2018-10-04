@@ -2,13 +2,13 @@
   {
     "Order": 1,
     "Text": "Пицца",
-    "Icon": "wwwroot/Images/icon-placeholder.png",
+    "IconPath": "wwwroot/Images/icon-placeholder.png",
     "IconContentType": "image/png",
     "Items": [
       {
         "Title": "Пицца #1",
         "Description": "Состав пиццы #1",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -34,7 +34,7 @@
       {
         "Title": "Пицца #2",
         "Description": "Состав пиццы #2",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -54,7 +54,7 @@
       {
         "Title": "Пицца #3",
         "Description": "Состав пиццы #3",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -80,7 +80,7 @@
       {
         "Title": "Пицца #4",
         "Description": "Состав пиццы #4",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -102,13 +102,13 @@
   {
     "Order": 2,
     "Text": "Суши",
-    "Icon": "wwwroot/Images/icon-placeholder.png",
+    "IconPath": "wwwroot/Images/icon-placeholder.png",
     "IconContentType": "image/png",
     "Items": [
       {
         "Title": "Суши #1",
         "Description": "Состав суши #1",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -128,7 +128,7 @@
       {
         "Title": "Суши #2",
         "Description": "Состав суши #2",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -148,7 +148,7 @@
       {
         "Title": "Суши #3",
         "Description": "Состав суши #3",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -164,13 +164,13 @@
   {
     "Order": 3,
     "Text": "Десерты",
-    "Icon": "wwwroot/Images/icon-placeholder.png",
+    "IconPath": "wwwroot/Images/icon-placeholder.png",
     "IconContentType": "image/png",
     "Items": [
       {
         "Title": "Пирог #1",
         "Description": "Состав пирога #1",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -190,7 +190,7 @@
       {
         "Title": "Пирог #2",
         "Description": "Состав пирога #2",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -212,13 +212,13 @@
   {
     "Order": 4,
     "Text": "Напитки",
-    "Icon": "wwwroot/Images/icon-placeholder.png",
+    "IconPath": "wwwroot/Images/icon-placeholder.png",
     "IconContentType": "image/png",
     "Items": [
       {
         "Title": "Напиток #1",
         "Description": "Напиток #1 описание",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -238,7 +238,7 @@
       {
         "Title": "Напиток #2",
         "Description": "Напиток #2 описание",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {
@@ -258,7 +258,7 @@
       {
         "Title": "Напиток #3",
         "Description": "Напиток #3 описание",
-        "Image": "wwwroot/Images/image-placeholder.png",
+        "ImagePath": "wwwroot/Images/image-placeholder.png",
         "ImageContentType": "image/png",
         "Details": [
           {

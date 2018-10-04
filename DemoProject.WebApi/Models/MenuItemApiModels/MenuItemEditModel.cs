@@ -31,7 +31,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
         Id = id,
         Order = model.Order,
         Text = model.Text,
-        Icon = new byte[0],
+        IconPath = string.Empty,
         IconContentType = model.IconContentType
       };
     }
