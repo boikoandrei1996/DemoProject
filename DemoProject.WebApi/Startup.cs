@@ -87,6 +87,7 @@ namespace DemoProject.WebApi
       app.ApplyMigrationAndDatabaseSeed(isDatabaseRestore);
 
       app.UseMvc();
+      app.UseFileServer();
 
       app.UseSwagger();
       app.UseSwaggerUI(x =>
