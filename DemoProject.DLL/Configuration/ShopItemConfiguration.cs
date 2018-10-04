@@ -16,9 +16,9 @@ namespace DemoProject.DLL.Configuration
         .IsRequired()
         .HasMaxLength(255);
 
-      builder.Property(x => x.Image)
+      builder.Property(x => x.ImagePath)
         .IsRequired()
-        .HasColumnType("image");
+        .HasMaxLength(255);
 
       builder.Property(x => x.ImageContentType)
         .IsRequired()

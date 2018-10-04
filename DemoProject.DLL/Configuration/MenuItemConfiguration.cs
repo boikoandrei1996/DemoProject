@@ -16,9 +16,9 @@ namespace DemoProject.DLL.Configuration
         .IsRequired()
         .HasMaxLength(100);
 
-      builder.Property(x => x.Icon)
+      builder.Property(x => x.IconPath)
         .IsRequired()
-        .HasColumnType("image");
+        .HasMaxLength(255);
 
       builder.Property(x => x.IconContentType)
         .IsRequired()

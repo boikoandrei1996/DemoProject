@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace DemoProject.DLL.Infrastructure
 {
+  // TODO: Not used.
   public class ImageJsonConverter : JsonConverter
   {
     public override bool CanConvert(Type objectType)
