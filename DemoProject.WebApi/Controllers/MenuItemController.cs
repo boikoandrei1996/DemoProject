@@ -6,6 +6,7 @@ using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.MenuItemApiModels;
+using DemoProject.WebApi.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -21,6 +22,15 @@ namespace DemoProject.WebApi.Controllers
       IMenuItemService menuItemService)
     {
       _menuItemService = menuItemService;
+    }
+
+    // GET api/menuitem/history
+    [HttpGet("history")]
+    public async Task<ChangeHistoryViewModel> GetHistoryRecord()
+    {
+      var entity = await _menuItemService.GetHistoryRecordAsync();
+
+      return ChangeHistoryViewModel.Map(entity);
     }
 
     // GET api/menuitem/all

@@ -20,6 +20,12 @@ namespace DemoProject.DLL.Services
       _context = context;
     }
 
+    public Task<ChangeHistory> GetHistoryRecordAsync()
+    {
+      return _context.History
+        .LastOrDefaultAsync(x => x.TableName == TableNames.MenuItem);
+    }
+
     public async Task<List<MenuItem>> GetListAsync(Expression<Func<MenuItem, bool>> filter = null)
     {
       var query = _context.MenuItems.AsNoTracking();
@@ -62,6 +68,7 @@ namespace DemoProject.DLL.Services
       }
       
       _context.MenuItems.Add(model);
+      _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
       return _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
     }
@@ -79,6 +86,7 @@ namespace DemoProject.DLL.Services
       }
       
       _context.MenuItems.Update(model);
+      _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
       return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
@@ -92,6 +100,7 @@ namespace DemoProject.DLL.Services
       }
       
       _context.MenuItems.Remove(model);
+      _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
     }

@@ -7,8 +7,9 @@ using DemoProject.DLL.Models.Pages;
 
 namespace DemoProject.DLL.Interfaces
 {
-  public interface IContentGroupService : IService<ContentGroup>, ITrackableService
+  public interface IContentGroupService : IService<ContentGroup>
   {
+    Task<ChangeHistory> GetHistoryRecordAsync(GroupName group);
     Task<ContentGroupPage> GetPageAsync(GroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null);
     Task<List<ContentGroup>> GetListAsync(GroupName group, Expression<Func<ContentGroup, bool>> filter = null);
     Task<ContentGroup> FindByAsync(GroupName group, Expression<Func<ContentGroup, bool>> filter);

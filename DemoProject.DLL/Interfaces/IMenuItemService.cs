@@ -8,6 +8,7 @@ namespace DemoProject.DLL.Interfaces
 {
   public interface IMenuItemService : IService<MenuItem>
   {
+    Task<ChangeHistory> GetHistoryRecordAsync();
     Task<List<MenuItem>> GetListAsync(Expression<Func<MenuItem, bool>> filter = null);
     Task<MenuItem> FindByAsync(Expression<Func<MenuItem, bool>> filter);
   }

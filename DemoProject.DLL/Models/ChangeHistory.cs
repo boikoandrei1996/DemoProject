@@ -38,5 +38,6 @@ namespace DemoProject.DLL.Models
     public static readonly string Delivery = "Delivery";
     public static readonly string AboutUs = "AboutUs";
     public static readonly string InfoObject = "InfoObject";
+    public static readonly string MenuItem = "MenuItem";
   }
 }
