@@ -9,7 +9,6 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
     public int Order { get; set; }
     public string Text { get; set; }
     public string IconPath { get; set; }
-    public string IconContentType { get; set; }
 
     public static MenuItemViewModel Map(MenuItem model)
     {
@@ -23,8 +22,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
         Id = model.Id,
         Order = model.Order,
         Text = model.Text,
-        IconPath = model.IconPath,
-        IconContentType = model.IconContentType
+        IconPath = model.IconPath
       };
     }
   }

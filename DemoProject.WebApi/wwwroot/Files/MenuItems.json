@@ -3,13 +3,11 @@
     "Order": 1,
     "Text": "Пицца",
     "IconPath": "Images/icon-placeholder.png",
-    "IconContentType": "image/png",
     "Items": [
       {
         "Title": "Пицца #1",
         "Description": "Состав пиццы #1",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большая",
@@ -35,7 +33,6 @@
         "Title": "Пицца #2",
         "Description": "Состав пиццы #2",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большая",
@@ -55,7 +52,6 @@
         "Title": "Пицца #3",
         "Description": "Состав пиццы #3",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большая",
@@ -81,7 +77,6 @@
         "Title": "Пицца #4",
         "Description": "Состав пиццы #4",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большая",
@@ -103,13 +98,11 @@
     "Order": 2,
     "Text": "Суши",
     "IconPath": "Images/icon-placeholder.png",
-    "IconContentType": "image/png",
     "Items": [
       {
         "Title": "Суши #1",
         "Description": "Состав суши #1",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большой сет",
@@ -129,7 +122,6 @@
         "Title": "Суши #2",
         "Description": "Состав суши #2",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большой сет",
@@ -149,7 +141,6 @@
         "Title": "Суши #3",
         "Description": "Состав суши #3",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большой сет",
@@ -165,13 +156,11 @@
     "Order": 3,
     "Text": "Десерты",
     "IconPath": "Images/icon-placeholder.png",
-    "IconContentType": "image/png",
     "Items": [
       {
         "Title": "Пирог #1",
         "Description": "Состав пирога #1",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Пирог",
@@ -191,7 +180,6 @@
         "Title": "Пирог #2",
         "Description": "Состав пирога #2",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Пирог",
@@ -213,13 +201,11 @@
     "Order": 4,
     "Text": "Напитки",
     "IconPath": "Images/icon-placeholder.png",
-    "IconContentType": "image/png",
     "Items": [
       {
         "Title": "Напиток #1",
         "Description": "Напиток #1 описание",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большая",
@@ -239,7 +225,6 @@
         "Title": "Напиток #2",
         "Description": "Напиток #2 описание",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Большая",
@@ -259,7 +244,6 @@
         "Title": "Напиток #3",
         "Description": "Напиток #3 описание",
         "ImagePath": "Images/image-placeholder.png",
-        "ImageContentType": "image/png",
         "Details": [
           {
             "Kind": "Порция",

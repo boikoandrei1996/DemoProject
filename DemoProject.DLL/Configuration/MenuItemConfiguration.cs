@@ -19,10 +19,6 @@ namespace DemoProject.DLL.Configuration
       builder.Property(x => x.IconPath)
         .IsRequired()
         .HasMaxLength(255);
-
-      builder.Property(x => x.IconContentType)
-        .IsRequired()
-        .HasMaxLength(20);
     }
   }
 }

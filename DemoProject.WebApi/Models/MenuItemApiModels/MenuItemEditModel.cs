@@ -19,10 +19,6 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
     [ImageExistValidation]
     public string IconFilename { get; set; }
 
-    [Required]
-    [MaxLength(20)]
-    public string IconContentType { get; set; }
-
     public static MenuItem Map(MenuItemEditModel model, Guid id)
     {
       if (model == null)
@@ -35,8 +31,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
         Id = id,
         Order = model.Order,
         Text = model.Text,
-        IconPath = Constants.DEFAULT_PATH_TO_IMAGE + model.IconFilename,
-        IconContentType = model.IconContentType
+        IconPath = Constants.DEFAULT_PATH_TO_IMAGE + model.IconFilename
       };
     }
   }
