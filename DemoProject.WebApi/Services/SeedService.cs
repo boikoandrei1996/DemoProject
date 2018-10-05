@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace DemoProject.WebApi.Infrastructure
+namespace DemoProject.WebApi.Services
 {
   public class SeedService
   {

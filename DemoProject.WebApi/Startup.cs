@@ -3,6 +3,7 @@ using DemoProject.DLL;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Services;
 using DemoProject.WebApi.Infrastructure;
+using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,11 @@ namespace DemoProject.WebApi
       services.AddTransient<SeedService>(serviceProvider =>
       {
         return new SeedService(Path.Combine(Environment.WebRootPath, "Files"));
+      });
+
+      services.AddTransient<IImageService>(serviceProvider =>
+      {
+        return new ImageService(Environment.WebRootPath);
       });
 
       services.AddTransient<IContentGroupService, ContentGroupService>();

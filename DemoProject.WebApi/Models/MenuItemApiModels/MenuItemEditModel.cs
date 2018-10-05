@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
+using DemoProject.WebApi.Attributes;
 
 namespace DemoProject.WebApi.Models.MenuItemApiModels
 {
@@ -13,7 +14,10 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
     [MaxLength(100)]
     public string Text { get; set; }
 
-    // public byte[] Icon { get; set; }
+    [Required]
+    [MaxLength(100)]
+    [ImageExistValidation]
+    public string IconFilename { get; set; }
 
     [Required]
     [MaxLength(20)]
@@ -31,7 +35,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
         Id = id,
         Order = model.Order,
         Text = model.Text,
-        IconPath = string.Empty,
+        IconPath = Constants.DEFAULT_PATH_TO_IMAGE + model.IconFilename,
         IconContentType = model.IconContentType
       };
     }

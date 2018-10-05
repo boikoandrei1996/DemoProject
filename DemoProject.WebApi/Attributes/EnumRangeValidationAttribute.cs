@@ -18,7 +18,8 @@ namespace DemoProject.WebApi.Attributes
       else
       {
         var allowableValues = String.Join(", ", Enum.GetNames(typeof(InfoObjectType)));
-        return new ValidationResult($"The {nameof(Type)} field should be in range of [{allowableValues}].", new[] { nameof(Type) });
+        var memberName = "Type";
+        return new ValidationResult($"The {memberName} field should be in range of [{allowableValues}].", new[] { memberName });
       }
     }
 
