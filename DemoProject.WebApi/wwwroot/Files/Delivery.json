@@ -26,17 +26,17 @@
       {
         "Content": "<b>Пункт #1</b>",
         "Type": 1,
-        "SubOrder": 1
+        "SubOrder": 5
       },
       {
         "Content": "<b>Пункт #3</b>",
         "Type": 1,
-        "SubOrder": 3
+        "SubOrder": 7
       },
       {
         "Content": "<b>Пункт #2</b>",
         "Type": 1,
-        "SubOrder": 2
+        "SubOrder": 6
       }
     ]
   },
