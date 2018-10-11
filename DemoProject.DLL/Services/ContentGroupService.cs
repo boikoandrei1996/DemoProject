@@ -50,7 +50,8 @@ namespace DemoProject.DLL.Services
       var records = await query
         .OrderBy(x => x.Order)
         .Skip((pageIndex - 1) * pageSize)
-        .Take(pageSize).Include(x => x.Items)
+        .Take(pageSize)
+        .Include(x => x.Items)
         .ToListAsync();
       foreach (var record in records)
       {
