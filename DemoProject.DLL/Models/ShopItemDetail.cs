@@ -5,6 +5,8 @@ namespace DemoProject.DLL.Models
 {
   public class ShopItemDetail : BaseEntity
   {
+    public int SubOrder { get; set; }
+
     // Ex. Big, small, medium
     public string Kind { get; set; }
 

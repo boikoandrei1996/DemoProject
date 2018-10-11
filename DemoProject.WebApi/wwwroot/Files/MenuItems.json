@@ -10,18 +10,21 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большая",
             "Quantity": "1 кг",
             "Price": 11
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Средняя",
             "Quantity": "800 г",
             "Price": 9.5
           },
 
           {
+            "SubOrder": 3,
             "Kind": "Маленькая",
             "Quantity": "450 г",
             "Price": 7
@@ -35,12 +38,14 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большая",
             "Quantity": "1 кг",
             "Price": 12
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Маленькая",
             "Quantity": "450 г",
             "Price": 7.5
@@ -54,18 +59,21 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большая",
             "Quantity": "1 кг",
             "Price": 13
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Средняя",
             "Quantity": "800 г",
             "Price": 10.5
           },
 
           {
+            "SubOrder": 3,
             "Kind": "Маленькая",
             "Quantity": "450 г",
             "Price": 7.5
@@ -79,12 +87,14 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большая",
             "Quantity": "1 кг",
             "Price": 14
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Маленькая",
             "Quantity": "450 г",
             "Price": 8
@@ -105,12 +115,14 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большой сет",
             "Quantity": "1 кг",
             "Price": 12
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Маленький сет",
             "Quantity": "450 г",
             "Price": 6
@@ -124,12 +136,14 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большой сет",
             "Quantity": "1 кг",
             "Price": 14
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Маленький сет",
             "Quantity": "450г",
             "Price": 7
@@ -143,6 +157,7 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большой сет",
             "Quantity": "1100 г",
             "Price": 15.5
@@ -163,12 +178,14 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Пирог",
             "Quantity": "1 кг",
             "Price": 20
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Порция",
             "Quantity": "100 г",
             "Price": 2.5
@@ -182,12 +199,14 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Пирог",
             "Quantity": "1 кг",
             "Price": 22
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Порция",
             "Quantity": "100 г",
             "Price": 2.5
@@ -208,12 +227,14 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большая",
             "Quantity": "2 л",
             "Price": 2.6
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Маленькая",
             "Quantity": "0.5",
             "Price": 1
@@ -227,12 +248,14 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Большая",
             "Quantity": "2 л",
             "Price": 2.8
           },
 
           {
+            "SubOrder": 2,
             "Kind": "Маленькая",
             "Quantity": "0.5",
             "Price": 1.1
@@ -246,6 +269,7 @@
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
+            "SubOrder": 1,
             "Kind": "Порция",
             "Quantity": "1 чашка",
             "Price": 1.5
