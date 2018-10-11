@@ -33,15 +33,19 @@ namespace DemoProject.WebApi.Services
     {
       var menuItems = await this.LoadAsync<List<MenuItem>>("MenuItems.json");
       await this.SaveToDbAsync(context, menuItems);
+      await context.History.AddAsync(ChangeHistory.Create(TableNames.MenuItem));
 
       var discounts = await this.LoadAsync<List<ContentGroup>>("Discounts.json");
       await this.SaveToDbAsync(context, discounts);
+      await context.History.AddAsync(ChangeHistory.Create(TableNames.Discount));
 
       var delivery = await this.LoadAsync<List<ContentGroup>>("Delivery.json");
       await this.SaveToDbAsync(context, delivery);
+      await context.History.AddAsync(ChangeHistory.Create(TableNames.Delivery));
 
       var aboutUs = await this.LoadAsync<List<ContentGroup>>("AboutUs.json");
       await this.SaveToDbAsync(context, aboutUs);
+      await context.History.AddAsync(ChangeHistory.Create(TableNames.AboutUs));
     }
 
     private async Task<T> LoadAsync<T>(string fileName)
