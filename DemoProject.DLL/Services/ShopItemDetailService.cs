@@ -1,0 +1,92 @@
+﻿using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using DemoProject.DLL.Extensions;
+using DemoProject.DLL.Infrastructure;
+using DemoProject.DLL.Interfaces;
+using DemoProject.DLL.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace DemoProject.DLL.Services
+{
+  public class ShopItemDetailService : IShopItemDetailService
+  {
+    private readonly EFContext _context;
+
+    public ShopItemDetailService(EFContext context)
+    {
+      _context = context;
+    }
+
+    public Task<bool> ExistAsync(Expression<Func<ShopItemDetail, bool>> filter)
+    {
+      if (filter == null)
+      {
+        throw new ArgumentNullException(nameof(filter));
+      }
+
+      return _context.ShopItemDetails.AnyAsync(filter);
+    }
+
+    public async Task<ServiceResult> AddAsync(ShopItemDetail model)
+    {
+      if (model == null)
+      {
+        throw new ArgumentNullException(nameof(model));
+      }
+
+      if (await _context.ShopItems.AnyAsync(x => x.Id == model.ShopItemId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(model.ShopItemId), this.GetErrorMessage(model.ShopItemId));
+      }
+
+      _context.ShopItemDetails.Add(model);
+
+      return await _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
+    }
+
+    public async Task<ServiceResult> UpdateAsync(ShopItemDetail model)
+    {
+      if (model == null)
+      {
+        throw new ArgumentNullException(nameof(model));
+      }
+
+      if (await _context.ShopItemDetails.AnyAsync(x => x.Id == model.Id) == false)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+      else if (await _context.ShopItems.AnyAsync(x => x.Id == model.ShopItemId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(model.ShopItemId), this.GetErrorMessage(model.ShopItemId));
+      }
+
+      _context.ShopItemDetails.Update(model);
+
+      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
+    }
+
+    public async Task<ServiceResult> DeleteAsync(Guid id)
+    {
+      var model = await _context.ShopItemDetails.FirstOrDefaultAsync(x => x.Id == id);
+      if (model == null)
+      {
+        return ServiceResultFactory.Success;
+      }
+
+      _context.ShopItemDetails.Remove(model);
+
+      return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
+    }
+
+    public void Dispose()
+    {
+      _context.Dispose();
+    }
+
+    private string GetErrorMessage(Guid id)
+    {
+      return $"ShopItem not found with id: '{id}'.";
+    }
+  }
+}

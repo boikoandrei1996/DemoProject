@@ -47,6 +47,7 @@ namespace DemoProject.WebApi
       services.AddTransient<IInfoObjectService, InfoObjectService>();
       services.AddTransient<IMenuItemService, MenuItemService>();
       services.AddTransient<IShopItemService, ShopItemService>();
+      services.AddTransient<IShopItemDetailService, ShopItemDetailService>();
 
       services
         .AddMvc(x =>

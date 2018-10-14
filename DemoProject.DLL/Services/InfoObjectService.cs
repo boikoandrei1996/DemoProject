@@ -70,13 +70,13 @@ namespace DemoProject.DLL.Services
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var infoObject = await _context.InfoObjects.FirstOrDefaultAsync(x => x.Id == id);
-      if (infoObject == null)
+      var model = await _context.InfoObjects.FirstOrDefaultAsync(x => x.Id == id);
+      if (model == null)
       {
         return ServiceResultFactory.Success;
       }
 
-      _context.InfoObjects.Remove(infoObject);
+      _context.InfoObjects.Remove(model);
       _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
 
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
