@@ -24,8 +24,8 @@ namespace DemoProject.WebApi.Controllers
       _shopItemService = shopItemService;
     }
 
-    // GET api/shopitem/all/{menuItemId}
-    [HttpGet("all/{menuItemId:guid}")]
+    // GET api/{menuItemId}/shopitem/all
+    [HttpGet("/api/{menuItemId:guid}/shopitem/all")]
     public async Task<IEnumerable<ShopItemViewModel>> GetAll(Guid menuItemId)
     {
       var entities = await _shopItemService.GetListAsync(x => x.MenuItemId == menuItemId);
@@ -33,8 +33,8 @@ namespace DemoProject.WebApi.Controllers
       return entities.Select(ShopItemViewModel.Map);
     }
 
-    // GET api/shopitem/page/{menuItemId}/{index}
-    [HttpGet("page/{menuItemId:guid}/{index:int?}")]
+    // GET api/{menuItemId}/shopitem/page/{index}
+    [HttpGet("/api/{menuItemId:guid}/shopitem/page/{index:int?}")]
     public async Task<ShopItemPageModel> GetPage(Guid menuItemId, int? index, [FromQuery]int? pageSize)
     {
       var page = await _shopItemService.GetPageAsync(
