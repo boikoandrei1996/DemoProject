@@ -2,7 +2,7 @@
 
 namespace DemoProject.DLL.Models.Pages
 {
-  public class ContentGroupPage
+  public class ContentGroupPage : IPage<ContentGroup>
   {
     public int CurrentPage { get; set; }
     public int PageSize { get; set; }

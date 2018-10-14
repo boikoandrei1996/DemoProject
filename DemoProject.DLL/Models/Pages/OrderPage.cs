@@ -2,11 +2,11 @@
 
 namespace DemoProject.DLL.Models.Pages
 {
-  public class ShopItemPage : IPage<ShopItem>
+  public class OrderPage : IPage<Order>
   {
     public int CurrentPage { get; set; }
     public int PageSize { get; set; }
     public int TotalPages { get; set; }
-    public ICollection<ShopItem> Records { get; set; } = new List<ShopItem>();
+    public ICollection<Order> Records { get; set; } = new List<Order>();
   }
 }
