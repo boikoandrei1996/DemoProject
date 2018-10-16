@@ -42,7 +42,7 @@ namespace DemoProject.DLL.Services
       return _context.Carts.AnyAsync(filter);
     }
 
-    public async Task<ServiceResult> AddAsync(Cart model)
+    public Task<ServiceResult> AddAsync(Cart model)
     {
       if (model == null)
       {
@@ -51,7 +51,7 @@ namespace DemoProject.DLL.Services
 
       _context.Carts.Add(model);
 
-      return await _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
+      return _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
     }
 
     public Task<ServiceResult> UpdateAsync(Cart model)
