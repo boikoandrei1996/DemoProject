@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DemoProject.DLL;
@@ -46,6 +47,9 @@ namespace DemoProject.WebApi.Services
       var aboutUs = await this.LoadAsync<List<ContentGroup>>("AboutUs.json");
       await this.SaveToDbAsync(context, aboutUs);
       await context.History.AddAsync(ChangeHistory.Create(TableNames.AboutUs));
+
+      var carts = this.LoadCarts(menuItems.First().Items.First().Details);
+      await this.SaveToDbAsync(context, carts);
     }
 
     private async Task<T> LoadAsync<T>(string fileName)
@@ -91,6 +95,23 @@ namespace DemoProject.WebApi.Services
           _logger.LogError(ex.InnerException, nameof(SaveToDbAsync));
         }
       }
+    }
+
+    private List<Cart> LoadCarts(IEnumerable<ShopItemDetail> shopItemDetails)
+    {
+      var carts = new List<Cart>();
+      foreach (var shopItemDetail in shopItemDetails)
+      {
+        var cartShopItem = new CartShopItem
+        {
+          Count = 1,
+          Price = shopItemDetail.Price,
+          ShopItemDetailId = shopItemDetail.Id
+        };
+        carts.Add(new Cart { CartShopItems = new List<CartShopItem>() { cartShopItem } });
+      }
+
+      return carts;
     }
   }
 }
