@@ -24,7 +24,7 @@ namespace DemoProject.WebApi.Models.Pages
         CurrentPage = model.CurrentPage,
         PageSize = model.PageSize,
         TotalPages = model.TotalPages,
-        Records = model.Records.Select(x => DeliveryViewModel.Map(x)).ToList()
+        Records = model.Records.Select(DeliveryViewModel.Map).ToList()
       };
     }
   }

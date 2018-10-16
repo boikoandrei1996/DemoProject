@@ -42,7 +42,7 @@ namespace DemoProject.WebApi.Models.Pages
         CurrentPage = model.CurrentPage,
         PageSize = model.PageSize,
         TotalPages = model.TotalPages,
-        Records = model.Records.Select(x => DiscountViewModel.Map(x)).ToList()
+        Records = model.Records.Select(DiscountViewModel.Map).ToList()
       };
     }
   }

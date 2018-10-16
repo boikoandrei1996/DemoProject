@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.DLL.Extensions;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
+using DemoProject.DLL.Models.Pages;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DLL.Services
@@ -16,6 +19,51 @@ namespace DemoProject.DLL.Services
     public CartService(EFContext context)
     {
       _context = context;
+    }
+
+    public async Task<CartPage> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Cart, bool>> filter = null)
+    {
+      var query = _context.Carts.AsNoTracking();
+
+      if (filter != null)
+      {
+        query = query.Where(filter);
+      }
+
+      var totalCount = await query.CountAsync();
+
+      var page = new CartPage
+      {
+        CurrentPage = pageIndex,
+        PageSize = pageSize,
+        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
+      };
+
+      page.Records = await query
+        .Skip((pageIndex - 1) * pageSize)
+        .Take(pageSize)
+        .Include(x => x.CartShopItems)
+        .ThenInclude(x => x.ShopItemDetail)
+        .ThenInclude(x => x.ShopItem)
+        .ToListAsync();
+
+      return page;
+    }
+
+    public async Task<List<Cart>> GetListAsync(Expression<Func<Cart, bool>> filter = null)
+    {
+      var query = _context.Carts.AsNoTracking();
+
+      if (filter != null)
+      {
+        query = query.Where(filter);
+      }
+
+      return await query
+        .Include(x => x.CartShopItems)
+        .ThenInclude(x => x.ShopItemDetail)
+        .ThenInclude(x => x.ShopItem)
+        .ToListAsync();
     }
 
     public Task<Cart> FindByAsync(Expression<Func<Cart, bool>> filter)

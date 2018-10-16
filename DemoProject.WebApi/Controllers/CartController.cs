@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.CartApiModels;
+using DemoProject.WebApi.Models.Pages;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -19,6 +22,26 @@ namespace DemoProject.WebApi.Controllers
       ICartService cartService)
     {
       _cartService = cartService;
+    }
+
+    // GET api/cart/all
+    [HttpGet("all")]
+    public async Task<IEnumerable<CartViewModel>> GetAll()
+    {
+      var entities = await _cartService.GetListAsync();
+
+      return entities.Select(CartViewModel.Map);
+    }
+
+    // GET api/cart/page/{index}
+    [HttpGet("page/{index:int?}")]
+    public async Task<CartPageModel> GetPage(int? index, [FromQuery]int? pageSize)
+    {
+      var page = await _cartService.GetPageAsync(
+        index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
+        pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
+
+      return CartPageModel.Map(page);
     }
 
     // GET api/cart/{id}
