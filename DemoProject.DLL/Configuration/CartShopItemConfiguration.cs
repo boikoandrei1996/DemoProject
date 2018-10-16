@@ -9,7 +9,7 @@ namespace DemoProject.DLL.Configuration
     public void Configure(EntityTypeBuilder<CartShopItem> builder)
     {
       builder
-        .HasKey(x => new { x.CartId, x.ShopItemId });
+        .HasKey(x => new { x.CartId, x.ShopItemDetailId });
     }
   }
 }

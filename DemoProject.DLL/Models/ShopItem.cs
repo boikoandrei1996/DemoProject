@@ -13,6 +13,5 @@ namespace DemoProject.DLL.Models
     public MenuItem MenuItem { get; set; }
 
     public ICollection<ShopItemDetail> Details { get; set; } = new List<ShopItemDetail>();
-    public ICollection<CartShopItem> CartShopItems { get; set; } = new List<CartShopItem>();
   }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DemoProject.DLL.Models
@@ -18,5 +19,7 @@ namespace DemoProject.DLL.Models
 
     public Guid ShopItemId { get; set; }
     public ShopItem ShopItem { get; set; }
+
+    public ICollection<CartShopItem> CartShopItems { get; set; } = new List<CartShopItem>();
   }
 }
