@@ -1,9 +1,12 @@
-﻿using DemoProject.DLL.Models;
+﻿using System;
+using DemoProject.DLL.Models;
 
 namespace DemoProject.WebApi.Models.CartApiModels
 {
   public class CartAddModel
   {
+    public Guid Id { get; set; }
+
     public static Cart Map(CartAddModel model)
     {
       if (model == null)
@@ -11,7 +14,7 @@ namespace DemoProject.WebApi.Models.CartApiModels
         return null;
       }
 
-      return new Cart();
+      return new Cart { Id = model.Id };
     }
   }
 }

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
-using DemoProject.DLL.Models;
 using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.CartApiModels;
 using Microsoft.AspNetCore.Mvc;
@@ -34,21 +32,11 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/cart
     [HttpPost]
-    public Task<ServiceResult> Add([FromBody]CartAddModel apiEntity)
+    public Task<ServiceResult> CreateNew([FromBody]CartAddModel apiEntity)
     {
       var entity = CartAddModel.Map(apiEntity);
 
       return _cartService.AddAsync(entity);
-    }
-
-    // PUT api/cart/{id}
-    [HttpPut("{id:guid}")]
-    public Task<ServiceResult> Edit(Guid id/*, [FromBody]CartEditModel apiEntity*/)
-    {
-      // var entity = CartEditModel.Map(apiEntity, id);
-      var entity = new Cart();
-
-      return _cartService.UpdateAsync(entity);
     }
 
     // DELETE api/cart/{id}
@@ -56,6 +44,20 @@ namespace DemoProject.WebApi.Controllers
     public Task<ServiceResult> Delete(Guid id)
     {
       return _cartService.DeleteAsync(id);
+    }
+
+    // POST api/cart/addItem
+    [HttpPost("addItem")]
+    public Task<ServiceResult> AddItemToCart([FromBody]AddItemToCartModel apiEntity)
+    {
+      return _cartService.AddItemToCartAsync(apiEntity.CartId, apiEntity.ShopItemDetailId);
+    }
+
+    // POST api/cart/removeItem
+    [HttpPost("removeItem")]
+    public Task<ServiceResult> RemoveItemFromCart([FromBody]RemoveItemFromCartModel apiEntity)
+    {
+      return _cartService.RemoveItemFromCartAsync(apiEntity.CartId, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems);
     }
 
     protected override void Dispose(bool disposing)

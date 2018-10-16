@@ -32,6 +32,78 @@ namespace DemoProject.DLL.Services
         .FirstOrDefaultAsync(filter);
     }
 
+    public async Task<ServiceResult> AddItemToCartAsync(Guid cartId, Guid shopItemDetailId)
+    {
+      if (await _context.Carts.AnyAsync(x => x.Id == cartId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
+      }
+
+      var shopItemDetail = await _context.ShopItemDetails.FirstOrDefaultAsync(x => x.Id == shopItemDetailId);
+      if (shopItemDetail == null)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(shopItemDetailId), $"ShopItemDetail not found with id: '{shopItemDetailId}'.");
+      }
+
+      var oldCartShopItem = await _context.CartShopItems
+        .FirstOrDefaultAsync(x => x.CartId == cartId && x.ShopItemDetailId == shopItemDetailId);
+
+      if (oldCartShopItem == null)
+      {
+        // add new item
+        await _context.CartShopItems.AddAsync(new CartShopItem
+        {
+          CartId = cartId,
+          ShopItemDetailId = shopItemDetailId,
+          Price = shopItemDetail.Price,
+          Count = 1
+        });
+      }
+      else
+      {
+        // increase count and update price
+        oldCartShopItem.Count += 1;
+        oldCartShopItem.Price = shopItemDetail.Price;
+        _context.CartShopItems.Update(oldCartShopItem);
+      }
+
+      return await _context.SaveChangesSafeAsync(nameof(AddItemToCartAsync));
+    }
+
+    public async Task<ServiceResult> RemoveItemFromCartAsync(Guid cartId, Guid shopItemDetailId, bool shouldBeRemovedAllItems)
+    {
+      if (await _context.Carts.AnyAsync(x => x.Id == cartId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
+      }
+      
+      if (await _context.ShopItemDetails.AnyAsync(x => x.Id == shopItemDetailId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(shopItemDetailId), $"ShopItemDetail not found with id: '{shopItemDetailId}'.");
+      }
+
+      var cartShopItem = await _context.CartShopItems
+        .FirstOrDefaultAsync(x => x.CartId == cartId && x.ShopItemDetailId == shopItemDetailId);
+      if (cartShopItem == null)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(cartShopItem), $"CartShopItem not found with such complex id: '{cartId}-{shopItemDetailId}'.");
+      }
+
+      if (shouldBeRemovedAllItems || cartShopItem.Count <= 1)
+      {
+        // remove cartshopitem record
+        _context.CartShopItems.Remove(cartShopItem);
+      }
+      else
+      {
+        // reduce count
+        cartShopItem.Count -= 1;
+        _context.CartShopItems.Update(cartShopItem);
+      }
+
+      return await _context.SaveChangesSafeAsync(nameof(RemoveItemFromCartAsync));
+    }
+
     public Task<bool> ExistAsync(Expression<Func<Cart, bool>> filter)
     {
       if (filter == null)
