@@ -1,0 +1,153 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using DemoProject.DLL.Extensions;
+using DemoProject.DLL.Infrastructure;
+using DemoProject.DLL.Interfaces;
+using DemoProject.DLL.Models;
+using DemoProject.DLL.Models.Pages;
+using Microsoft.EntityFrameworkCore;
+
+namespace DemoProject.DLL.Services
+{
+  public class OrderService : IOrderService
+  {
+    private readonly EFContext _context;
+
+    public OrderService(EFContext context)
+    {
+      _context = context;
+    }
+
+    public async Task<OrderPage> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Order, bool>> filter = null)
+    {
+      var query = _context.Orders.AsNoTracking();
+
+      if (filter != null)
+      {
+        query = query.Where(filter);
+      }
+
+      var totalCount = await query.CountAsync();
+
+      var page = new OrderPage
+      {
+        CurrentPage = pageIndex,
+        PageSize = pageSize,
+        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
+      };
+
+      page.Records = await query
+        .Skip((pageIndex - 1) * pageSize)
+        .Take(pageSize)
+        .Include(x => x.Cart)
+        .ThenInclude(x => x.CartShopItems)
+        .ThenInclude(x => x.ShopItemDetail)
+        .ThenInclude(x => x.ShopItem)
+        .ToListAsync();
+
+      return page;
+    }
+
+    public async Task<List<Order>> GetListAsync(Expression<Func<Order, bool>> filter = null)
+    {
+      var query = _context.Orders.AsNoTracking();
+
+      if (filter != null)
+      {
+        query = query.Where(filter);
+      }
+
+      return await query
+        .Include(x => x.Cart)
+        .ThenInclude(x => x.CartShopItems)
+        .ThenInclude(x => x.ShopItemDetail)
+        .ThenInclude(x => x.ShopItem)
+        .ToListAsync();
+    }
+
+    public Task<Order> FindByAsync(Expression<Func<Order, bool>> filter)
+    {
+      if (filter == null)
+      {
+        throw new ArgumentNullException(nameof(filter));
+      }
+
+      return _context.Orders.AsNoTracking()
+        .Include(x => x.Cart)
+        .ThenInclude(x => x.CartShopItems)
+        .ThenInclude(x => x.ShopItemDetail)
+        .ThenInclude(x => x.ShopItem)
+        .FirstOrDefaultAsync(filter);
+    }
+
+    public Task<bool> ExistAsync(Expression<Func<Order, bool>> filter)
+    {
+      if (filter == null)
+      {
+        throw new ArgumentNullException(nameof(filter));
+      }
+
+      return _context.Orders.AnyAsync(filter);
+    }
+
+    public async Task<ServiceResult> AddAsync(Order model)
+    {
+      if (model == null)
+      {
+        throw new ArgumentNullException(nameof(model));
+      }
+
+      if (await _context.Carts.AnyAsync(x => x.Id == model.CartId) == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(model.CartId), $"Cart not found with id: '{model.CartId}'.");
+      }
+
+      _context.Orders.Add(model);
+
+      return await _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
+    }
+
+    public async Task<ServiceResult> UpdateAsync(Order model)
+    {
+      if (model == null)
+      {
+        throw new ArgumentNullException(nameof(model));
+      }
+
+      var oldOrder = await _context.Orders.FirstOrDefaultAsync(x => x.Id == model.Id);
+      if (oldOrder == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+      else
+      {
+        model.CartId = oldOrder.CartId;
+      }
+
+      _context.Orders.Update(model);
+
+      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
+    }
+
+    public async Task<ServiceResult> DeleteAsync(Guid id)
+    {
+      var model = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+      if (model == null)
+      {
+        return ServiceResultFactory.Success;
+      }
+
+      _context.Orders.Remove(model);
+
+      return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
+    }
+
+    public void Dispose()
+    {
+      _context.Dispose();
+    }
+  }
+}
