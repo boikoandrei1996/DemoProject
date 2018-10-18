@@ -50,6 +50,9 @@ namespace DemoProject.WebApi.Services
 
       var carts = this.LoadCarts(menuItems.First().Items.First().Details);
       await this.SaveToDbAsync(context, carts);
+
+      var orders = this.LoadOrders(carts);
+      await this.SaveToDbAsync(context, orders);
     }
 
     private async Task<T> LoadAsync<T>(string fileName)
@@ -112,6 +115,25 @@ namespace DemoProject.WebApi.Services
       }
 
       return carts;
+    }
+
+    private List<Order> LoadOrders(IEnumerable<Cart> carts)
+    {
+      var orders = new List<Order>();
+      var i = 0;
+      foreach (var cart in carts)
+      {
+        i += 1;
+        orders.Add(new Order
+        {
+          Name = $"Order #{i}",
+          Mobile = "1234567",
+          Address = $"Minsk pr.Pushkina {i}",
+          CartId = cart.Id
+        });
+      }
+
+      return orders;
     }
   }
 }
