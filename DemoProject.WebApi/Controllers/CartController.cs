@@ -73,7 +73,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpPost("addItem")]
     public Task<ServiceResult> AddItemToCart([FromBody]AddItemToCartModel apiEntity)
     {
-      return _cartService.AddItemToCartAsync(apiEntity.CartId, apiEntity.ShopItemDetailId);
+      return _cartService.AddItemToCartAsync(apiEntity.CartId, apiEntity.ShopItemDetailId, apiEntity.Count ?? 1);
     }
 
     // POST api/cart/removeItem

@@ -13,7 +13,7 @@ namespace DemoProject.DLL.Interfaces
     Task<CartPage> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Cart, bool>> filter = null);
     Task<List<Cart>> GetListAsync(Expression<Func<Cart, bool>> filter = null);
     Task<Cart> FindByAsync(Expression<Func<Cart, bool>> filter);
-    Task<ServiceResult> AddItemToCartAsync(Guid cartId, Guid shopItemDetailId);
+    Task<ServiceResult> AddItemToCartAsync(Guid cartId, Guid shopItemDetailId, int count);
     Task<ServiceResult> RemoveItemFromCartAsync(Guid cartId, Guid shopItemDetailId, bool shouldBeRemovedAllItems);
   }
 }

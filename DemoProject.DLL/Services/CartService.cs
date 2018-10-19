@@ -80,8 +80,13 @@ namespace DemoProject.DLL.Services
         .FirstOrDefaultAsync(filter);
     }
 
-    public async Task<ServiceResult> AddItemToCartAsync(Guid cartId, Guid shopItemDetailId)
+    public async Task<ServiceResult> AddItemToCartAsync(Guid cartId, Guid shopItemDetailId, int count)
     {
+      if (count < 1)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(count), $"'{count}' should be positive.");
+      }
+
       if (await _context.Carts.AnyAsync(x => x.Id == cartId) == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
@@ -104,13 +109,13 @@ namespace DemoProject.DLL.Services
           CartId = cartId,
           ShopItemDetailId = shopItemDetailId,
           Price = shopItemDetail.Price,
-          Count = 1
+          Count = count
         });
       }
       else
       {
         // increase count and update price
-        oldCartShopItem.Count += 1;
+        oldCartShopItem.Count += count;
         oldCartShopItem.Price = shopItemDetail.Price;
         _context.CartShopItems.Update(oldCartShopItem);
       }
