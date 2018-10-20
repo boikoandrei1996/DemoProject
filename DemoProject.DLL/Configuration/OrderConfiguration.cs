@@ -8,9 +8,6 @@ namespace DemoProject.DLL.Configuration
   {
     public void Configure(EntityTypeBuilder<Order> builder)
     {
-      builder.Property(x => x.DateOfCreation)
-        .HasDefaultValueSql("GETUTCDATE()");
-
       builder.Property(x => x.Name)
         .IsRequired()
         .HasMaxLength(255);

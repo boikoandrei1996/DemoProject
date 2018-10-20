@@ -34,6 +34,7 @@ namespace DemoProject.WebApi.Models.OrderApiModels
         Mobile = model.Mobile,
         Address = model.Address,
         Comment = model.Comment,
+        DateOfCreation = DateTime.UtcNow,
         CartId = model.CartId
       };
     }

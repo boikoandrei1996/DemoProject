@@ -129,6 +129,7 @@ namespace DemoProject.WebApi.Services
           Name = $"Order #{i}",
           Mobile = "1234567",
           Address = $"Minsk pr.Pushkina {i}",
+          DateOfCreation = DateTime.UtcNow,
           CartId = cart.Id
         });
       }
