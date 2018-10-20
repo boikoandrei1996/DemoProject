@@ -110,26 +110,27 @@ namespace DemoProject.DLL.Services
       return await _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
     }
 
-    public async Task<ServiceResult> UpdateAsync(Order model)
+    public Task<ServiceResult> UpdateAsync(Order model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      throw new NotImplementedException();
+      //if (model == null)
+      //{
+      //  throw new ArgumentNullException(nameof(model));
+      //}
 
-      var oldOrder = await _context.Orders.FirstOrDefaultAsync(x => x.Id == model.Id);
-      if (oldOrder == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-      else
-      {
-        model.CartId = oldOrder.CartId;
-      }
+      //var oldOrder = await _context.Orders.FirstOrDefaultAsync(x => x.Id == model.Id);
+      //if (oldOrder == null)
+      //{
+      //  return ServiceResultFactory.NotFound;
+      //}
+      //else
+      //{
+      //  model.CartId = oldOrder.CartId;
+      //}
 
-      _context.Orders.Update(model);
+      //_context.Orders.Update(model);
 
-      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
+      //return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -143,6 +144,81 @@ namespace DemoProject.DLL.Services
       _context.Orders.Remove(model);
 
       return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
+    }
+
+    public async Task<ServiceResult> ApproveAsync(Guid id)
+    {
+      var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+      if (order == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      if (order.DateOfApproved.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "Order is already approved.");
+      }
+
+      if (order.DateOfRejected.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "Order is already rejected.");
+      }
+
+      order.DateOfApproved = DateTime.UtcNow;
+
+      _context.Orders.Update(order);
+
+      return await _context.SaveChangesSafeAsync(nameof(ApproveAsync));
+    }
+
+    public async Task<ServiceResult> RejectAsync(Guid id)
+    {
+      var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+      if (order == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      if (order.DateOfRejected.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already rejected.");
+      }
+
+      if (order.DateOfApproved.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already approved.");
+      }
+
+      order.DateOfRejected = DateTime.UtcNow;
+
+      _context.Orders.Update(order);
+
+      return await _context.SaveChangesSafeAsync(nameof(RejectAsync));
+    }
+
+    public async Task<ServiceResult> CloseAsync(Guid id)
+    {
+      var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+      if (order == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      if (order.DateOfClosed.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "Order is already closed.");
+      }
+
+      if (!order.DateOfApproved.HasValue && !order.DateOfRejected.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "Order should be approved or rejected.");
+      }
+
+      order.DateOfClosed = DateTime.UtcNow;
+
+      _context.Orders.Update(order);
+
+      return await _context.SaveChangesSafeAsync(nameof(CloseAsync));
     }
 
     public void Dispose()

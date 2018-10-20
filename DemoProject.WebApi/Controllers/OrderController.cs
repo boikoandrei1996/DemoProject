@@ -62,13 +62,25 @@ namespace DemoProject.WebApi.Controllers
       return _orderService.AddAsync(entity);
     }
 
-    // PUT api/order/{id}
-    [HttpPut("{id:guid}")]
-    public Task<ServiceResult> Edit(Guid id, [FromBody]OrderEditModel apiEntity)
+    // POST api/order/{id}/approve
+    [HttpPost("{id:guid}/approve")]
+    public Task<ServiceResult> ApproveOrder(Guid id)
     {
-      var entity = OrderEditModel.Map(apiEntity, id);
+      return _orderService.ApproveAsync(id);
+    }
 
-      return _orderService.UpdateAsync(entity);
+    // POST api/order/{id}/reject
+    [HttpPost("{id:guid}/reject")]
+    public Task<ServiceResult> RejectOrder(Guid id)
+    {
+      return _orderService.RejectAsync(id);
+    }
+
+    // POST api/order/{id}/close
+    [HttpPost("{id:guid}/close")]
+    public Task<ServiceResult> CloseOrder(Guid id)
+    {
+      return _orderService.CloseAsync(id);
     }
 
     // DELETE api/order/{id}
