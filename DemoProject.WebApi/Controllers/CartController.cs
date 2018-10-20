@@ -69,18 +69,18 @@ namespace DemoProject.WebApi.Controllers
       return _cartService.DeleteAsync(id);
     }
 
-    // POST api/cart/addItem
-    [HttpPost("addItem")]
-    public Task<ServiceResult> AddItemToCart([FromBody]AddItemToCartModel apiEntity)
+    // POST api/cart/{id}/addItem
+    [HttpPost("{id:guid}/addItem")]
+    public Task<ServiceResult> AddItemToCart(Guid id, [FromBody]AddItemToCartModel apiEntity)
     {
-      return _cartService.AddItemToCartAsync(apiEntity.CartId, apiEntity.ShopItemDetailId, apiEntity.Count ?? 1);
+      return _cartService.AddItemToCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.Count ?? 1);
     }
 
-    // POST api/cart/removeItem
-    [HttpPost("removeItem")]
-    public Task<ServiceResult> RemoveItemFromCart([FromBody]RemoveItemFromCartModel apiEntity)
+    // POST api/cart/{id}/removeItem
+    [HttpPost("{id:guid}/removeItem")]
+    public Task<ServiceResult> RemoveItemFromCart(Guid id, [FromBody]RemoveItemFromCartModel apiEntity)
     {
-      return _cartService.RemoveItemFromCartAsync(apiEntity.CartId, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems);
+      return _cartService.RemoveItemFromCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems);
     }
 
     protected override void Dispose(bool disposing)
