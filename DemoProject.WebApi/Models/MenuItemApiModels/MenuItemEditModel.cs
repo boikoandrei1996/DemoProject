@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
-using DemoProject.WebApi.Attributes;
+using DemoProject.WebApi.Attributes.ValidationAttributes;
 
 namespace DemoProject.WebApi.Models.MenuItemApiModels
 {
   public class MenuItemEditModel
   {
     [Required]
+    [MinimumValueValidation]
     public int Order { get; set; }
 
     [Required]
@@ -16,7 +17,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
 
     [Required]
     [MaxLength(100)]
-    [ImageExistValidation]
+    [ImageExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
     public string IconFilename { get; set; }
 
     public static MenuItem Map(MenuItemEditModel model, Guid id)

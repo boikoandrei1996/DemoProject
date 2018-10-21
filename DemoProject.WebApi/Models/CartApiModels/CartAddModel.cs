@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
 
 namespace DemoProject.WebApi.Models.CartApiModels
 {
   public class CartAddModel
   {
+    [Required]
     public Guid Id { get; set; }
 
     public static Cart Map(CartAddModel model)

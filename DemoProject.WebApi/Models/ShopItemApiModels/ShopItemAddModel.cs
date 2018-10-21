@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
-using DemoProject.WebApi.Attributes;
+using DemoProject.WebApi.Attributes.ValidationAttributes;
 
 namespace DemoProject.WebApi.Models.ShopItemApiModels
 {
@@ -15,9 +15,10 @@ namespace DemoProject.WebApi.Models.ShopItemApiModels
 
     [Required]
     [MaxLength(100)]
-    [ImageExistValidation]
+    [ImageExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
     public string ImageFilename { get; set; }
 
+    [Required]
     public Guid MenuItemId { get; set; }
 
     public static ShopItem Map(ShopItemAddModel model)

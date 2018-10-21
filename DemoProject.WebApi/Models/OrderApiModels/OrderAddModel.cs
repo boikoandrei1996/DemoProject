@@ -19,6 +19,7 @@ namespace DemoProject.WebApi.Models.OrderApiModels
 
     public string Comment { get; set; }
 
+    [Required]
     public Guid CartId { get; set; }
 
     public static Order Map(OrderAddModel model)

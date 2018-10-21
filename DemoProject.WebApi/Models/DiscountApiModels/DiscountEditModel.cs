@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
+using DemoProject.WebApi.Attributes.ValidationAttributes;
 
 namespace DemoProject.WebApi.Models.DiscountApiModels
 {
@@ -11,6 +12,7 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
     public string Title { get; set; }
 
     [Required]
+    [MinimumValueValidation]
     public int Order { get; set; }
 
     public static ContentGroup Map(DiscountEditModel model, Guid id)

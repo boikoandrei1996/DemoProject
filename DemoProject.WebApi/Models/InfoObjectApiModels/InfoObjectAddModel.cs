@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
-using DemoProject.WebApi.Attributes;
+using DemoProject.WebApi.Attributes.ValidationAttributes;
 
 namespace DemoProject.WebApi.Models.InfoObjectApiModels
 {
@@ -15,8 +15,10 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     public string Type { get; set; }
 
     [Required]
+    [MinimumValueValidation]
     public int SubOrder { get; set; }
 
+    [Required]
     public Guid ContentGroupId { get; set; }
 
     public static InfoObject Map(InfoObjectAddModel model)

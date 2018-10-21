@@ -80,7 +80,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpPost("{id:guid}/removeItem")]
     public Task<ServiceResult> RemoveItemFromCart(Guid id, [FromBody]RemoveItemFromCartModel apiEntity)
     {
-      return _cartService.RemoveItemFromCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems);
+      return _cartService.RemoveItemFromCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems ?? false);
     }
 
     protected override void Dispose(bool disposing)

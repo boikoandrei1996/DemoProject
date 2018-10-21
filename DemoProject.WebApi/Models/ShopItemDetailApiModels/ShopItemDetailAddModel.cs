@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DLL.Models;
+using DemoProject.WebApi.Attributes.ValidationAttributes;
 
 namespace DemoProject.WebApi.Models.ShopItemDetailApiModels
 {
   public class ShopItemDetailAddModel
   {
+    [Required]
+    [MinimumValueValidation(1)]
     public int SubOrder { get; set; }
 
     [Required]
@@ -15,9 +18,11 @@ namespace DemoProject.WebApi.Models.ShopItemDetailApiModels
     [Required]
     [MaxLength(100)]
     public string Quantity { get; set; }
-    
+
+    [Required]
     public decimal Price { get; set; }
 
+    [Required]
     public Guid ShopItemId { get; set; }
 
     public static ShopItemDetail Map(ShopItemDetailAddModel model)
