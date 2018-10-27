@@ -1,0 +1,16 @@
+{
+  "editor.fontSize": 13,
+  "editor.renderWhitespace": "all",
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.autoIndent": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "git.enableSmartCommit": true,
+  "files.exclude": {
+    "**/node_modules": true,
+    "package-lock.json": true,
+    "**/public": true,
+    "**/.vscode": true
+  }
+}
