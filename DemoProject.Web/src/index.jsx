@@ -6,7 +6,6 @@ import reducer from "./app/reducer.jsx";
 import AppView from "./app/appView.jsx";
 
 var store = createStore(reducer);
-
 store.dispatch({
   type: "DEFAULT_STATE",
   defaultData: {
@@ -18,5 +17,5 @@ ReactDOM.render(
   <Provider store={store}>
     <AppView />
   </Provider>,
-  document.getElementById("container")
+  document.getElementById("root")
 );
