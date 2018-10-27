@@ -1,6 +1,6 @@
 # **DemoProject Web**
 
 ## **How to use:**
-- npm install - install node modules
-- npm run build - build source code
-- npm run dev - start webpack-dev-server and open page in browser
+- **npm install** - _install node modules_
+- **npm run build** - _build source code_
+- **npm run dev** - _start webpack-dev-server and open page in browser_
