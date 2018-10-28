@@ -4,8 +4,8 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
-import reducer from "./store/reducer";
-import * as actionTypes from './store/actionTypeNames';
+import reducer from "./reducers/reducer";
+import * as actionTypes from './constants/actionTypeNames';
 import Layout from "./components/layout.jsx";
 
 var store = createStore(reducer);

@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import * as actionTypes from './actionTypeNames';
+import * as actionTypes from '../constants/actionTypeNames';
 
 var reducer = function (state = Map(), action) {
   switch (action.type) {
