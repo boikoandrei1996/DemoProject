@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect } from "react-redux";
-import actions from "./actions.jsx";
-import PhoneForm from "./components/phoneForm.jsx";
-import PhonesList from "./components/phoneList.jsx";
+import { connect } from 'react-redux';
+import actions from '../store/actions';
+import PhoneForm from './phoneForm.jsx';
+import PhonesList from './phoneList.jsx';
 
 class PhoneView extends React.Component {
   render() {
@@ -15,7 +15,7 @@ class PhoneView extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    phones: state.get("phones")
+    phones: state.get('phones')
   };
 }
 

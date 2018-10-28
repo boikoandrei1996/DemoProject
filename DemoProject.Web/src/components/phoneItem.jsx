@@ -14,7 +14,8 @@ class PhoneItem extends React.Component {
   render() {
     return <div>
       <p>
-        <b>{this.props.text}</b><br />
+        <b>{this.props.text}</b>
+        <br />
         <button onClick={this.onClickDelete}>Удалить</button>
       </p>
     </div>

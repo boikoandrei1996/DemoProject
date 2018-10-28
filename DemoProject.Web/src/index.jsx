@@ -4,12 +4,13 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
-import reducer from "./phone/reducer.jsx";
-import Layout from "./shared/layout.jsx";
+import reducer from "./store/reducer";
+import * as actionTypes from './store/actionTypeNames';
+import Layout from "./components/layout.jsx";
 
 var store = createStore(reducer);
 store.dispatch({
-  type: "DEFAULT_STATE",
+  type: actionTypes.SET_INITIAL_STATE,
   defaultData: {
     phones: ["iPhone 7 Plus", "Samsung Galaxy A5", "qwe"]
   }

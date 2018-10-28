@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Col, Grid, Row } from 'react-bootstrap';
-import NavMenu from './components/navMenu.jsx';
-import PhoneView from '../phone/phoneView.jsx'
-import PhoneView2 from '../phone/phoneView2.jsx'
+import NavMenu from './navMenu.jsx';
+import PhoneView from './phoneView.jsx'
+import PhoneView2 from './phoneView2.jsx'
 import NotFound from './notFound.jsx'
 
 class Layout extends React.Component {

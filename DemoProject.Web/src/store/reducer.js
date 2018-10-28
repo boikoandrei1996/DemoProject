@@ -1,19 +1,20 @@
-import { Map } from "immutable";
+import { Map } from 'immutable';
+import * as actionTypes from './actionTypeNames';
 
 var reducer = function (state = Map(), action) {
   switch (action.type) {
-    case "DEFAULT_STATE":
+    case actionTypes.SET_INITIAL_STATE:
       return state.merge(action.defaultData);
 
-    case "ADD_PHONE":
+    case actionTypes.ADD_PHONE:
       return state.update(
-        "phones",
+        'phones',
         (phones) => phones.push(action.phone)
       );
 
-    case "DELETE_PHONE":
+    case actionTypes.DELETE_PHONE:
       return state.update(
-        "phones",
+        'phones',
         (phones) => phones.filterNot(
           (item) => item === action.phone
         )

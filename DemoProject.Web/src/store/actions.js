@@ -1,13 +1,15 @@
+import * as actionTypes from './actionTypeNames';
+
 var addPhone = function (phone) {
   return {
-    type: "ADD_PHONE",
+    type: actionTypes.ADD_PHONE,
     phone
   }
 };
 
 var deletePhone = function (phone) {
   return {
-    type: "DELETE_PHONE",
+    type: actionTypes.DELETE_PHONE,
     phone
   }
 };
