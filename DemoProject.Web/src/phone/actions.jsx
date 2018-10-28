@@ -12,7 +12,7 @@ var deletePhone = function (phone) {
   }
 };
 
-module.exports = {
+export default {
   addPhone,
   deletePhone
 };

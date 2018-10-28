@@ -4,7 +4,7 @@ import actions from "./actions.jsx";
 import PhoneForm from "./components/phoneForm.jsx";
 import PhonesList from "./components/phoneList.jsx";
 
-class AppView extends React.Component {
+class PhoneView extends React.Component {
   render() {
     return <div>
       <PhoneForm addPhone={this.props.addPhone} />
@@ -19,4 +19,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, actions)(AppView);
+export default connect(mapStateToProps, actions)(PhoneView);
