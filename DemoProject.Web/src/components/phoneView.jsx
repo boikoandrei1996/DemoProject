@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actions from '../actions/actions';
+import phoneActions from '../actions/phoneActions';
 import PhoneForm from './phoneForm.jsx';
 import PhonesList from './phoneList.jsx';
 
@@ -19,4 +19,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, actions)(PhoneView);
+export default connect(mapStateToProps, phoneActions)(PhoneView);

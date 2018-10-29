@@ -4,11 +4,11 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
-import reducer from "./reducers/reducer";
-import * as actionTypes from './constants/actionTypeNames';
+import phoneReducer from "./reducers/phoneReducer";
+import * as actionTypes from './constants/phoneActionTypeNames';
 import Layout from "./components/layout.jsx";
 
-var store = createStore(reducer);
+var store = createStore(phoneReducer);
 store.dispatch({
   type: actionTypes.SET_INITIAL_STATE,
   defaultData: {

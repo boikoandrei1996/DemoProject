@@ -1,4 +1,4 @@
-import * as actionTypes from '../constants/actionTypeNames';
+import * as actionTypes from '../constants/phoneActionTypeNames';
 
 var addPhone = function (phone) {
   return {

@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
-import * as actionTypes from '../constants/actionTypeNames';
+import * as actionTypes from '../constants/phoneActionTypeNames';
 
-var reducer = function (state = Map(), action) {
+var phoneReducer = function (state = Map(), action) {
   switch (action.type) {
     case actionTypes.SET_INITIAL_STATE:
       return state.merge(action.defaultData);
@@ -24,4 +24,4 @@ var reducer = function (state = Map(), action) {
   return state;
 }
 
-export default reducer;
+export default phoneReducer;
