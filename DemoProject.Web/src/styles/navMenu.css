@@ -16,11 +16,8 @@
   .navbar {
       height: 100%;
       width: calc(25% - 20px);
-  }
-  .navbar {
       border-radius: 0;
       border-width: 0;
-      height: 100%;
   }
   .navbar-header {
       float: none;

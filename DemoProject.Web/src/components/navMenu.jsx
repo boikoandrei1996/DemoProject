@@ -21,9 +21,39 @@ class NavMenu extends React.Component {
                 <Glyphicon glyph='home' /> Home
               </NavItem>
             </LinkContainer>
-            <LinkContainer to='/phone/42'>
+            <LinkContainer to='/temp/3'>
               <NavItem>
-                <Glyphicon glyph='phone' /> Phone View id
+                <Glyphicon glyph='question-sign' /> About
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to='/temp/6'>
+              <NavItem>
+                <Glyphicon glyph='shopping-cart' /> Cart
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to='/temp/2'>
+              <NavItem>
+                <Glyphicon glyph='usd' /> Delivery
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to='/temp/1'>
+              <NavItem>
+                <Glyphicon glyph='info-sign' /> Discount
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to='/temp/4'>
+              <NavItem>
+                <Glyphicon glyph='cutlery' /> MenuItem
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to='/temp/7'>
+              <NavItem>
+                <Glyphicon glyph='inbox' /> Order
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to='/temp/5'>
+              <NavItem>
+                <Glyphicon glyph='th-list' /> ShopItem
               </NavItem>
             </LinkContainer>
           </Nav>

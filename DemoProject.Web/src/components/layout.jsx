@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Col, Grid, Row } from 'react-bootstrap';
 import NavMenu from './navMenu.jsx';
 import PhoneView from './phoneView.jsx'
-import PhoneView2 from './phoneView2.jsx'
+import TempView from './tempView.jsx'
 import NotFound from './notFound.jsx'
 
 class Layout extends React.Component {
@@ -17,7 +17,7 @@ class Layout extends React.Component {
           <Col sm={9}>
             <Switch>
               <Route exact path='/' component={PhoneView} />
-              <Route path='/phone/:id(\d+)' component={PhoneView2} />
+              <Route path='/temp/:id(\d+)' component={TempView} />
               <Route component={NotFound} />
             </Switch>
           </Col>
