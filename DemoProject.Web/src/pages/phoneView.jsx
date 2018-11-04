@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import phoneActions from '../actions/phoneActions';
-import PhoneForm from '../components/phoneForm.jsx';
-import PhonesList from '../components/phoneList.jsx';
+import PhoneForm from '../components/phone/phoneForm.jsx';
+import PhonesList from '../components/phone/phoneList.jsx';
 
 class PhoneView extends React.Component {
   render() {
