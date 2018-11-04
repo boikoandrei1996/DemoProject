@@ -1,6 +1,6 @@
 import React from 'react';
 
-class NotFound extends React.Component {
+class NotFoundView extends React.Component {
   render() {
     return (
       <div class='alert alert-danger' role='alert'>
@@ -10,4 +10,4 @@ class NotFound extends React.Component {
   }
 }
 
-export default NotFound;
+export default NotFoundView;
