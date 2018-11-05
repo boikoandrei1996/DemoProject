@@ -24,11 +24,19 @@ namespace DemoProject.DLL.Infrastructure
       ModelId = modelId;
     }
 
+    public ServiceResult(ServiceResultKey key, object model)
+    {
+      Key = key;
+      Model = model;
+    }
+
     public ServiceResultKey Key { get; }
 
     public ICollection<ServiceError> Errors { get; }
 
     public Guid ModelId { get; }
+
+    public object Model { get; }
   }
 
   public enum ServiceResultKey : int
@@ -37,6 +45,7 @@ namespace DemoProject.DLL.Infrastructure
     BadRequest = 1,
     NotFound = 2,
     InternalServerError = 3,
-    ModelCreated = 4
+    ModelCreated = 4,
+    ModelUpdated = 5
   }
 }

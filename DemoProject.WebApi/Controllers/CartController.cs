@@ -73,14 +73,18 @@ namespace DemoProject.WebApi.Controllers
     [HttpPost("{id:guid}/addItem")]
     public Task<ServiceResult> AddItemToCart(Guid id, [FromBody]AddItemToCartModel apiEntity)
     {
-      return _cartService.AddItemToCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.Count ?? 1);
+      var taskResult = _cartService.AddItemToCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.Count ?? 1);
+
+      return this.ProcessResultAsync(taskResult, id);
     }
 
     // POST api/cart/{id}/removeItem
     [HttpPost("{id:guid}/removeItem")]
     public Task<ServiceResult> RemoveItemFromCart(Guid id, [FromBody]RemoveItemFromCartModel apiEntity)
     {
-      return _cartService.RemoveItemFromCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems ?? false);
+      var taskResult = _cartService.RemoveItemFromCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems ?? false);
+
+      return this.ProcessResultAsync(taskResult, id);
     }
 
     protected override void Dispose(bool disposing)
@@ -91,6 +95,22 @@ namespace DemoProject.WebApi.Controllers
       }
 
       base.Dispose(disposing);
+    }
+
+    private async Task<ServiceResult> ProcessResultAsync(Task<ServiceResult> taskResult, Guid id)
+    {
+      var result = await taskResult;
+      
+      if (result.Key == ServiceResultKey.Success)
+      {
+        var entity = await _cartService.FindByAsync(x => x.Id == id);
+
+        return ServiceResultFactory.EntityUpdatedResult(CartViewModel.Map(entity));
+      }
+      else
+      {
+        return result;
+      }
     }
   }
 }

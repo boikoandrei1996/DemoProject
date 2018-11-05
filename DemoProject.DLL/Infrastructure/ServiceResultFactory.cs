@@ -25,6 +25,11 @@ namespace DemoProject.DLL.Infrastructure
       return new ServiceResult(ServiceResultKey.ModelCreated, modelId);
     }
 
+    public static ServiceResult EntityUpdatedResult(object model)
+    {
+      return new ServiceResult(ServiceResultKey.ModelUpdated, model);
+    }
+
     public static ServiceResult InternalServerErrorResult(string message)
     {
       return new ServiceResult(ServiceResultKey.InternalServerError, new ServiceError
