@@ -21,6 +21,11 @@ class NavMenu extends React.Component {
                 <Glyphicon glyph='home' /> Home
               </NavItem>
             </LinkContainer>
+            <LinkContainer to='/discount'>
+              <NavItem>
+                <Glyphicon glyph='info-sign' /> Discount
+              </NavItem>
+            </LinkContainer>
             <LinkContainer to='/temp/3'>
               <NavItem>
                 <Glyphicon glyph='question-sign' /> About
@@ -34,11 +39,6 @@ class NavMenu extends React.Component {
             <LinkContainer to='/temp/2'>
               <NavItem>
                 <Glyphicon glyph='usd' /> Delivery
-              </NavItem>
-            </LinkContainer>
-            <LinkContainer to='/temp/1'>
-              <NavItem>
-                <Glyphicon glyph='info-sign' /> Discount
               </NavItem>
             </LinkContainer>
             <LinkContainer to='/temp/4'>
