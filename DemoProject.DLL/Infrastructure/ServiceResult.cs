@@ -36,7 +36,7 @@ namespace DemoProject.DLL.Infrastructure
 
     public Guid ModelId { get; }
 
-    public object Model { get; }
+    public object Model { get; set; }
   }
 
   public enum ServiceResultKey : int

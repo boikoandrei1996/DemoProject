@@ -39,6 +39,15 @@ namespace DemoProject.DLL.Extensions
         result;
     }
 
+    public static async Task<ServiceResult> TrySaveChangesAsync(this DbContext context, string code, object model)
+    {
+      var result = await context.TrySaveChangesAsync(code);
+
+      return result.Key == ServiceResultKey.Success ?
+        ServiceResultFactory.EntityUpdatedResult(model) :
+        result;
+    }
+
     public static async Task<ServiceResult> TrySaveChangesAsync(this DbContext context, string code)
     {
       try

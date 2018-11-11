@@ -120,7 +120,9 @@ namespace DemoProject.DLL.Services
         _context.CartShopItems.Update(oldCartShopItem);
       }
 
-      return await _context.TrySaveChangesAsync(nameof(AddItemToCartAsync));
+      var cart = await this.GetCartAsync(cartId);
+
+      return await _context.TrySaveChangesAsync(nameof(AddItemToCartAsync), cart);
     }
 
     public async Task<ServiceResult> RemoveItemFromCartAsync(Guid cartId, Guid shopItemDetailId, bool shouldBeRemovedAllItems)
@@ -129,7 +131,7 @@ namespace DemoProject.DLL.Services
       {
         return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
       }
-      
+
       if (await _context.ShopItemDetails.AnyAsync(x => x.Id == shopItemDetailId) == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(shopItemDetailId), $"ShopItemDetail not found with id: '{shopItemDetailId}'.");
@@ -154,7 +156,9 @@ namespace DemoProject.DLL.Services
         _context.CartShopItems.Update(cartShopItem);
       }
 
-      return await _context.TrySaveChangesAsync(nameof(RemoveItemFromCartAsync));
+      var cart = await this.GetCartAsync(cartId);
+
+      return await _context.TrySaveChangesAsync(nameof(RemoveItemFromCartAsync), cart);
     }
 
     public Task<bool> ExistAsync(Expression<Func<Cart, bool>> filter)
@@ -200,6 +204,15 @@ namespace DemoProject.DLL.Services
     public void Dispose()
     {
       _context.Dispose();
+    }
+
+    private Task<Cart> GetCartAsync(Guid id)
+    {
+      return _context.Carts
+        .Include(x => x.CartShopItems)
+        .ThenInclude(x => x.ShopItemDetail)
+        .ThenInclude(x => x.ShopItem)
+        .FirstAsync(x => x.Id == id);
     }
   }
 }
