@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
 {
+  [ApiExplorerSettings(IgnoreApi = true)]
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]

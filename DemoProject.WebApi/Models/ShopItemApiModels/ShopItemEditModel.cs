@@ -15,7 +15,7 @@ namespace DemoProject.WebApi.Models.ShopItemApiModels
 
     [Required]
     [MaxLength(100)]
-    [ImageExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
+    [FileExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
     public string ImageFilename { get; set; }
 
     [Required]
@@ -33,7 +33,7 @@ namespace DemoProject.WebApi.Models.ShopItemApiModels
         Id = id,
         Title = model.Title,
         Description = model.Description,
-        ImagePath = Constants.DEFAULT_PATH_TO_IMAGE + model.ImageFilename,
+        ImagePath = Constants.GetRelativePathToImage(model.ImageFilename),
         MenuItemId = model.MenuItemId
       };
     }

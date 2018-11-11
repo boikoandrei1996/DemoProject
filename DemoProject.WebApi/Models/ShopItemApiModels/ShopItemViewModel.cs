@@ -27,7 +27,7 @@ namespace DemoProject.WebApi.Models.ShopItemApiModels
         Id = model.Id,
         Title = model.Title,
         Description = model.Description,
-        ImagePath = Constants.BASE_URL + model.ImagePath,
+        ImagePath = Constants.GetFullPathToImage(model.ImagePath),
         Details = model.Details.Select(x => ShopItemDetailViewModel.Map(x)).ToList()
       };
     }

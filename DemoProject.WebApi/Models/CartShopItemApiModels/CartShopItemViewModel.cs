@@ -26,7 +26,7 @@ namespace DemoProject.WebApi.Models.CartShopItemApiModels
         ShopItemDetailId = model.ShopItemDetailId,
         Kind = model.ShopItemDetail.Kind,
         Title = model.ShopItemDetail.ShopItem.Title,
-        ImagePath = Constants.BASE_URL + model.ShopItemDetail.ShopItem.ImagePath
+        ImagePath = Constants.GetFullPathToImage(model.ShopItemDetail.ShopItem.ImagePath)
       };
     }
   }

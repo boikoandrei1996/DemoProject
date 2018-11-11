@@ -22,7 +22,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
         Id = model.Id,
         Order = model.Order,
         Text = model.Text,
-        IconPath = Constants.BASE_URL + model.IconPath
+        IconPath = Constants.GetFullPathToImage(model.IconPath)
       };
     }
   }

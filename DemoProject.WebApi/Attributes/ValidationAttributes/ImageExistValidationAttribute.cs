@@ -3,18 +3,18 @@ using System.IO;
 
 namespace DemoProject.WebApi.Attributes.ValidationAttributes
 {
-  public class ImageExistValidationAttribute : ValidationAttribute
+  public class FileExistValidationAttribute : ValidationAttribute
   {
-    private readonly string _path;
+    private readonly string _relativePath;
 
-    public ImageExistValidationAttribute(string path)
+    public FileExistValidationAttribute(string relativePath)
     {
-      _path = path;
+      _relativePath = relativePath;
     }
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-      if (File.Exists(_path + (string)value))
+      if (File.Exists(_relativePath + (string)value))
       {
         return ValidationResult.Success;
       }

@@ -16,7 +16,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
 
     [Required]
     [MaxLength(100)]
-    [ImageExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
+    [FileExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
     public string IconFilename { get; set; }
 
     public static MenuItem Map(MenuItemAddModel model)
@@ -30,7 +30,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
       {
         Order = model.Order,
         Text = model.Text,
-        IconPath = Constants.DEFAULT_PATH_TO_IMAGE + model.IconFilename
+        IconPath = Constants.GetRelativePathToImage(model.IconFilename)
       };
     }
   }
