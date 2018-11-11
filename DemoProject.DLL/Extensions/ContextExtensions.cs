@@ -20,7 +20,7 @@ namespace DemoProject.DLL.Extensions
       context.History.DeleteFromQuery();
     }
 
-    public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context)
+    /*public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context)
     {
       return context.SaveChangesSafeAsync(string.Empty);
     }
@@ -28,18 +28,18 @@ namespace DemoProject.DLL.Extensions
     public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, Guid modelId)
     {
       return context.SaveChangesSafeAsync(string.Empty, modelId);
-    }
+    }*/
 
-    public static async Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, string code, Guid modelId)
+    public static async Task<ServiceResult> TrySaveChangesAsync(this DbContext context, string code, Guid modelId)
     {
-      var result = await context.SaveChangesSafeAsync(code);
+      var result = await context.TrySaveChangesAsync(code);
 
       return result.Key == ServiceResultKey.Success ?
         ServiceResultFactory.EntityCreatedResult(modelId) :
         result;
     }
 
-    public static async Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, string code)
+    public static async Task<ServiceResult> TrySaveChangesAsync(this DbContext context, string code)
     {
       try
       {

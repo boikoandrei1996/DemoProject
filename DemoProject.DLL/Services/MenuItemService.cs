@@ -7,6 +7,7 @@ using DemoProject.DLL.Extensions;
 using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
+using DemoProject.DLL.Models.Pages;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DLL.Services
@@ -24,6 +25,11 @@ namespace DemoProject.DLL.Services
     {
       return _context.History
         .LastOrDefaultAsync(x => x.TableName == TableNames.MenuItem);
+    }
+
+    public Task<MenuItemPage> GetPageAsync(int pageIndex, int pageSize, Expression<Func<MenuItem, bool>> filter = null)
+    {
+      throw new NotImplementedException();
     }
 
     public async Task<List<MenuItem>> GetListAsync(Expression<Func<MenuItem, bool>> filter = null)
@@ -70,7 +76,7 @@ namespace DemoProject.DLL.Services
       _context.MenuItems.Add(model);
       _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
-      return _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
+      return _context.TrySaveChangesAsync(nameof(AddAsync), model.Id);
     }
 
     public async Task<ServiceResult> UpdateAsync(MenuItem model)
@@ -88,7 +94,7 @@ namespace DemoProject.DLL.Services
       _context.MenuItems.Update(model);
       _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
-      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
+      return await _context.TrySaveChangesAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -102,7 +108,7 @@ namespace DemoProject.DLL.Services
       _context.MenuItems.Remove(model);
       _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
-      return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
+      return await _context.TrySaveChangesAsync(nameof(DeleteAsync));
     }
 
     public void Dispose()

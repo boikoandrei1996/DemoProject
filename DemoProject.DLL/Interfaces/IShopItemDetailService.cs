@@ -2,7 +2,7 @@
 
 namespace DemoProject.DLL.Interfaces
 {
-  public interface IShopItemDetailService : IService<ShopItemDetail>
+  public interface IShopItemDetailService : IChangeableService<ShopItemDetail>
   {
   }
 }

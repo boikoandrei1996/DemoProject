@@ -5,7 +5,7 @@ using DemoProject.DLL.Infrastructure;
 
 namespace DemoProject.DLL.Interfaces
 {
-  public interface IService<T> : IDisposable
+  public interface IChangeableService<T> : IDisposable
   {
     Task<bool> ExistAsync(Expression<Func<T, bool>> filter);
     Task<ServiceResult> AddAsync(T model);

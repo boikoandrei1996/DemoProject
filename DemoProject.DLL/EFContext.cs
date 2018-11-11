@@ -29,14 +29,15 @@ namespace DemoProject.DLL
     {
       base.OnModelCreating(builder);
 
-      builder.ApplyConfiguration(new ShopItemConfiguration());
-      builder.ApplyConfiguration(new ShopItemDetailConfiguration());
-      builder.ApplyConfiguration(new CartShopItemConfiguration());
-      builder.ApplyConfiguration(new MenuItemConfiguration());
-      builder.ApplyConfiguration(new InfoObjectConfiguration());
-      builder.ApplyConfiguration(new ContentGroupConfiguration());
-      builder.ApplyConfiguration(new OrderConfiguration());
-      builder.ApplyConfiguration(new ChangeHistoryConfiguration());
+      builder
+        .ApplyConfiguration(new ShopItemConfiguration())
+        .ApplyConfiguration(new ShopItemDetailConfiguration())
+        .ApplyConfiguration(new CartShopItemConfiguration())
+        .ApplyConfiguration(new MenuItemConfiguration())
+        .ApplyConfiguration(new InfoObjectConfiguration())
+        .ApplyConfiguration(new ContentGroupConfiguration())
+        .ApplyConfiguration(new OrderConfiguration())
+        .ApplyConfiguration(new ChangeHistoryConfiguration());
     }
   }
 }

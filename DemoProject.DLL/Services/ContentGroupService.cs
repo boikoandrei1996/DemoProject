@@ -115,7 +115,7 @@ namespace DemoProject.DLL.Services
       _context.ContentGroups.Add(model);
       _context.History.Add(ChangeHistory.Create(tableName));
 
-      return _context.SaveChangesSafeAsync(nameof(AddAsync), model.Id);
+      return _context.TrySaveChangesAsync(nameof(AddAsync), model.Id);
     }
 
     public async Task<ServiceResult> UpdateAsync(ContentGroup model)
@@ -134,7 +134,7 @@ namespace DemoProject.DLL.Services
       _context.ContentGroups.Update(model);
       _context.History.Add(ChangeHistory.Create(tableName));
 
-      return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
+      return await _context.TrySaveChangesAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -149,7 +149,7 @@ namespace DemoProject.DLL.Services
       _context.ContentGroups.Remove(model);
       _context.History.Add(ChangeHistory.Create(tableName));
 
-      return await _context.SaveChangesSafeAsync(nameof(DeleteAsync));
+      return await _context.TrySaveChangesAsync(nameof(DeleteAsync));
     }
 
     public void Dispose()

@@ -7,7 +7,7 @@ using DemoProject.DLL.Models.Pages;
 
 namespace DemoProject.DLL.Interfaces
 {
-  public interface IContentGroupService : IService<ContentGroup>
+  public interface IContentGroupService : IChangeableService<ContentGroup>
   {
     Task<ChangeHistory> GetHistoryRecordAsync(GroupName group);
     Task<ContentGroupPage> GetPageAsync(GroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null);

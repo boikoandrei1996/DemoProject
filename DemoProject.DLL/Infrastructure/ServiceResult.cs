@@ -5,7 +5,7 @@ namespace DemoProject.DLL.Infrastructure
 {
   public class ServiceResult
   {
-    public ServiceResult(ServiceResultKey key) : this(key, null) { }
+    public ServiceResult(ServiceResultKey key) : this(key, error: null) { }
 
     public ServiceResult(ServiceResultKey key, ServiceError error)
     {

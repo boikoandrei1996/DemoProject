@@ -2,7 +2,7 @@
 
 namespace DemoProject.DLL.Interfaces
 {
-  public interface IInfoObjectService : IService<InfoObject>
+  public interface IInfoObjectService : IChangeableService<InfoObject>
   {
   }
 }

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DemoProject.DLL.Models;
+using DemoProject.DLL.Models.Pages;
 
 namespace DemoProject.DLL.Interfaces
 {
-  public interface IMenuItemService : IService<MenuItem>
+  public interface IMenuItemService : IChangeableService<MenuItem>, IReadableService<MenuItem, MenuItemPage>
   {
     Task<ChangeHistory> GetHistoryRecordAsync();
-    Task<List<MenuItem>> GetListAsync(Expression<Func<MenuItem, bool>> filter = null);
-    Task<MenuItem> FindByAsync(Expression<Func<MenuItem, bool>> filter);
   }
 }
