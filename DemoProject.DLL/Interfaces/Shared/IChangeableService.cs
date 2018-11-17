@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
 
-namespace DemoProject.DLL.Interfaces
+namespace DemoProject.DLL.Interfaces.Shared
 {
   public interface IChangeableService<T> : IDisposable
   {

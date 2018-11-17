@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DemoProject.DLL.Interfaces.Shared;
 using DemoProject.DLL.Models;
 using DemoProject.DLL.Models.Pages;
 

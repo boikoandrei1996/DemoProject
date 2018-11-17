@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DemoProject.DLL.Interfaces
+namespace DemoProject.DLL.Interfaces.Shared
 {
   public interface IReadableService<TModel, TModelPage> : IDisposable
   {

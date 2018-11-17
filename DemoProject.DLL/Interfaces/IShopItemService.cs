@@ -1,4 +1,5 @@
-﻿using DemoProject.DLL.Models;
+﻿using DemoProject.DLL.Interfaces.Shared;
+using DemoProject.DLL.Models;
 using DemoProject.DLL.Models.Pages;
 
 namespace DemoProject.DLL.Interfaces

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DemoProject.DLL.Infrastructure;
+using DemoProject.DLL.Interfaces.Shared;
 using DemoProject.DLL.Models;
 using DemoProject.DLL.Models.Pages;
 
