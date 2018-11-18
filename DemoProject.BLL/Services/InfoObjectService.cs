@@ -2,12 +2,13 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.DLL.Extensions;
-using DemoProject.DLL.Interfaces;
+using DemoProject.BLL.Interfaces;
 using DemoProject.DLL.Models;
 using DemoProject.Shared;
 using Microsoft.EntityFrameworkCore;
+using DemoProject.DLL;
 
-namespace DemoProject.DLL.Services
+namespace DemoProject.BLL.Services
 {
   public class InfoObjectService : IInfoObjectService
   {

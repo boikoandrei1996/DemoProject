@@ -5,7 +5,7 @@ using DemoProject.DLL.Models.Pages;
 using DemoProject.Shared;
 using DemoProject.Shared.Interfaces;
 
-namespace DemoProject.DLL.Interfaces
+namespace DemoProject.BLL.Interfaces
 {
   public interface ICartService : IChangeableService<Cart>, IReadableService<Cart, CartPage>
   {

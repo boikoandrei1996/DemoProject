@@ -3,7 +3,7 @@ using DemoProject.DLL.Models;
 using DemoProject.DLL.Models.Pages;
 using DemoProject.Shared.Interfaces;
 
-namespace DemoProject.DLL.Interfaces
+namespace DemoProject.BLL.Interfaces
 {
   public interface IMenuItemService : IChangeableService<MenuItem>, IReadableService<MenuItem, MenuItemPage>
   {
