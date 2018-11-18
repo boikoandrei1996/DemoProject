@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.IO;
 
-namespace DemoProject.WebApi.Attributes.ValidationAttributes
+namespace DemoProject.Shared.Attributes
 {
   public class FileExistValidationAttribute : ValidationAttribute
   {

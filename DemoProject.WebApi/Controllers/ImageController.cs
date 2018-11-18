@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DemoProject.Shared;
-using DemoProject.WebApi.Attributes;
+using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

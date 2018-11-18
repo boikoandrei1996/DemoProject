@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DemoProject.WebApi.Attributes.ValidationAttributes
+namespace DemoProject.Shared.Attributes
 {
   public class MinimumValueValidationAttribute : ValidationAttribute
   {

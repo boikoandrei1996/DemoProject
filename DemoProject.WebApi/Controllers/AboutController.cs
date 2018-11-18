@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
-using DemoProject.WebApi.Attributes;
+using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.AboutUsApiModels;
 using DemoProject.WebApi.Models.Pages;
 using DemoProject.WebApi.Models.Shared;

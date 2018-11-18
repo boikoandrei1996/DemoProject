@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DemoProject.DAL.Models;
-using DemoProject.WebApi.Attributes.ValidationAttributes;
+using DemoProject.Shared.Attributes;
 
 namespace DemoProject.WebApi.Models.DiscountApiModels
 {

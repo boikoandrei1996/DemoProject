@@ -1,8 +1,7 @@
-﻿using DemoProject.Shared;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace DemoProject.WebApi.Attributes
+namespace DemoProject.Shared.Attributes
 {
   public class ValidateModelStateAttribute : ActionFilterAttribute
   {

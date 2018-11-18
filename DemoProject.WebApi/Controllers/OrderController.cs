@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.Shared;
-using DemoProject.WebApi.Attributes;
+using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.OrderApiModels;
 using DemoProject.WebApi.Models.Pages;
 using Microsoft.AspNetCore.Mvc;

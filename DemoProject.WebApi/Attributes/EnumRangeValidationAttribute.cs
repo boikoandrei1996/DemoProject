@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DAL.Models;
 
-namespace DemoProject.WebApi.Attributes.ValidationAttributes
+namespace DemoProject.WebApi.Attributes
 {
   public class EnumRangeValidationAttribute : ValidationAttribute
   {

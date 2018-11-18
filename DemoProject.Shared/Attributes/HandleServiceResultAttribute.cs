@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DemoProject.Shared;
-using DemoProject.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace DemoProject.WebApi.Attributes
+namespace DemoProject.Shared.Attributes
 {
-
   /// <summary>
   /// Need for using DI in HandleServiceResultInnerAttribute.
   /// </summary>
