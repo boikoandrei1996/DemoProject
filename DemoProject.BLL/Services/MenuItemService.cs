@@ -4,10 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
+using DemoProject.BLL.PageModels;
 using DemoProject.DAL;
 using DemoProject.DAL.Extensions;
 using DemoProject.DAL.Models;
-using DemoProject.DAL.Models.Pages;
 using DemoProject.Shared;
 using Microsoft.EntityFrameworkCore;
 

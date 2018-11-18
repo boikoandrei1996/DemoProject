@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DemoProject.DAL.Models.Pages;
+using DemoProject.BLL.PageModels;
 using DemoProject.WebApi.Models.AboutUsApiModels;
 
 namespace DemoProject.WebApi.Models.Pages

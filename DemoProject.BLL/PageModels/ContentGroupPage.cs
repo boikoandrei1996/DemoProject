@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using DemoProject.DAL.Models;
+using DemoProject.Shared.Interfaces;
 
-namespace DemoProject.DAL.Models.Pages
+namespace DemoProject.BLL.PageModels
 {
   public class ContentGroupPage : IPage<ContentGroup>
   {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DemoProject.DAL.Models.Pages
+namespace DemoProject.Shared.Interfaces
 {
   public interface IPage<T>
   {

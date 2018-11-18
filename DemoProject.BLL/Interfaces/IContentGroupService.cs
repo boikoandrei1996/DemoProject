@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DemoProject.BLL.PageModels;
 using DemoProject.DAL.Models;
-using DemoProject.DAL.Models.Pages;
 using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces
