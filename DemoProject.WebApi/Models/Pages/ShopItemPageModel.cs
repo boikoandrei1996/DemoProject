@@ -20,6 +20,11 @@ namespace DemoProject.WebApi.Models.Pages
         return null;
       }
 
+      if (model.Records == null)
+      {
+        model.Records = new List<ShopItem>();
+      }
+
       return new ShopItemPageModel
       {
         CurrentPage = model.CurrentPage,

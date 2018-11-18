@@ -14,7 +14,7 @@ namespace DemoProject.WebApi.Models.CartShopItemApiModels
 
     public static CartShopItemViewModel Map(CartShopItem model)
     {
-      if (model == null)
+      if (model == null || model.ShopItemDetail == null || model.ShopItemDetail.ShopItem == null)
       {
         return null;
       }

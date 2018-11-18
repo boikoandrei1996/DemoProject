@@ -20,6 +20,11 @@ namespace DemoProject.WebApi.Models.Pages
         return null;
       }
 
+      if (model.Records == null)
+      {
+        model.Records = new List<ContentGroup>();
+      }
+
       return new AboutUsPageModel
       {
         CurrentPage = model.CurrentPage,

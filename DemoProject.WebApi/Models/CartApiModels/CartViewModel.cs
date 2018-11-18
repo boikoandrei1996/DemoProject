@@ -20,10 +20,15 @@ namespace DemoProject.WebApi.Models.CartApiModels
         return null;
       }
 
+      if (model.CartShopItems == null)
+      {
+        model.CartShopItems = new List<CartShopItem>();
+      }
+
       return new CartViewModel
       {
         Id = model.Id,
-        Items = model.CartShopItems.Select(x => CartShopItemViewModel.Map(x)).ToList(),
+        Items = model.CartShopItems.Select(CartShopItemViewModel.Map).ToList(),
         TotalCount = model.CartShopItems.Sum(x => x.Count),
         TotalPrice = model.CartShopItems.Sum(x => x.Price * x.Count)
       };

@@ -19,6 +19,11 @@ namespace DemoProject.WebApi.Models.DeliveryApiModels
         return null;
       }
 
+      if (model.Items == null)
+      {
+        model.Items = new List<InfoObject>();
+      }
+
       return new DeliveryViewModel
       {
         Id = model.Id,

@@ -16,7 +16,10 @@ namespace DemoProject.WebApi.Models.CartApiModels
         return null;
       }
 
-      return new Cart { Id = model.Id };
+      return new Cart
+      {
+        Id = model.Id
+      };
     }
   }
 }

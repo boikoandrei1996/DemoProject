@@ -20,6 +20,11 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
         return null;
       }
 
+      if (model.Items == null)
+      {
+        model.Items = new List<InfoObject>();
+      }
+
       return new DiscountViewModel
       {
         Id = model.Id,

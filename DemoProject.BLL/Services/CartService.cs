@@ -122,9 +122,13 @@ namespace DemoProject.BLL.Services
         _context.CartShopItems.Update(oldCartShopItem);
       }
 
-      var cart = await this.GetCartAsync(cartId);
+      var result =  await _context.SaveAsync(nameof(AddItemToCartAsync), null);
+      if (result.Key == ServiceResultKey.ModelUpdated)
+      {
+        result.Model = await this.FindByAsync(x => x.Id == cartId);
+      }
 
-      return await _context.SaveAsync(nameof(AddItemToCartAsync), cart);
+      return result;
     }
 
     public async Task<ServiceResult> RemoveItemFromCartAsync(Guid cartId, Guid shopItemDetailId, bool shouldBeRemovedAllItems)
@@ -158,9 +162,13 @@ namespace DemoProject.BLL.Services
         _context.CartShopItems.Update(cartShopItem);
       }
 
-      var cart = await this.GetCartAsync(cartId);
+      var result = await _context.SaveAsync(nameof(RemoveItemFromCartAsync), null);
+      if (result.Key == ServiceResultKey.ModelUpdated)
+      {
+        result.Model = await this.FindByAsync(x => x.Id == cartId);
+      }
 
-      return await _context.SaveAsync(nameof(RemoveItemFromCartAsync), cart);
+      return result;
     }
 
     public Task<bool> ExistAsync(Expression<Func<Cart, bool>> filter)
@@ -206,15 +214,6 @@ namespace DemoProject.BLL.Services
     public void Dispose()
     {
       _context.Dispose();
-    }
-
-    private Task<Cart> GetCartAsync(Guid id)
-    {
-      return _context.Carts
-        .Include(x => x.CartShopItems)
-        .ThenInclude(x => x.ShopItemDetail)
-        .ThenInclude(x => x.ShopItem)
-        .FirstAsync(x => x.Id == id);
     }
   }
 }

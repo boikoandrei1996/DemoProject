@@ -21,6 +21,11 @@ namespace DemoProject.WebApi.Models.ShopItemApiModels
         return null;
       }
 
+      if (model.Details == null)
+      {
+        model.Details = new List<ShopItemDetail>();
+      }
+
       return new ShopItemViewModel
       {
         Id = model.Id,

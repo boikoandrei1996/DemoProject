@@ -20,6 +20,11 @@ namespace DemoProject.WebApi.Models.AboutUsApiModels
         return null;
       }
 
+      if (model.Items == null)
+      {
+        model.Items = new List<InfoObject>();
+      }
+
       return new AboutUsViewModel
       {
         Id = model.Id,
