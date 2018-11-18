@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using DemoProject.DAL.Models;
 using DemoProject.Shared.Attributes;
-using DemoProject.WebApi.Attributes;
 
 namespace DemoProject.WebApi.Models.InfoObjectApiModels
 {
@@ -12,7 +11,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     public string Content { get; set; }
 
     [Required]
-    [EnumRangeValidation]
+    [EnumRangeValidation(typeof(InfoObjectType))]
     public string Type { get; set; }
 
     [Required]
