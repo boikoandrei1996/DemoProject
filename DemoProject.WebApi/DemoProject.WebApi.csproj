@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\**" />
+    <Content Remove="Helpers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Helpers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\Files\AboutUs.json" />
     <Content Remove="wwwroot\Files\Delivery.json" />
     <Content Remove="wwwroot\Files\Discounts.json" />
@@ -42,10 +49,6 @@
     <ProjectReference Include="..\DemoProject.BLL\DemoProject.BLL.csproj" />
     <ProjectReference Include="..\DemoProject.DAL\DemoProject.DAL.csproj" />
     <ProjectReference Include="..\DemoProject.Shared\DemoProject.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

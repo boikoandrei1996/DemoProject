@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.WebApi", "DemoProject.WebApi\DemoProject.WebApi.csproj", "{1D2D4076-6EFC-4CBD-819C-84CC2914AF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoProject.Shared", "DemoProject.Shared\DemoProject.Shared.csproj", "{0729F617-3BEE-496D-A697-07D37D956997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.Shared", "DemoProject.Shared\DemoProject.Shared.csproj", "{0729F617-3BEE-496D-A697-07D37D956997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoProject.BLL", "DemoProject.BLL\DemoProject.BLL.csproj", "{563A8EB5-139E-40BF-9D84-9EBD482F085F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.BLL", "DemoProject.BLL\DemoProject.BLL.csproj", "{563A8EB5-139E-40BF-9D84-9EBD482F085F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.DAL", "DemoProject.DAL\DemoProject.DAL.csproj", "{8972CEDE-EA74-4CD6-BA37-6DB77B687D82}"
 EndProject
