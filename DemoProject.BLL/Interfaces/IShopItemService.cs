@@ -4,7 +4,7 @@ using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces
 {
-  public interface IShopItemService : IChangeableService<ShopItem>, IReadableService<ShopItem, ShopItemPage>
+  public interface IShopItemService : IChangeableService<ShopItem>, IReadableService<ShopItem>
   {
   }
 }

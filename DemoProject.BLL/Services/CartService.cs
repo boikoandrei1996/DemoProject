@@ -9,6 +9,7 @@ using DemoProject.DAL;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Extensions;
+using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
@@ -22,7 +23,7 @@ namespace DemoProject.BLL.Services
       _context = context;
     }
 
-    public async Task<CartPage> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Cart, bool>> filter = null)
+    public async Task<IPage<Cart>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Cart, bool>> filter = null)
     {
       var query = _context.Carts.AsNoTracking();
 

@@ -7,7 +7,7 @@ using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces
 {
-  public interface ICartService : IChangeableService<Cart>, IReadableService<Cart, CartPage>
+  public interface ICartService : IChangeableService<Cart>, IReadableService<Cart>
   {
     Task<ServiceResult> AddItemToCartAsync(Guid cartId, Guid shopItemDetailId, int count);
     Task<ServiceResult> RemoveItemFromCartAsync(Guid cartId, Guid shopItemDetailId, bool shouldBeRemovedAllItems);

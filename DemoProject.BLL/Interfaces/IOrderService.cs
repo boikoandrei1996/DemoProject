@@ -7,7 +7,7 @@ using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces
 {
-  public interface IOrderService : IChangeableService<Order>, IReadableService<Order, OrderPage>
+  public interface IOrderService : IChangeableService<Order>, IReadableService<Order>
   {
     Task<ServiceResult> ApproveAsync(Guid id);
     Task<ServiceResult> RejectAsync(Guid id);

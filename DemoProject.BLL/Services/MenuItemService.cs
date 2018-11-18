@@ -9,6 +9,7 @@ using DemoProject.DAL;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Extensions;
+using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
@@ -28,7 +29,7 @@ namespace DemoProject.BLL.Services
         .LastOrDefaultAsync(x => x.TableName == TableNames.MenuItem);
     }
 
-    public Task<MenuItemPage> GetPageAsync(int pageIndex, int pageSize, Expression<Func<MenuItem, bool>> filter = null)
+    public Task<IPage<MenuItem>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<MenuItem, bool>> filter = null)
     {
       throw new NotImplementedException();
     }

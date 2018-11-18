@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DemoProject.BLL.PageModels;
+using DemoProject.DAL.Models;
+using DemoProject.Shared.Interfaces;
 using DemoProject.WebApi.Models.CartApiModels;
 
 namespace DemoProject.WebApi.Models.Pages
@@ -12,7 +13,7 @@ namespace DemoProject.WebApi.Models.Pages
     public int TotalPages { get; set; }
     public ICollection<CartViewModel> Records { get; set; } = new List<CartViewModel>();
 
-    public static CartPageModel Map(CartPage model)
+    public static CartPageModel Map(IPage<Cart> model)
     {
       if (model == null)
       {
