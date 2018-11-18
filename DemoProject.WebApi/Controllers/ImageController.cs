@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
+using DemoProject.Shared;
 using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Http;

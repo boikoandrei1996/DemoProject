@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DemoProject.DLL.Infrastructure
+namespace DemoProject.Shared
 {
   public static class ServiceResultFactory
   {

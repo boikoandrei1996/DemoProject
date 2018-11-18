@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
+using DemoProject.Shared;
 using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.ShopItemDetailApiModels;
 using Microsoft.AspNetCore.Mvc;

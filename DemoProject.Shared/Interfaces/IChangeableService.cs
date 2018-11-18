@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
 
-namespace DemoProject.DLL.Interfaces.Shared
+namespace DemoProject.Shared.Interfaces
 {
   public interface IChangeableService<T> : IDisposable
   {

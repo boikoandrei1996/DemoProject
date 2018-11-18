@@ -2,9 +2,9 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.DLL.Extensions;
-using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
+using DemoProject.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DLL.Services

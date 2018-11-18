@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
 using DemoProject.DLL.Interfaces;
 using DemoProject.DLL.Models;
+using DemoProject.Shared;
 using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.CartApiModels;
 using DemoProject.WebApi.Models.Pages;

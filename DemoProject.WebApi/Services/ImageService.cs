@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
+using DemoProject.Shared;
 using Microsoft.AspNetCore.Http;
 
 namespace DemoProject.WebApi.Services

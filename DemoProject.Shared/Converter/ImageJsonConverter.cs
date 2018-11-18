@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace DemoProject.DLL.Infrastructure
+namespace DemoProject.Shared.Converter
 {
   // TODO: Not used.
   public class ImageJsonConverter : JsonConverter

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
+using DemoProject.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DLL.Extensions
 {
-  public static class ContextExtensions
+  public static class DbContextExtensions
   {
     public static async Task<ServiceResult> SaveAsync(this DbContext context, string code, Guid modelId)
     {

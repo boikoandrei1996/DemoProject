@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
+using DemoProject.Shared;
 using DemoProject.WebApi.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,7 @@ namespace DemoProject.WebApi.Attributes
 
   public class HandleServiceResultInnerAttribute : ResultFilterAttribute
   {
-    private bool _isDevelopment;
+    private readonly bool _isDevelopment;
 
     public HandleServiceResultInnerAttribute(IHostingEnvironment environment)
     {

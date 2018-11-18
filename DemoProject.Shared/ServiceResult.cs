@@ -1,8 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DemoProject.DLL.Infrastructure
+namespace DemoProject.Shared
 {
+  public enum ServiceResultKey : int
+  {
+    Success = 0,
+    BadRequest = 1,
+    NotFound = 2,
+    InternalServerError = 3,
+    ModelCreated = 4,
+    ModelUpdated = 5
+  }
+
   public class ServiceResult
   {
     public ServiceResult(ServiceResultKey key) : this(key, error: null) { }
@@ -37,15 +47,5 @@ namespace DemoProject.DLL.Infrastructure
     public Guid ModelId { get; }
 
     public object Model { get; set; }
-  }
-
-  public enum ServiceResultKey : int
-  {
-    Success = 0,
-    BadRequest = 1,
-    NotFound = 2,
-    InternalServerError = 3,
-    ModelCreated = 4,
-    ModelUpdated = 5
   }
 }

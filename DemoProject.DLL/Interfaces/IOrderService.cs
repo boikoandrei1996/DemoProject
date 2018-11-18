@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
-using DemoProject.DLL.Interfaces.Shared;
 using DemoProject.DLL.Models;
 using DemoProject.DLL.Models.Pages;
+using DemoProject.Shared;
+using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.DLL.Interfaces
 {
