@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DemoProject.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoProject.DAL.Extensions
+namespace DemoProject.Shared.Extensions
 {
   public static class DbContextExtensions
   {

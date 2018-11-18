@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.BLL.PageModels;
 using DemoProject.DAL;
-using DemoProject.DAL.Extensions;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
+using DemoProject.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services

@@ -8,10 +8,14 @@ namespace DemoProject.DAL.Models
   {
     public int SubOrder { get; set; }
 
-    // Ex. Big, small, medium
+    /// <summary>
+    /// Big, small, medium and etc.
+    /// </summary>
     public string Kind { get; set; }
 
-    // Ex. 0.5kg, 1 litr
+    /// <summary>
+    /// 0.5kg, 1 litr and etc.
+    /// </summary>
     public string Quantity { get; set; }
 
     [DataType(DataType.Currency)]
