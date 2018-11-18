@@ -1,8 +1,8 @@
-﻿using DemoProject.DLL.Models;
+﻿using DemoProject.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DemoProject.DLL.Configuration
+namespace DemoProject.DAL.Configuration
 {
   class InfoObjectConfiguration : IEntityTypeConfiguration<InfoObject>
   {

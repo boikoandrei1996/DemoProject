@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DemoProject.DLL.Models
+namespace DemoProject.DAL.Models
 {
   public class CartShopItem
   {

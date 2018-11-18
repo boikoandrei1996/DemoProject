@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.WebApi.Attributes;
 using DemoProject.WebApi.Models.CartApiModels;

@@ -1,10 +1,10 @@
 ﻿using System;
-using DemoProject.DLL.Configuration;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Configuration;
+using DemoProject.DAL.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoProject.DLL
+namespace DemoProject.DAL
 {
   public class EFContext : IdentityDbContext<AppUser, AppRole, Guid>
   {

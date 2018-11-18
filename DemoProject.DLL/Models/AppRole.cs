@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace DemoProject.DLL.Models
+namespace DemoProject.DAL.Models
 {
   public class AppRole : IdentityRole<Guid>
   {

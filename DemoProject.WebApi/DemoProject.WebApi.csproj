@@ -40,7 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DemoProject.BLL\DemoProject.BLL.csproj" />
-    <ProjectReference Include="..\DemoProject.DLL\DemoProject.DLL.csproj" />
+    <ProjectReference Include="..\DemoProject.DLL\DemoProject.DAL.csproj" />
     <ProjectReference Include="..\DemoProject.Shared\DemoProject.Shared.csproj" />
   </ItemGroup>
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 using DemoProject.WebApi.Models.ShopItemDetailApiModels;
 
 namespace DemoProject.WebApi.Models.ShopItemApiModels

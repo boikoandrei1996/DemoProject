@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DemoProject.DLL.Models.Pages
+namespace DemoProject.DAL.Models.Pages
 {
   public class CartPage : IPage<Cart>
   {

@@ -1,4 +1,4 @@
-﻿using DemoProject.DLL.Models;
+﻿using DemoProject.DAL.Models;
 using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces

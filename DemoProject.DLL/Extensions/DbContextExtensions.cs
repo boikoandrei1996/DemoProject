@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using DemoProject.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoProject.DLL.Extensions
+namespace DemoProject.DAL.Extensions
 {
   public static class DbContextExtensions
   {

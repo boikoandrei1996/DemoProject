@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DemoProject.DLL.Models
+namespace DemoProject.DAL.Models
 {
   public class InfoObject : BaseEntity
   {

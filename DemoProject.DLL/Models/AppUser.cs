@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace DemoProject.DLL.Models
+namespace DemoProject.DAL.Models
 {
   public class AppUser : IdentityUser<Guid>
   {

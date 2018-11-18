@@ -1,5 +1,5 @@
-﻿using DemoProject.DLL.Models;
-using DemoProject.DLL.Models.Pages;
+﻿using DemoProject.DAL.Models;
+using DemoProject.DAL.Models.Pages;
 using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DemoProject.DLL.Extensions;
 using DemoProject.BLL.Interfaces;
-using DemoProject.DLL.Models;
-using DemoProject.DLL.Models.Pages;
+using DemoProject.DAL;
+using DemoProject.DAL.Extensions;
+using DemoProject.DAL.Models;
+using DemoProject.DAL.Models.Pages;
 using DemoProject.Shared;
 using Microsoft.EntityFrameworkCore;
-using DemoProject.DLL;
 
 namespace DemoProject.BLL.Services
 {

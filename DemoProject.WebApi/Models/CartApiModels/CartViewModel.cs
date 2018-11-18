@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 using DemoProject.WebApi.Models.CartShopItemApiModels;
 
 namespace DemoProject.WebApi.Models.CartApiModels

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DemoProject.DLL.Models
+namespace DemoProject.DAL.Models
 {
   public class Cart : BaseEntity
   {

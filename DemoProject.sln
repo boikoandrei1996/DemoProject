@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.WebApi", "DemoProject.WebApi\DemoProject.WebApi.csproj", "{1D2D4076-6EFC-4CBD-819C-84CC2914AF47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.DLL", "DemoProject.DLL\DemoProject.DLL.csproj", "{4B9C7588-4F6A-48EC-AD9D-7C2EE6BF17D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.DAL", "DemoProject.DLL\DemoProject.DAL.csproj", "{4B9C7588-4F6A-48EC-AD9D-7C2EE6BF17D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoProject.Shared", "DemoProject.Shared\DemoProject.Shared.csproj", "{0729F617-3BEE-496D-A697-07D37D956997}"
 EndProject

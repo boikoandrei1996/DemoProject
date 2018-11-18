@@ -1,6 +1,5 @@
 ﻿using System;
-using DemoProject.DLL;
-using DemoProject.DLL.Extensions;
+using DemoProject.DAL;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Rewrite;
