@@ -76,7 +76,7 @@ namespace DemoProject.DLL.Services
       _context.MenuItems.Add(model);
       _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
-      return _context.TrySaveChangesAsync(nameof(AddAsync), model.Id);
+      return _context.SaveAsync(nameof(AddAsync), model.Id);
     }
 
     public async Task<ServiceResult> UpdateAsync(MenuItem model)
@@ -94,7 +94,7 @@ namespace DemoProject.DLL.Services
       _context.MenuItems.Update(model);
       _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
-      return await _context.TrySaveChangesAsync(nameof(UpdateAsync));
+      return await _context.SaveAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -108,7 +108,7 @@ namespace DemoProject.DLL.Services
       _context.MenuItems.Remove(model);
       _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
-      return await _context.TrySaveChangesAsync(nameof(DeleteAsync));
+      return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
     public void Dispose()

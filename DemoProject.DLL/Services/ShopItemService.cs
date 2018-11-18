@@ -104,7 +104,7 @@ namespace DemoProject.DLL.Services
 
       _context.ShopItems.Add(model);
 
-      return _context.TrySaveChangesAsync(nameof(AddAsync), model.Id);
+      return _context.SaveAsync(nameof(AddAsync), model.Id);
     }
 
     public async Task<ServiceResult> UpdateAsync(ShopItem model)
@@ -121,7 +121,7 @@ namespace DemoProject.DLL.Services
 
       _context.ShopItems.Update(model);
 
-      return await _context.TrySaveChangesAsync(nameof(UpdateAsync));
+      return await _context.SaveAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -134,7 +134,7 @@ namespace DemoProject.DLL.Services
 
       _context.ShopItems.Remove(model);
 
-      return await _context.TrySaveChangesAsync(nameof(DeleteAsync));
+      return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
     public void Dispose()

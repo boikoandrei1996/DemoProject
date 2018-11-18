@@ -107,7 +107,7 @@ namespace DemoProject.DLL.Services
 
       _context.Orders.Add(model);
 
-      return await _context.TrySaveChangesAsync(nameof(AddAsync), model.Id);
+      return await _context.SaveAsync(nameof(AddAsync), model.Id);
     }
 
     public Task<ServiceResult> UpdateAsync(Order model)
@@ -143,7 +143,7 @@ namespace DemoProject.DLL.Services
 
       _context.Orders.Remove(model);
 
-      return await _context.TrySaveChangesAsync(nameof(DeleteAsync));
+      return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
     public async Task<ServiceResult> ApproveAsync(Guid id)
@@ -168,7 +168,7 @@ namespace DemoProject.DLL.Services
 
       _context.Orders.Update(order);
 
-      return await _context.TrySaveChangesAsync(nameof(ApproveAsync));
+      return await _context.SaveAsync(nameof(ApproveAsync));
     }
 
     public async Task<ServiceResult> RejectAsync(Guid id)
@@ -193,7 +193,7 @@ namespace DemoProject.DLL.Services
 
       _context.Orders.Update(order);
 
-      return await _context.TrySaveChangesAsync(nameof(RejectAsync));
+      return await _context.SaveAsync(nameof(RejectAsync));
     }
 
     public async Task<ServiceResult> CloseAsync(Guid id)
@@ -218,7 +218,7 @@ namespace DemoProject.DLL.Services
 
       _context.Orders.Update(order);
 
-      return await _context.TrySaveChangesAsync(nameof(CloseAsync));
+      return await _context.SaveAsync(nameof(CloseAsync));
     }
 
     public void Dispose()

@@ -122,7 +122,7 @@ namespace DemoProject.DLL.Services
 
       var cart = await this.GetCartAsync(cartId);
 
-      return await _context.TrySaveChangesAsync(nameof(AddItemToCartAsync), cart);
+      return await _context.SaveAsync(nameof(AddItemToCartAsync), cart);
     }
 
     public async Task<ServiceResult> RemoveItemFromCartAsync(Guid cartId, Guid shopItemDetailId, bool shouldBeRemovedAllItems)
@@ -158,7 +158,7 @@ namespace DemoProject.DLL.Services
 
       var cart = await this.GetCartAsync(cartId);
 
-      return await _context.TrySaveChangesAsync(nameof(RemoveItemFromCartAsync), cart);
+      return await _context.SaveAsync(nameof(RemoveItemFromCartAsync), cart);
     }
 
     public Task<bool> ExistAsync(Expression<Func<Cart, bool>> filter)
@@ -180,7 +180,7 @@ namespace DemoProject.DLL.Services
 
       _context.Carts.Add(model);
 
-      return _context.TrySaveChangesAsync(nameof(AddAsync), model.Id);
+      return _context.SaveAsync(nameof(AddAsync), model.Id);
     }
 
     public Task<ServiceResult> UpdateAsync(Cart model)
@@ -198,7 +198,7 @@ namespace DemoProject.DLL.Services
 
       _context.Carts.Remove(model);
 
-      return await _context.TrySaveChangesAsync(nameof(DeleteAsync));
+      return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
     public void Dispose()

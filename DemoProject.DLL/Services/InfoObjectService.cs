@@ -43,7 +43,7 @@ namespace DemoProject.DLL.Services
       _context.InfoObjects.Add(model);
       _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
 
-      return await _context.TrySaveChangesAsync(nameof(AddAsync), model.Id);
+      return await _context.SaveAsync(nameof(AddAsync), model.Id);
     }
 
     public async Task<ServiceResult> UpdateAsync(InfoObject model)
@@ -65,7 +65,7 @@ namespace DemoProject.DLL.Services
       _context.InfoObjects.Update(model);
       _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
 
-      return await _context.TrySaveChangesAsync(nameof(UpdateAsync));
+      return await _context.SaveAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -79,7 +79,7 @@ namespace DemoProject.DLL.Services
       _context.InfoObjects.Remove(model);
       _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
 
-      return await _context.TrySaveChangesAsync(nameof(DeleteAsync));
+      return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
     public void Dispose()

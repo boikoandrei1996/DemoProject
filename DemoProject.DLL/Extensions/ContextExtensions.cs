@@ -7,48 +7,25 @@ namespace DemoProject.DLL.Extensions
 {
   public static class ContextExtensions
   {
-    public static void ClearDatabase(this EFContext context)
+    public static async Task<ServiceResult> SaveAsync(this DbContext context, string code, Guid modelId)
     {
-      context.Carts.DeleteFromQuery();
-      context.CartShopItems.DeleteFromQuery();
-      context.ContentGroups.DeleteFromQuery();
-      context.InfoObjects.DeleteFromQuery();
-      context.MenuItems.DeleteFromQuery();
-      context.Orders.DeleteFromQuery();
-      context.ShopItemDetails.DeleteFromQuery();
-      context.ShopItems.DeleteFromQuery();
-      context.History.DeleteFromQuery();
-    }
-
-    /*public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context)
-    {
-      return context.SaveChangesSafeAsync(string.Empty);
-    }
-
-    public static Task<ServiceResult> SaveChangesSafeAsync(this DbContext context, Guid modelId)
-    {
-      return context.SaveChangesSafeAsync(string.Empty, modelId);
-    }*/
-
-    public static async Task<ServiceResult> TrySaveChangesAsync(this DbContext context, string code, Guid modelId)
-    {
-      var result = await context.TrySaveChangesAsync(code);
+      var result = await context.SaveAsync(code);
 
       return result.Key == ServiceResultKey.Success ?
         ServiceResultFactory.EntityCreatedResult(modelId) :
         result;
     }
 
-    public static async Task<ServiceResult> TrySaveChangesAsync(this DbContext context, string code, object model)
+    public static async Task<ServiceResult> SaveAsync(this DbContext context, string code, object model)
     {
-      var result = await context.TrySaveChangesAsync(code);
+      var result = await context.SaveAsync(code);
 
       return result.Key == ServiceResultKey.Success ?
         ServiceResultFactory.EntityUpdatedResult(model) :
         result;
     }
 
-    public static async Task<ServiceResult> TrySaveChangesAsync(this DbContext context, string code)
+    public static async Task<ServiceResult> SaveAsync(this DbContext context, string code)
     {
       try
       {

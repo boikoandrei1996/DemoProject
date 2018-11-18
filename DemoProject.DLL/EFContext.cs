@@ -39,5 +39,18 @@ namespace DemoProject.DLL
         .ApplyConfiguration(new OrderConfiguration())
         .ApplyConfiguration(new ChangeHistoryConfiguration());
     }
+
+    public void ClearDatabase()
+    {
+      this.Carts.DeleteFromQuery();
+      this.CartShopItems.DeleteFromQuery();
+      this.ContentGroups.DeleteFromQuery();
+      this.InfoObjects.DeleteFromQuery();
+      this.MenuItems.DeleteFromQuery();
+      this.Orders.DeleteFromQuery();
+      this.ShopItemDetails.DeleteFromQuery();
+      this.ShopItems.DeleteFromQuery();
+      this.History.DeleteFromQuery();
+    }
   }
 }
