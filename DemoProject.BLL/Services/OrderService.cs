@@ -72,10 +72,7 @@ namespace DemoProject.BLL.Services
 
     public Task<Order> FindByAsync(Expression<Func<Order, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.Orders.AsNoTracking()
         .Include(x => x.Cart)
@@ -87,20 +84,14 @@ namespace DemoProject.BLL.Services
 
     public Task<bool> ExistAsync(Expression<Func<Order, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.Orders.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(Order model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       if (await _context.Carts.AnyAsync(x => x.Id == model.CartId) == false)
       {
@@ -115,10 +106,8 @@ namespace DemoProject.BLL.Services
     public Task<ServiceResult> UpdateAsync(Order model)
     {
       throw new NotImplementedException();
-      //if (model == null)
-      //{
-      //  throw new ArgumentNullException(nameof(model));
-      //}
+
+      //Check.NotNull(model, nameof(model));
 
       //var oldOrder = await _context.Orders.FirstOrDefaultAsync(x => x.Id == model.Id);
       //if (oldOrder == null)

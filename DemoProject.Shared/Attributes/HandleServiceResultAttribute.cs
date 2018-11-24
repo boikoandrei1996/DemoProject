@@ -9,11 +9,12 @@ namespace DemoProject.Shared.Attributes
   /// <summary>
   /// Need for using DI in HandleServiceResultInnerAttribute.
   /// </summary>
-  public class HandleServiceResultAttribute : TypeFilterAttribute
+  [AttributeUsage(AttributeTargets.Class)]
+  public sealed class HandleServiceResultAttribute : TypeFilterAttribute
   {
     public HandleServiceResultAttribute() : base(typeof(HandleServiceResultInnerAttribute)) { }
 
-    private class HandleServiceResultInnerAttribute : ResultFilterAttribute
+    private sealed class HandleServiceResultInnerAttribute : ResultFilterAttribute
     {
       private readonly bool _isDevelopment;
 
@@ -39,10 +40,7 @@ namespace DemoProject.Shared.Attributes
 
       private IActionResult BuildFromServiceResult(ServiceResult result)
       {
-        if (result == null)
-        {
-          throw new ArgumentNullException(nameof(result));
-        }
+        Check.NotNull(result, nameof(result));
 
         switch (result.Key)
         {

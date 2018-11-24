@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 
 namespace DemoProject.Shared.Attributes
 {
-  public class FileExistValidationAttribute : ValidationAttribute
+  [AttributeUsage(AttributeTargets.Property)]
+  public sealed class FileExistValidationAttribute : ValidationAttribute
   {
     private readonly string _relativePath;
 

@@ -21,20 +21,14 @@ namespace DemoProject.BLL.Services
 
     public Task<bool> ExistAsync(Expression<Func<InfoObject, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.InfoObjects.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(InfoObject model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       if (await _context.ContentGroups.AnyAsync(x => x.Id == model.ContentGroupId) == false)
       {
@@ -49,10 +43,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> UpdateAsync(InfoObject model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       if (await _context.InfoObjects.AnyAsync(x => x.Id == model.Id) == false)
       {

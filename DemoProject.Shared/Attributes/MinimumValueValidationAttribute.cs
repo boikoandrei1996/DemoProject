@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DemoProject.Shared.Attributes
 {
-  public class MinimumValueValidationAttribute : ValidationAttribute
+  [AttributeUsage(AttributeTargets.Property)]
+  public sealed class MinimumValueValidationAttribute : ValidationAttribute
   {
     private readonly int _minValue;
 

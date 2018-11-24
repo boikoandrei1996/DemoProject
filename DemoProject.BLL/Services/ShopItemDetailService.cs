@@ -21,20 +21,14 @@ namespace DemoProject.BLL.Services
 
     public Task<bool> ExistAsync(Expression<Func<ShopItemDetail, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.ShopItemDetails.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(ShopItemDetail model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       if (await _context.ShopItems.AnyAsync(x => x.Id == model.ShopItemId) == false)
       {
@@ -48,10 +42,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> UpdateAsync(ShopItemDetail model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       if (await _context.ShopItemDetails.AnyAsync(x => x.Id == model.Id) == false)
       {

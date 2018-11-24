@@ -77,10 +77,7 @@ namespace DemoProject.BLL.Services
 
     public Task<ShopItem> FindByAsync(Expression<Func<ShopItem, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.ShopItems.AsNoTracking()
         .Include(x => x.Details)
@@ -89,20 +86,14 @@ namespace DemoProject.BLL.Services
 
     public Task<bool> ExistAsync(Expression<Func<ShopItem, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.ShopItems.AnyAsync(filter);
     }
 
     public Task<ServiceResult> AddAsync(ShopItem model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       _context.ShopItems.Add(model);
 
@@ -111,10 +102,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> UpdateAsync(ShopItem model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       if (await _context.ShopItems.AnyAsync(x => x.Id == model.Id) == false)
       {

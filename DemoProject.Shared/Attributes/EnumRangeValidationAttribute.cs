@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DemoProject.Shared.Attributes
 {
-  public class EnumRangeValidationAttribute : ValidationAttribute
+  [AttributeUsage(AttributeTargets.Property)]
+  public sealed class EnumRangeValidationAttribute : ValidationAttribute
   {
     private readonly Type _enumType;
 

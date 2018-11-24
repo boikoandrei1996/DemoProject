@@ -84,10 +84,7 @@ namespace DemoProject.BLL.Services
 
     public Task<ContentGroup> FindByAsync(GroupName group, Expression<Func<ContentGroup, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.ContentGroups.AsNoTracking()
         .Include(x => x.Items)
@@ -97,20 +94,14 @@ namespace DemoProject.BLL.Services
 
     public Task<bool> ExistAsync(Expression<Func<ContentGroup, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.ContentGroups.AnyAsync(filter);
     }
 
     public Task<ServiceResult> AddAsync(ContentGroup model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       var tableName = ChangeHistory.GetTableNameByGroupName(model.GroupName);
       _context.ContentGroups.Add(model);
@@ -121,10 +112,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> UpdateAsync(ContentGroup model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       if (await _context.ContentGroups.AnyAsync(x => x.Id == model.Id) == false)
       {

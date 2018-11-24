@@ -48,10 +48,7 @@ namespace DemoProject.BLL.Services
 
     public Task<MenuItem> FindByAsync(Expression<Func<MenuItem, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.MenuItems.AsNoTracking()
         .Include(x => x.Items)
@@ -60,21 +57,15 @@ namespace DemoProject.BLL.Services
 
     public Task<bool> ExistAsync(Expression<Func<MenuItem, bool>> filter)
     {
-      if (filter == null)
-      {
-        throw new ArgumentNullException(nameof(filter));
-      }
+      Check.NotNull(filter, nameof(filter));
 
       return _context.MenuItems.AnyAsync(filter);
     }
 
     public Task<ServiceResult> AddAsync(MenuItem model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
-      
+      Check.NotNull(model, nameof(model));
+
       _context.MenuItems.Add(model);
       _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
 
@@ -83,10 +74,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> UpdateAsync(MenuItem model)
     {
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
+      Check.NotNull(model, nameof(model));
 
       if (await _context.MenuItems.AnyAsync(x => x.Id == model.Id) == false)
       {
