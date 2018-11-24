@@ -21,7 +21,9 @@ namespace DemoProject.Shared.Attributes
       else
       {
         var allowableValues = string.Join(", ", Enum.GetNames(_enumType));
-        return new ValidationResult($"The {validationContext.DisplayName} field should be in range of [{allowableValues}].", new[] { validationContext.MemberName });
+        return new ValidationResult(
+          $"The {validationContext.DisplayName} field should be in range of [{allowableValues}].", 
+          new[] { validationContext.MemberName });
       }
     }
   }

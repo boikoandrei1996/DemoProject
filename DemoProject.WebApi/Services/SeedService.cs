@@ -111,7 +111,11 @@ namespace DemoProject.WebApi.Services
           Price = shopItemDetail.Price,
           ShopItemDetailId = shopItemDetail.Id
         };
-        carts.Add(new Cart { CartShopItems = new List<CartShopItem>() { cartShopItem } });
+        carts.Add(new Cart
+        {
+          DateOfCreation = DateTime.UtcNow,
+          CartShopItems = new List<CartShopItem>() { cartShopItem }
+        });
       }
 
       return carts;

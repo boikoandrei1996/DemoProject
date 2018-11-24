@@ -20,7 +20,9 @@ namespace DemoProject.Shared.Attributes
       }
       else
       {
-        return new ValidationResult($"File should exist on the server.", new[] { validationContext.MemberName });
+        return new ValidationResult(
+          $"File should exist on the server.", 
+          new[] { validationContext.MemberName });
       }
     }
   }

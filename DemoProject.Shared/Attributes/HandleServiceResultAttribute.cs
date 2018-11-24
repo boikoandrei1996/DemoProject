@@ -11,65 +11,63 @@ namespace DemoProject.Shared.Attributes
   /// </summary>
   public class HandleServiceResultAttribute : TypeFilterAttribute
   {
-    public HandleServiceResultAttribute() : base(typeof(HandleServiceResultInnerAttribute))
-    {
-    }
-  }
+    public HandleServiceResultAttribute() : base(typeof(HandleServiceResultInnerAttribute)) { }
 
-  public class HandleServiceResultInnerAttribute : ResultFilterAttribute
-  {
-    private readonly bool _isDevelopment;
-
-    public HandleServiceResultInnerAttribute(IHostingEnvironment environment)
+    private class HandleServiceResultInnerAttribute : ResultFilterAttribute
     {
-      _isDevelopment = environment.IsDevelopment();
-    }
+      private readonly bool _isDevelopment;
 
-    public override Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
-    {
-      if (context.Result is ObjectResult)
+      public HandleServiceResultInnerAttribute(IHostingEnvironment environment)
       {
-        var result = context.Result as ObjectResult;
+        _isDevelopment = environment.IsDevelopment();
+      }
 
-        if (result.DeclaredType == typeof(ServiceResult))
+      public override Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
+      {
+        if (context.Result is ObjectResult)
         {
-          context.Result = this.BuildFromServiceResult(result.Value as ServiceResult);
+          var result = context.Result as ObjectResult;
+
+          if (result.DeclaredType == typeof(ServiceResult))
+          {
+            context.Result = this.BuildFromServiceResult(result.Value as ServiceResult);
+          }
         }
+
+        return base.OnResultExecutionAsync(context, next);
       }
 
-      return base.OnResultExecutionAsync(context, next);
-    }
-
-    private IActionResult BuildFromServiceResult(ServiceResult result)
-    {
-      if (result == null)
+      private IActionResult BuildFromServiceResult(ServiceResult result)
       {
-        throw new ArgumentNullException(nameof(result));
-      }
+        if (result == null)
+        {
+          throw new ArgumentNullException(nameof(result));
+        }
 
-      switch (result.Key)
-      {
-        case ServiceResultKey.Success:
-          return new OkResult();
-        case ServiceResultKey.ModelCreated:
-          return new OkObjectResult(result.ModelId);
-        case ServiceResultKey.ModelUpdated:
-          return new OkObjectResult(result.Model);
-        case ServiceResultKey.NotFound:
-          return new NotFoundResult();
-        case ServiceResultKey.InternalServerError:
-          if (_isDevelopment)
-          {
-            return new InternalServerErrorObjectResult(result.Errors);
-          }
-          else
-          {
-            return new InternalServerErrorResult();
-          }
-        case ServiceResultKey.BadRequest:
-          return new BadRequestObjectResult(result.Errors);
-        default:
-          throw new NotImplementedException(nameof(ServiceResultKey));
+        switch (result.Key)
+        {
+          case ServiceResultKey.Success:
+            return new OkResult();
+          case ServiceResultKey.ModelCreated:
+            return new OkObjectResult(result.ModelId);
+          case ServiceResultKey.ModelUpdated:
+            return new OkObjectResult(result.Model);
+          case ServiceResultKey.NotFound:
+            return new NotFoundResult();
+          case ServiceResultKey.BadRequest:
+            return new BadRequestObjectResult(result.Errors);
+          case ServiceResultKey.InternalServerError:
+            if (_isDevelopment)
+            {
+              return new InternalServerErrorObjectResult(result.Errors);
+            }
+            else
+            {
+              return new InternalServerErrorResult();
+            }
+          default:
+            throw new NotImplementedException(nameof(ServiceResultKey));
+        }
       }
     }
   }
