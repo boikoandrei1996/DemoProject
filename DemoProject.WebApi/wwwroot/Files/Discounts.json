@@ -23,7 +23,7 @@
   },
   {
     "Title": "Система скидок на заказы онлайн",
-    "GroupName": 2,
+    "GroupName": 1,
     "Order": 2,
     "Items": [
       {
@@ -50,7 +50,7 @@
   },
   {
     "Title": "Скидка в день студента!",
-    "GroupName": 3,
+    "GroupName": 1,
     "Order": 3,
     "Items": [
       {
@@ -67,7 +67,7 @@
   },
   {
     "Title": "Квас в подарок",
-    "GroupName": 4,
+    "GroupName": 1,
     "Order": 4,
     "Items": [
       {
