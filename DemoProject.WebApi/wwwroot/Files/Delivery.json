@@ -49,7 +49,7 @@
   },
   {
     "Title": "Пример чеков",
-    "GroupName": 3,
+    "GroupName": 2,
     "Order": 3,
     "Items": [
       {
@@ -65,7 +65,7 @@
     ]
   },
   {
-    "GroupName": 4,
+    "GroupName": 2,
     "Order": 4,
     "Items": [
       {
