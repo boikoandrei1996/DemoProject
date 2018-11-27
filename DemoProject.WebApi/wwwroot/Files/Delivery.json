@@ -53,13 +53,13 @@
     "Order": 3,
     "Items": [
       {
-        "Content": "1 РБ.",
-        "Type": 2,
+        "Content": "Images/receipt-one.png",
+        "Type": 3,
         "SubOrder": 1
       },
       {
-        "Content": "2 РБ.",
-        "Type": 2,
+        "Content": "Images/receipt-two.png",
+        "Type": 3,
         "SubOrder": 2
       }
     ]
