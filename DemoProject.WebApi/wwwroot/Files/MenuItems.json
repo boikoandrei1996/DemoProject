@@ -2,7 +2,7 @@
   {
     "Order": 1,
     "Text": "Пицца",
-    "IconPath": "Images/icon-placeholder.png",
+    "IconPath": "Images/menu-pizza.png",
     "Items": [
       {
         "Title": "Пицца #1",
@@ -107,7 +107,7 @@
   {
     "Order": 2,
     "Text": "Суши",
-    "IconPath": "Images/icon-placeholder.png",
+    "IconPath": "Images/menu-sushi.png",
     "Items": [
       {
         "Title": "Суши #1",
@@ -169,8 +169,35 @@
 
   {
     "Order": 3,
+    "Text": "Супы",
+    "IconPath": "Images/menu-soup.png",
+    "Items": [
+      
+    ]
+  },
+   
+  {
+    "Order": 4,
+    "Text": "Бургеры",
+    "IconPath": "Images/menu-burger.png",
+    "Items": [
+      
+    ]
+  },
+   
+  {
+    "Order": 5,
+    "Text": "Салаты",
+    "IconPath": "Images/menu-salad.png",
+    "Items": [
+      
+    ]
+  },
+   
+  {
+    "Order": 6,
     "Text": "Десерты",
-    "IconPath": "Images/icon-placeholder.png",
+    "IconPath": "Images/menu-dessert.png",
     "Items": [
       {
         "Title": "Пирог #1",
@@ -192,7 +219,6 @@
           }
         ]
       },
-
       {
         "Title": "Пирог #2",
         "Description": "Состав пирога #2",
@@ -217,9 +243,9 @@
   },
 
   {
-    "Order": 4,
+    "Order": 7,
     "Text": "Напитки",
-    "IconPath": "Images/icon-placeholder.png",
+    "IconPath": "Images/menu-drink.png",
     "Items": [
       {
         "Title": "Напиток #1",
