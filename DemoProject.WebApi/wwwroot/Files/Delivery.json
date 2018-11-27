@@ -55,12 +55,12 @@
     "Order": 3,
     "Items": [
       {
-        "Content": "Images/receipt-one.png",
+        "Content": "Images/delivery/684e4048-d275-4ad3-86f4-0d9ebbe72dda.png",
         "Type": 3,
         "SubOrder": 1
       },
       {
-        "Content": "Images/receipt-two.png",
+        "Content": "Images/delivery/e45f4a5f-e7c3-4134-9ef2-ee538cc93e48.png",
         "Type": 3,
         "SubOrder": 2
       }
