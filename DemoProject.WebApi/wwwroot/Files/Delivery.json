@@ -35,9 +35,8 @@
       }
     ]
   },
-   
+
   {
-    "Title": "Возврат денежных средств",
     "GroupName": 2,
     "Order": 2,
     "Items": [
@@ -48,25 +47,24 @@
       }
     ]
   },
-   
+
   {
-    "Title": "Пример чеков",
     "GroupName": 2,
     "Order": 3,
     "Items": [
       {
-        "Content": "Images/delivery/684e4048-d275-4ad3-86f4-0d9ebbe72dda.png",
+        "Content": "images/delivery/check-1.png",
         "Type": 3,
         "SubOrder": 1
       },
       {
-        "Content": "Images/delivery/e45f4a5f-e7c3-4134-9ef2-ee538cc93e48.png",
+        "Content": "images/delivery/check-2.png",
         "Type": 3,
         "SubOrder": 2
       }
     ]
   },
-   
+
   {
     "GroupName": 2,
     "Order": 4,

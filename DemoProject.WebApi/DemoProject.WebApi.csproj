@@ -22,8 +22,8 @@
     <Content Remove="wwwroot\Files\Delivery.json" />
     <Content Remove="wwwroot\Files\Discounts.json" />
     <Content Remove="wwwroot\Files\MenuItems.json" />
-    <Content Remove="wwwroot\Images\icon-placeholder.png" />
-    <Content Remove="wwwroot\Images\image-placeholder.png" />
+    <Content Remove="wwwroot\images\icon-placeholder.png" />
+    <Content Remove="wwwroot\images\image-placeholder.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,8 +41,8 @@
     <None Include="wwwroot\Files\Delivery.json" />
     <None Include="wwwroot\Files\Discounts.json" />
     <None Include="wwwroot\Files\MenuItems.json" />
-    <None Include="wwwroot\Images\icon-placeholder.png" />
-    <None Include="wwwroot\Images\image-placeholder.png" />
+    <None Include="wwwroot\images\icon-placeholder.png" />
+    <None Include="wwwroot\images\image-placeholder.png" />
   </ItemGroup>
 
   <ItemGroup>
