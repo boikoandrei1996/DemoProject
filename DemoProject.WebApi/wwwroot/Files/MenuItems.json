@@ -5,99 +5,225 @@
     "IconPath": "Images/menu-pizza.png",
     "Items": [
       {
-        "Title": "Пицца #1",
-        "Description": "Состав пиццы #1",
+        "Title": "Фирменная",
+        "Description": "тесто для пиццы, соус томатный, сыр, салями, ветчина, грибы, помидоры, оливки и специи",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
             "Kind": "Большая",
-            "Quantity": "1 кг",
-            "Price": 11
+            "Quantity": "500 г.",
+            "Price": 5.50
           },
 
           {
             "SubOrder": 2,
+            "Kind": "Маленькая",
+            "Quantity": "270 г.",
+            "Price": 9.50
+          }
+        ]
+      },
+            
+      {
+        "Title": "Капченая куриная грудка",
+        "Description": "тесто для пиццы, соус томатный, сыр, копченая куриная грудка, перец сладкий и специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Большая",
+            "Quantity": "1 кг.",
+            "Price": 17.50
+          },
+          
+          {
+            "SubOrder": 2,
             "Kind": "Средняя",
-            "Quantity": "800 г",
-            "Price": 9.5
+            "Quantity": "470 г.",
+            "Price": 8.50
           },
 
           {
             "SubOrder": 3,
             "Kind": "Маленькая",
-            "Quantity": "450 г",
-            "Price": 7
+            "Quantity": "280 г.",
+            "Price": 5
           }
         ]
       },
-
+      
       {
-        "Title": "Пицца #2",
-        "Description": "Состав пиццы #2",
+        "Title": "Сицильяно",
+        "Description": "тесто для пиццы, соус, сыр, перец сладкий, колбаски охотничьи и специи",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
             "Kind": "Большая",
-            "Quantity": "1 кг",
-            "Price": 12
+            "Quantity": "1200 г.",
+            "Price": 20.50
+          },
+          
+          {
+            "SubOrder": 2,
+            "Kind": "Средняя",
+            "Quantity": "770 г.",
+            "Price": 12.50
           },
 
           {
-            "SubOrder": 2,
+            "SubOrder": 3,
             "Kind": "Маленькая",
-            "Quantity": "450 г",
-            "Price": 7.5
+            "Quantity": "480 г.",
+            "Price": 7.20
           }
         ]
       },
-
+      
       {
-        "Title": "Пицца #3",
-        "Description": "Состав пиццы #3",
+        "Title": "Сицильяно",
+        "Description": "тесто для пиццы, соус, сыр, перец сладкий, колбаски охотничьи и специи",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
             "Kind": "Большая",
-            "Quantity": "1 кг",
+            "Quantity": "500 г.",
+            "Price": 8.50
+          }
+        ]
+      },
+
+      {
+        "Title": "Океан",
+        "Description": "тесто для пиццы, соус томатный, сыр, креветки, кальмар, мидии, осьминор, лимон и специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Большая",
+            "Quantity": "460 г.",
             "Price": 13
           },
 
           {
             "SubOrder": 2,
-            "Kind": "Средняя",
-            "Quantity": "800 г",
-            "Price": 10.5
-          },
-
-          {
-            "SubOrder": 3,
             "Kind": "Маленькая",
-            "Quantity": "450 г",
-            "Price": 7.5
+            "Quantity": "270 г.",
+            "Price": 8.50
           }
         ]
       },
-
+      
       {
-        "Title": "Пицца #4",
-        "Description": "Состав пиццы #4",
+        "Title": "Примавера",
+        "Description": "тесто для пиццы, соус, сыр, ветчина, руккола и специи",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
             "Kind": "Большая",
-            "Quantity": "1 кг",
-            "Price": 14
+            "Quantity": "440 г.",
+            "Price": 9.50
+          },
+
+          {
+            "SubOrder": 3,
+            "Kind": "Маленькая",
+            "Quantity": "260 г.",
+            "Price": 5.50
+          }
+        ]
+      },
+
+      {
+        "Title": "Наполетана",
+        "Description": "тесто для пиццы, соус, сыр, ветчина, моцарелла, руккола и специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Большая",
+            "Quantity": "460 г.",
+            "Price": 9
           },
 
           {
             "SubOrder": 2,
             "Kind": "Маленькая",
-            "Quantity": "450 г",
+            "Quantity": "260 г.",
+            "Price": 5.50
+          }
+        ]
+      },
+      
+       {
+        "Title": "Вегетарианская",
+        "Description": "тесто для пиццы, соус томатный, сыр, помидор, перец сладкий, фасоль спаржевая, шампиньоны, оливки и специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Большая",
+            "Quantity": "440 г.",
+            "Price": 8.50
+          },
+
+          {
+            "SubOrder": 2,
+            "Kind": "Маленькая",
+            "Quantity": "290 г.",
+            "Price": 5
+          }
+        ]
+      },
+      
+      {
+        "Title": "Семга с креветками",
+        "Description": "тесто для пиццы, соус майонезный, сыр, феле сёмги, креветки, лимон и специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Большая",
+            "Quantity": "440 г.",
+            "Price": 16.50
+          },
+
+          {
+            "SubOrder": 2,
+            "Kind": "Маленькая",
+            "Quantity": "230 г.",
+            "Price": 10
+          }
+        ]
+      },
+      
+      {
+        "Title": "Тунец",
+        "Description": "тесто для пиццы, соус томатный, сыр, тунец и специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Большая",
+            "Quantity": "1 кг.",
+            "Price": 19.50
+          },
+          
+          {
+            "SubOrder": 2,
+            "Kind": "Средняя",
+            "Quantity": "410 г.",
             "Price": 8
+          },
+
+          {
+            "SubOrder": 3,
+            "Kind": "Маленькая",
+            "Quantity": "240 г.",
+            "Price": 5
           }
         ]
       }
@@ -110,57 +236,113 @@
     "IconPath": "Images/menu-sushi.png",
     "Items": [
       {
-        "Title": "Суши #1",
-        "Description": "Состав суши #1",
+        "Title": "Горячий суши сет 1",
+        "Description": "горячий ролл с крабовыми палочками 4 ролла, горячий ролл с курицей 4 ролла, горячий ролл с ветчиной 4 ролла, горячий ролл с угрём 4 ролла, горячий ролл с семгой 4 ролла, васаби - 12 г., имбирь - 24 г., соевый соус - 50 мл.",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
             "Kind": "Большой сет",
-            "Quantity": "1 кг",
-            "Price": 12
-          },
+            "Quantity": "690 г.",
+            "Price": 17
+          }
+        ]
+      },
 
+      {
+        "Title": "Суши сет 2",
+        "Description": "Сяке маки 4 ролла, эби маки 4 ролла, унаги маки 4 ролла, тобико крим маки 4 ролла, салат чука 50/12, васаби - 12 г., имбирь - 24 г., соевый соус - 50 мл.",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
           {
-            "SubOrder": 2,
-            "Kind": "Маленький сет",
-            "Quantity": "450 г",
+            "SubOrder": 1,
+            "Kind": "Средний сет",
+            "Quantity": "432 г.",
+            "Price": 16
+          }
+        ]
+      },
+
+      {
+        "Title": "Суши сет 3",
+        "Description": "Каппа оригами маки 4 ролла, ролл с крабовыми палочками 4 ролла, тояма маки 4 ролла, ясай маки 4 ролла, катори маки 4 ролла,  васаби - 12 г., имбирь - 24 г., соевый соус - 50 мл.",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Средний сет",
+            "Quantity": "480 г.",
+            "Price": 11.5
+          }
+        ]
+      },
+      
+      {
+        "Title": "Горячий ролл с креветкой (8 роллов)",
+        "Description": "суши рис, королевская креветка, мягкий сыр, кляр, сухари по-японки",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "230 г.",
+            "Price": 10
+          }
+        ]
+      },
+      
+      {
+        "Title": "Сяке маки",
+        "Description": "суши рис, семга, огурец, майонез",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "190 г.",
             "Price": 6
           }
         ]
       },
-
+      
       {
-        "Title": "Суши #2",
-        "Description": "Состав суши #2",
+        "Title": "Эби маки",
+        "Description": "суши рис, королевская креветка, огурец",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
-            "Kind": "Большой сет",
-            "Quantity": "1 кг",
-            "Price": 14
+            "Kind": "8 роллов",
+            "Quantity": "180 г.",
+            "Price": 7
           },
-
+          
           {
             "SubOrder": 2,
-            "Kind": "Маленький сет",
-            "Quantity": "450г",
-            "Price": 7
+            "Kind": "4 ролла",
+            "Quantity": "90 г.",
+            "Price": 3.50
           }
         ]
       },
-
+      
       {
-        "Title": "Суши #3",
-        "Description": "Состав суши #3",
+        "Title": "Каппа",
+        "Description": "суши рис, огурец, кунжут",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
-            "Kind": "Большой сет",
-            "Quantity": "1100 г",
-            "Price": 15.5
+            "Kind": "8 роллов",
+            "Quantity": "170 г.",
+            "Price": 3.50
+          },
+          
+          {
+            "SubOrder": 2,
+            "Kind": "4 ролла",
+            "Quantity": "85 г.",
+            "Price": 1.75
           }
         ]
       }
@@ -172,7 +354,75 @@
     "Text": "Супы",
     "IconPath": "Images/menu-soup.png",
     "Items": [
+      {
+        "Title": "Борщ Украинский",
+        "Description": "грудинка к/в, морковь, свекла, специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "250 г.",
+            "Price": 2.50
+          }
+        ]
+      },
       
+      {
+        "Title": "Суп-пюре Чикен",
+        "Description": "филе куриное, сливки, морковь, сыр, специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "220 г.",
+            "Price": 2.50
+          }
+        ]
+      },
+      
+      {
+        "Title": "Крем суп из лесных грибов",
+        "Description": "пюре из лесных грибов, шампиньоны, сыр",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "220 г.",
+            "Price": 3
+          }
+        ]
+      },
+      
+      {
+        "Title": "Томатный суп с креветками",
+        "Description": "пюре из томатов, креветки, сметана",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "220 г.",
+            "Price": 3.50
+          }
+        ]
+      },
+      
+      {
+        "Title": "Солянка мясная",
+        "Description": "салями, ветчина, копченая куриная грудка, огурец соленый, оливки, лимон, специи, сметана",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "270 г.",
+            "Price": 3
+          }
+        ]
+      }
     ]
   },
    
@@ -181,7 +431,33 @@
     "Text": "Бургеры",
     "IconPath": "Images/menu-burger.png",
     "Items": [
+       {
+        "Title": "Бургер Хард",
+        "Description": "булочка для бургера, соус Баварский, лист салата, грудинка, огурец маринованный, сыр для бургера",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "290 г.",
+            "Price": 8.50
+          }
+        ]
+      },
       
+      {
+        "Title": "Бургер Лайт",
+        "Description": "булочка для бургера, куриная отбивная, листья салата, томаты, творожный сыр",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "330 г.",
+            "Price": 7.50
+          }
+        ]
+      },
     ]
   },
    
@@ -190,7 +466,103 @@
     "Text": "Салаты",
     "IconPath": "Images/menu-salad.png",
     "Items": [
+      {
+        "Title": "Морской",
+        "Description": "креветки, кальмар, икра летучей рыбы, авокадо, листья салата, соус майонезный",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "140 г.",
+            "Price": 7
+          }
+        ]
+      },
       
+      {
+        "Title": "Салат Филе сёмги с икрой",
+        "Description": "филе семги слабосоленое, икра летучей рыбы, яйцо, огурец, листья салата, соус майонезный, сок лимона",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "180 г.",
+            "Price": 7.50
+          }
+        ]
+      },
+      
+      {
+        "Title": "Салат Теплый с кальмаром",
+        "Description": "кальмар, шампиньоны, листья салата, соус майонезный",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "120 г.",
+            "Price": 4
+          }
+        ]
+      },
+      
+      {
+        "Title": "Салат Тунец",
+        "Description": "филе тунца консервированное, яйцо, огурец, помидор, оливки, листья салата, оливковое масло, специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "230 г.",
+            "Price": 4
+          }
+        ]
+      },
+      
+      {
+        "Title": "Салат Куриное филе с грибами",
+        "Description": "филе куриное, шампиньоны консервированные, помидор, пекинская капуста, листья салата, сыр, соус майонезный",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "230 г.",
+            "Price": 4
+          }
+        ]
+      },
+      
+      {
+        "Title": "Салат Ветчина с ананасами",
+        "Description": "ветчина, ананас консервированный, сладкий перец, пекинская капуста, соус майонезный",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "160 г.",
+            "Price": 3
+          }
+        ]
+      },
+      
+       {
+        "Title": "Греческий",
+        "Description": "сладкий перец, огурец, помидор, оливки, оливковое масло, специи",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "220 г.",
+            "Price": 4
+          }
+        ]
+      }
     ]
   },
    
@@ -200,45 +572,116 @@
     "IconPath": "Images/menu-dessert.png",
     "Items": [
       {
-        "Title": "Пирог #1",
-        "Description": "Состав пирога #1",
+        "Title": "тартар",
+        "Description": "песочное тесто, мус манго, вишневый джем, какао",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
-            "Kind": "Пирог",
-            "Quantity": "1 кг",
-            "Price": 20
-          },
-
-          {
-            "SubOrder": 2,
             "Kind": "Порция",
-            "Quantity": "100 г",
-            "Price": 2.5
+            "Quantity": "100 г.",
+            "Price": 3
           }
         ]
       },
+      
       {
-        "Title": "Пирог #2",
-        "Description": "Состав пирога #2",
+        "Title": "Штрудель",
+        "Description": "Слоеное тесто, яблоки, грецкий орех, корица, сахарная пудра",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
-            "Kind": "Пирог",
-            "Quantity": "1 кг",
-            "Price": 22
+            "Kind": "Порция",
+            "Quantity": "100 г.",
+            "Price": 2.50
           },
-
+          
           {
             "SubOrder": 2,
-            "Kind": "Порция",
-            "Quantity": "100 г",
-            "Price": 2.5
+            "Kind": "Пирог",
+            "Quantity": "1 кг.",
+            "Price": 23
           }
         ]
-      }
+      },
+      
+      {
+        "Title": "Канноли",
+        "Description": "вафельная трубочка, крем чиз, шоколад, сахарная пудра",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "80 г.",
+            "Price": 2.50
+          }
+        ]
+      },
+      
+       {
+        "Title": "Карамелька 100г",
+        "Description": "бисквит с карамальным кремом и взбитыми сливками",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "100 г.",
+            "Price": 2.50
+          }
+        ]
+      },
+      
+      {
+        "Title": "Фруктовый",
+        "Description": "бисквит, взбитые сливки, клубника, киви, банановый крем, кокосовая стружка",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "100 г.",
+            "Price": 2.50
+          },
+          
+          {
+            "SubOrder": 2,
+            "Kind": "Пирог",
+            "Quantity": "1 кг.",
+            "Price": 23
+          }
+        ]
+      },
+      
+      {
+        "Title": "Творожок 120г",
+        "Description": "бисквит, творожный крем, взбитые сливки, клубника, киви, виноград, ананас, кокосовая стружка",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "120 г.",
+            "Price": 2.70
+          }
+        ]
+      },
+      
+      {
+        "Title": "Десерт Венские вафли с сиропом",
+        "Description": "сироп на выбор: дыня, мята, арбуз, кокос, ваниль, ананас, малина, шоколад, клубника, кленовый сироп",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Порция",
+            "Quantity": "110 г.",
+            "Price": 3
+          }
+        ]
+      },
     ]
   },
 
@@ -248,57 +691,101 @@
     "IconPath": "Images/menu-drink.png",
     "Items": [
       {
-        "Title": "Напиток #1",
-        "Description": "Напиток #1 описание",
+        "Title": "Фанта апельсин",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
-            "Kind": "Большая",
-            "Quantity": "2 л",
-            "Price": 2.6
+            "Kind": "Средняя",
+            "Quantity": "1 л.",
+            "Price": 2
           },
 
           {
             "SubOrder": 2,
             "Kind": "Маленькая",
-            "Quantity": "0.5",
-            "Price": 1
+            "Quantity": "0.5 л.",
+            "Price": 1.70
           }
         ]
       },
 
       {
-        "Title": "Напиток #2",
-        "Description": "Напиток #2 описание",
+        "Title": "Спрайт",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
-            "Kind": "Большая",
-            "Quantity": "2 л",
-            "Price": 2.8
+            "Kind": "Средняя",
+            "Quantity": "1 л.",
+            "Price": 2
           },
 
           {
             "SubOrder": 2,
             "Kind": "Маленькая",
-            "Quantity": "0.5",
-            "Price": 1.1
+            "Quantity": "0.5 л.",
+            "Price": 1.70
           }
         ]
       },
 
       {
-        "Title": "Напиток #3",
-        "Description": "Напиток #3 описание",
+        "Title": "Кока Кола",
         "ImagePath": "Images/image-placeholder.png",
         "Details": [
           {
             "SubOrder": 1,
-            "Kind": "Порция",
-            "Quantity": "1 чашка",
-            "Price": 1.5
+            "Kind": "Средняя",
+            "Quantity": "1 л.",
+            "Price": 2
+          },
+
+          {
+            "SubOrder": 2,
+            "Kind": "Маленькая",
+            "Quantity": "0.5 л.",
+            "Price": 1.70
+          }
+        ]
+      },
+      
+      {
+        "Title": "Сок Рич",
+        "Description": "в ассортименте: апельсин, яблоко, персик, грейпфрут, виноград, томат, вишня, мультифрукт",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Коробка",
+            "Quantity": "1 л.",
+            "Price": 4.80
+          }
+        ]
+      },
+      
+      {
+        "Title": "Бонаква 0.5л",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Маленькая",
+            "Quantity": "500 мл.",
+            "Price": 1.50
+          }
+        ]
+      },
+      
+      {
+        "Title": "Горячий шоколад",
+        "ImagePath": "Images/image-placeholder.png",
+        "Details": [
+          {
+            "SubOrder": 1,
+            "Kind": "Чашка",
+            "Quantity": "50 мл.",
+            "Price": 1.70
           }
         ]
       }
