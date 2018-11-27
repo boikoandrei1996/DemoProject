@@ -2,7 +2,7 @@
   {
     "Order": 1,
     "Text": "Пицца",
-    "IconPath": "Images/menu-pizza.png",
+    "IconPath": "Images/menu/icon/385b54fc-9f78-4802-9963-536a8006ee41.png",
     "Items": [
       {
         "Title": "Фирменная",
@@ -233,7 +233,7 @@
   {
     "Order": 2,
     "Text": "Суши",
-    "IconPath": "Images/menu-sushi.png",
+    "IconPath": "Images/menu/icon/fcfb6878-5679-43cb-a511-1ad7fed426c6.png",
     "Items": [
       {
         "Title": "Горячий суши сет 1",
@@ -352,7 +352,7 @@
   {
     "Order": 3,
     "Text": "Супы",
-    "IconPath": "Images/menu-soup.png",
+    "IconPath": "Images/menu/icon/ebcf6302-db00-4c18-92bc-4cc9659ef0c9.png",
     "Items": [
       {
         "Title": "Борщ Украинский",
@@ -429,7 +429,7 @@
   {
     "Order": 4,
     "Text": "Бургеры",
-    "IconPath": "Images/menu-burger.png",
+    "IconPath": "Images/menu/icon/be93289e-b236-4d66-8b56-c7dfd1ac4026.png",
     "Items": [
        {
         "Title": "Бургер Хард",
@@ -464,7 +464,7 @@
   {
     "Order": 5,
     "Text": "Салаты",
-    "IconPath": "Images/menu-salad.png",
+    "IconPath": "Images/menu/icon/c4e0ccea-ad88-4fc1-9a47-5e4afbf21ff2.png",
     "Items": [
       {
         "Title": "Морской",
@@ -569,7 +569,7 @@
   {
     "Order": 6,
     "Text": "Десерты",
-    "IconPath": "Images/menu-dessert.png",
+    "IconPath": "Images/menu/icon/ce4e6d76-5069-441d-a2ce-58d366f87f60.png",
     "Items": [
       {
         "Title": "тартар",
@@ -688,7 +688,7 @@
   {
     "Order": 7,
     "Text": "Напитки",
-    "IconPath": "Images/menu-drink.png",
+    "IconPath": "Images/menu/icon/9a233862-2db9-4742-a489-efd5ea32a134.png",
     "Items": [
       {
         "Title": "Фанта апельсин",
