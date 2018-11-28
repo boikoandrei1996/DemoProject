@@ -7,6 +7,8 @@ namespace DemoProject.Shared.Attributes
   [AttributeUsage(AttributeTargets.Property)]
   public sealed class FileExistValidationAttribute : ValidationAttribute
   {
+    public static readonly string CustomMessage = "File should exist on the server.";
+
     private readonly string _relativePath;
 
     public FileExistValidationAttribute(string relativePath)
@@ -23,7 +25,7 @@ namespace DemoProject.Shared.Attributes
       else
       {
         return new ValidationResult(
-          $"File should exist on the server.", 
+          FileExistValidationAttribute.CustomMessage,
           new[] { validationContext.MemberName });
       }
     }

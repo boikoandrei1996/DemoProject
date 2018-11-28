@@ -43,6 +43,8 @@ namespace DemoProject.WebApi
         return new ImageService(Environment.WebRootPath);
       });
 
+      services.AddTransient<ValidationService>();
+
       services.AddTransient<IContentGroupService, ContentGroupService>();
       services.AddTransient<IInfoObjectService, InfoObjectService>();
       services.AddTransient<IMenuItemService, MenuItemService>();

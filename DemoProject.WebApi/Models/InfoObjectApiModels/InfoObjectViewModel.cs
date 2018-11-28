@@ -18,13 +18,19 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
         return null;
       }
 
+      var content = model.Content;
+      if (model.Type == InfoObjectType.Image)
+      {
+        content = Constants.GetFullPathToImage(model.Content);
+      }
+
       return new InfoObjectViewModel
       {
         Id = model.Id,
-        ContentGroupId = model.ContentGroupId,
-        Content = model.Content,
+        Content = content,
+        Type = model.Type.ToString(),
         SubOrder = model.SubOrder,
-        Type = model.Type.ToString()
+        ContentGroupId = model.ContentGroupId,
       };
     }
   }
