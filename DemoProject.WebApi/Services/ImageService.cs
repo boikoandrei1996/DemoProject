@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
+using DemoProject.Shared;
 using Microsoft.AspNetCore.Http;
 
 namespace DemoProject.WebApi.Services
@@ -21,7 +21,8 @@ namespace DemoProject.WebApi.Services
         return ServiceResultFactory.BadRequestResult(nameof(file), "File not found.");
       }
 
-      var fullPath = Path.Combine(_webRootPath, Constants.DEFAULT_PATH_TO_IMAGE, file.FileName);
+      var relativePath = Constants.GetRelativePathToImage(file.FileName);
+      var fullPath = Path.Combine(_webRootPath, relativePath);
       using (var fileStream = new FileStream(fullPath, FileMode.Create))
       {
         await file.CopyToAsync(fileStream);

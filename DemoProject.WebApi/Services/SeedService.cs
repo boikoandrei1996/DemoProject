@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DemoProject.DLL;
-using DemoProject.DLL.Models;
+using DemoProject.DAL;
+using DemoProject.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -33,20 +33,20 @@ namespace DemoProject.WebApi.Services
     public async Task SeedDatabaseAsync(EFContext context)
     {
       var menuItems = await this.LoadAsync<List<MenuItem>>("MenuItems.json");
-      await this.SaveToDbAsync(context, menuItems);
       await context.History.AddAsync(ChangeHistory.Create(TableNames.MenuItem));
+      await this.SaveToDbAsync(context, menuItems);
 
       var discounts = await this.LoadAsync<List<ContentGroup>>("Discounts.json");
-      await this.SaveToDbAsync(context, discounts);
       await context.History.AddAsync(ChangeHistory.Create(TableNames.Discount));
+      await this.SaveToDbAsync(context, discounts);
 
       var delivery = await this.LoadAsync<List<ContentGroup>>("Delivery.json");
-      await this.SaveToDbAsync(context, delivery);
       await context.History.AddAsync(ChangeHistory.Create(TableNames.Delivery));
+      await this.SaveToDbAsync(context, delivery);
 
       var aboutUs = await this.LoadAsync<List<ContentGroup>>("AboutUs.json");
-      await this.SaveToDbAsync(context, aboutUs);
       await context.History.AddAsync(ChangeHistory.Create(TableNames.AboutUs));
+      await this.SaveToDbAsync(context, aboutUs);
 
       var carts = this.LoadCarts(menuItems.First().Items.First().Details);
       await this.SaveToDbAsync(context, carts);
@@ -111,7 +111,11 @@ namespace DemoProject.WebApi.Services
           Price = shopItemDetail.Price,
           ShopItemDetailId = shopItemDetail.Id
         };
-        carts.Add(new Cart { CartShopItems = new List<CartShopItem>() { cartShopItem } });
+        carts.Add(new Cart
+        {
+          DateOfCreation = DateTime.UtcNow,
+          CartShopItems = new List<CartShopItem>() { cartShopItem }
+        });
       }
 
       return carts;

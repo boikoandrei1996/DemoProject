@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DemoProject.DLL.Models;
-using DemoProject.WebApi.Attributes.ValidationAttributes;
+using DemoProject.DAL.Models;
+using DemoProject.Shared.Attributes;
 
 namespace DemoProject.WebApi.Models.MenuItemApiModels
 {
@@ -17,7 +17,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
 
     [Required]
     [MaxLength(100)]
-    [ImageExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
+    [FileExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
     public string IconFilename { get; set; }
 
     public static MenuItem Map(MenuItemEditModel model, Guid id)
@@ -32,7 +32,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
         Id = id,
         Order = model.Order,
         Text = model.Text,
-        IconPath = Constants.DEFAULT_PATH_TO_IMAGE + model.IconFilename
+        IconPath = Constants.GetRelativePathToImage(model.IconFilename)
       };
     }
   }

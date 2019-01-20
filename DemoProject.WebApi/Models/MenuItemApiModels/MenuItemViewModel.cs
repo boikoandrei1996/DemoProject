@@ -1,5 +1,5 @@
 ﻿using System;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 
 namespace DemoProject.WebApi.Models.MenuItemApiModels
 {
@@ -22,7 +22,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
         Id = model.Id,
         Order = model.Order,
         Text = model.Text,
-        IconPath = Constants.BASE_URL + model.IconPath
+        IconPath = Constants.GetFullPathToImage(model.IconPath)
       };
     }
   }

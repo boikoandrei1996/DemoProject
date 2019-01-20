@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
-using DemoProject.DLL.Interfaces;
-using DemoProject.DLL.Models;
-using DemoProject.WebApi.Attributes;
+using DemoProject.BLL.Interfaces;
+using DemoProject.DAL.Models;
+using DemoProject.Shared;
+using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.DeliveryApiModels;
 using DemoProject.WebApi.Models.Pages;
 using DemoProject.WebApi.Models.Shared;

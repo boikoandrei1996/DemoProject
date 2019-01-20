@@ -1,5 +1,5 @@
 ﻿using System;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 
 namespace DemoProject.WebApi.Models.CartShopItemApiModels
 {
@@ -14,7 +14,7 @@ namespace DemoProject.WebApi.Models.CartShopItemApiModels
 
     public static CartShopItemViewModel Map(CartShopItem model)
     {
-      if (model == null)
+      if (model == null || model.ShopItemDetail == null || model.ShopItemDetail.ShopItem == null)
       {
         return null;
       }
@@ -26,7 +26,7 @@ namespace DemoProject.WebApi.Models.CartShopItemApiModels
         ShopItemDetailId = model.ShopItemDetailId,
         Kind = model.ShopItemDetail.Kind,
         Title = model.ShopItemDetail.ShopItem.Title,
-        ImagePath = model.ShopItemDetail.ShopItem.ImagePath
+        ImagePath = Constants.GetFullPathToImage(model.ShopItemDetail.ShopItem.ImagePath)
       };
     }
   }

@@ -1,5 +1,5 @@
 ﻿using System;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 
 namespace DemoProject.WebApi.Models.ShopItemDetailApiModels
 {

@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using DemoProject.DLL;
-using DemoProject.DLL.Interfaces;
-using DemoProject.DLL.Services;
+using DemoProject.BLL.Interfaces;
+using DemoProject.BLL.Services;
+using DemoProject.DAL;
 using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +42,8 @@ namespace DemoProject.WebApi
       {
         return new ImageService(Environment.WebRootPath);
       });
+
+      services.AddTransient<ValidationService>();
 
       services.AddTransient<IContentGroupService, ContentGroupService>();
       services.AddTransient<IInfoObjectService, InfoObjectService>();

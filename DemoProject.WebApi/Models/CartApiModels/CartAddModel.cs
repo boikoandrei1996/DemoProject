@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 
 namespace DemoProject.WebApi.Models.CartApiModels
 {
@@ -16,7 +16,11 @@ namespace DemoProject.WebApi.Models.CartApiModels
         return null;
       }
 
-      return new Cart { Id = model.Id };
+      return new Cart
+      {
+        Id = model.Id,
+        DateOfCreation = DateTime.UtcNow
+      };
     }
   }
 }

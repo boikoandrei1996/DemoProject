@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DemoProject.DLL.Models.Pages;
+using DemoProject.DAL.Models;
+using DemoProject.Shared.Interfaces;
 using DemoProject.WebApi.Models.AboutUsApiModels;
 
 namespace DemoProject.WebApi.Models.Pages
@@ -12,11 +13,16 @@ namespace DemoProject.WebApi.Models.Pages
     public int TotalPages { get; set; }
     public ICollection<AboutUsViewModel> Records { get; set; } = new List<AboutUsViewModel>();
 
-    public static AboutUsPageModel Map(ContentGroupPage model)
+    public static AboutUsPageModel Map(IPage<ContentGroup> model)
     {
       if (model == null)
       {
         return null;
+      }
+
+      if (model.Records == null)
+      {
+        model.Records = new List<ContentGroup>();
       }
 
       return new AboutUsPageModel

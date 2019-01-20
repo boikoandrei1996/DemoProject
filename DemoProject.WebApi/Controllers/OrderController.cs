@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
-using DemoProject.DLL.Interfaces;
-using DemoProject.WebApi.Attributes;
+using DemoProject.BLL.Interfaces;
+using DemoProject.Shared;
+using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.OrderApiModels;
 using DemoProject.WebApi.Models.Pages;
 using Microsoft.AspNetCore.Mvc;

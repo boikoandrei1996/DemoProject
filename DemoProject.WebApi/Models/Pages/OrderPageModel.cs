@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DemoProject.DLL.Models.Pages;
+using DemoProject.DAL.Models;
+using DemoProject.Shared.Interfaces;
 using DemoProject.WebApi.Models.OrderApiModels;
 
 namespace DemoProject.WebApi.Models.Pages
@@ -12,11 +13,16 @@ namespace DemoProject.WebApi.Models.Pages
     public int TotalPages { get; set; }
     public ICollection<OrderViewModel> Records { get; set; } = new List<OrderViewModel>();
 
-    public static OrderPageModel Map(OrderPage model)
+    public static OrderPageModel Map(IPage<Order> model)
     {
       if (model == null)
       {
         return null;
+      }
+
+      if (model.Records == null)
+      {
+        model.Records = new List<Order>();
       }
 
       return new OrderPageModel

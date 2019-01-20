@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 using DemoProject.WebApi.Models.ShopItemDetailApiModels;
 
 namespace DemoProject.WebApi.Models.ShopItemApiModels
@@ -22,12 +21,17 @@ namespace DemoProject.WebApi.Models.ShopItemApiModels
         return null;
       }
 
+      if (model.Details == null)
+      {
+        model.Details = new List<ShopItemDetail>();
+      }
+
       return new ShopItemViewModel
       {
         Id = model.Id,
         Title = model.Title,
         Description = model.Description,
-        ImagePath = Constants.BASE_URL + model.ImagePath,
+        ImagePath = Constants.GetFullPathToImage(model.ImagePath),
         Details = model.Details.Select(x => ShopItemDetailViewModel.Map(x)).ToList()
       };
     }

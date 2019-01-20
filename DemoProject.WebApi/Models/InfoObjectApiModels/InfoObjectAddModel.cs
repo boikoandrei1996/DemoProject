@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DemoProject.DLL.Models;
-using DemoProject.WebApi.Attributes.ValidationAttributes;
+using DemoProject.DAL.Models;
+using DemoProject.Shared.Attributes;
 
 namespace DemoProject.WebApi.Models.InfoObjectApiModels
 {
@@ -11,7 +11,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     public string Content { get; set; }
 
     [Required]
-    [EnumRangeValidation]
+    [EnumRangeValidation(typeof(InfoObjectType))]
     public string Type { get; set; }
 
     [Required]
@@ -28,10 +28,17 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
         return null;
       }
 
+      var type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true);
+      var content = model.Content;
+      if (type == InfoObjectType.Image)
+      {
+        content = Constants.GetRelativePathToImage(model.Content);
+      }
+
       return new InfoObject
       {
-        Content = model.Content,
-        Type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true),
+        Content = content,
+        Type = type,
         SubOrder = model.SubOrder,
         ContentGroupId = model.ContentGroupId
       };

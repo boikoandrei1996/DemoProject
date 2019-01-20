@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DemoProject.DLL.Models;
-using DemoProject.WebApi.Attributes.ValidationAttributes;
+using DemoProject.DAL.Models;
+using DemoProject.Shared.Attributes;
 
 namespace DemoProject.WebApi.Models.DeliveryApiModels
 {

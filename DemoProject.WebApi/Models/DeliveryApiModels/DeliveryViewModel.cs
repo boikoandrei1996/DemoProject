@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DemoProject.DLL.Models;
+using DemoProject.DAL.Models;
 using DemoProject.WebApi.Models.InfoObjectApiModels;
 
 namespace DemoProject.WebApi.Models.DeliveryApiModels
@@ -17,6 +17,11 @@ namespace DemoProject.WebApi.Models.DeliveryApiModels
       if (model == null)
       {
         return null;
+      }
+
+      if (model.Items == null)
+      {
+        model.Items = new List<InfoObject>();
       }
 
       return new DeliveryViewModel

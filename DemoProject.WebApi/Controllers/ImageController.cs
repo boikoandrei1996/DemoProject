@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
-using DemoProject.DLL.Infrastructure;
-using DemoProject.WebApi.Attributes;
+using DemoProject.Shared;
+using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
 {
+  [ApiExplorerSettings(IgnoreApi = true)]
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
