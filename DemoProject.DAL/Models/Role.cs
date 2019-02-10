@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
 
 namespace DemoProject.DAL.Models
 {
-  public class AppRole : IdentityRole<Guid>
+  public static class Role
   {
     public const string Admin = "Admin";
     public const string Moderator = "Moderator";
@@ -13,8 +11,8 @@ namespace DemoProject.DAL.Models
     {
       return new List<string>
       {
-        Admin,
-        Moderator
+        Role.Admin,
+        Role.Moderator
       };
     }
   }

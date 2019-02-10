@@ -1,15 +1,14 @@
-﻿using System;
-using DemoProject.DAL.Configuration;
+﻿using DemoProject.DAL.Configuration;
 using DemoProject.DAL.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DAL
 {
-  public class EFContext : IdentityDbContext<AppUser, AppRole, Guid>
+  public class EFContext : DbContext
   {
     public EFContext(DbContextOptions<EFContext> options) : base(options) { }
 
+    public DbSet<AppUser> Users { get; set; }
     public DbSet<InfoObject> InfoObjects { get; set; }
     public DbSet<ContentGroup> ContentGroups { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
@@ -30,6 +29,7 @@ namespace DemoProject.DAL
       base.OnModelCreating(builder);
 
       builder
+        .ApplyConfiguration(new AppUserConfiguration())
         .ApplyConfiguration(new ShopItemConfiguration())
         .ApplyConfiguration(new ShopItemDetailConfiguration())
         .ApplyConfiguration(new CartShopItemConfiguration())
@@ -42,6 +42,7 @@ namespace DemoProject.DAL
 
     public void ClearDatabase()
     {
+      this.Users.DeleteFromQuery();
       this.Carts.DeleteFromQuery();
       this.CartShopItems.DeleteFromQuery();
       this.ContentGroups.DeleteFromQuery();

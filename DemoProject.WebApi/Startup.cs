@@ -2,6 +2,8 @@
 using DemoProject.BLL.Interfaces;
 using DemoProject.BLL.Services;
 using DemoProject.DAL;
+using DemoProject.Shared;
+using DemoProject.Shared.Interfaces;
 using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
@@ -32,9 +34,13 @@ namespace DemoProject.WebApi
     {
       services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
+      services.AddTransient<IPasswordManager, PasswordManager>();
+
       services.AddTransient<SeedService>(serviceProvider =>
       {
-        return new SeedService(Path.Combine(Environment.WebRootPath, "Files"));
+        return new SeedService(
+          Path.Combine(Environment.WebRootPath, "Files"),
+          serviceProvider.GetService<IPasswordManager>());
       });
 
       services.AddTransient<IImageService>(serviceProvider =>

@@ -1,0 +1,31 @@
+[
+  {
+    "Username": "Admin",
+    "Role": "Admin",
+    "FirstName": "I am Admin",
+    "LastName": "#1",
+    "Email": "Admin@gmail.com",
+    "EmailConfirmed": true,
+    "PhoneNumber": "375291234567"
+  },
+
+  {
+    "Username": "Moderator1",
+    "Role": "Moderator",
+    "FirstName": "I am Moderator",
+    "LastName": "#1",
+    "Email": "Moderator1@gmail.com",
+    "EmailConfirmed": true,
+    "PhoneNumber": "375291234567"
+  },
+
+  {
+    "Username": "Moderator2",
+    "Role": "Moderator",
+    "FirstName": "I am Moderator",
+    "LastName": "#2",
+    "Email": "Moderator2@gmail.com",
+    "EmailConfirmed": false,
+    "PhoneNumber": "375291234567"
+  }
+]

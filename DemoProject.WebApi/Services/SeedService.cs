@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
+using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -16,13 +17,15 @@ namespace DemoProject.WebApi.Services
   {
     private readonly string _dirPath;
     private readonly ILogger _logger;
+    private readonly IPasswordManager _passwordManager;
 
-    public SeedService(string dirPath) : this(dirPath, null) { }
+    public SeedService(string dirPath, IPasswordManager passwordManager) : this(dirPath, passwordManager, null) { }
 
-    public SeedService(string dirPath, ILogger logger)
+    public SeedService(string dirPath, IPasswordManager passwordManager, ILogger logger)
     {
       _dirPath = dirPath;
       _logger = logger;
+      _passwordManager = passwordManager;
     }
 
     public void SeedDatabase(EFContext context)
@@ -32,6 +35,10 @@ namespace DemoProject.WebApi.Services
 
     public async Task SeedDatabaseAsync(EFContext context)
     {
+      var users = await this.LoadAsync<List<AppUser>>("Users.json");
+      this.ManagePasswords(users);
+      await this.SaveToDbAsync(context, users);
+
       var menuItems = await this.LoadAsync<List<MenuItem>>("MenuItems.json");
       await context.History.AddAsync(ChangeHistory.Create(TableNames.MenuItem));
       await this.SaveToDbAsync(context, menuItems);
@@ -139,6 +146,17 @@ namespace DemoProject.WebApi.Services
       }
 
       return orders;
+    }
+
+    private void ManagePasswords(List<AppUser> users)
+    {
+      foreach (var user in users)
+      {
+        var (hash, salt) = _passwordManager.CreatePasswordHash(user.Username);
+
+        user.PasswordHash = hash;
+        user.PasswordSalt = salt;
+      }
     }
   }
 }
