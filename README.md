@@ -31,3 +31,4 @@ ___
 9. Tesing
 	* Unit tests
 	* Integration tests
+10. Setup CI&CD
