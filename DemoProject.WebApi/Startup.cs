@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -29,9 +30,7 @@ namespace DemoProject.WebApi
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services
-        .AddDbContext<EFContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+      services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
       services.AddTransient<SeedService>(serviceProvider =>
       {
@@ -54,9 +53,13 @@ namespace DemoProject.WebApi
       services.AddTransient<IOrderService, OrderService>();
 
       services
-        .AddMvc(x =>
-        {
-        })
+        .AddDbContext<EFContext>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+      // services.AddCors();
+
+      services
+        .AddMvc(x => { })
         .AddJsonOptions(x =>
         {
           x.SerializerSettings.Formatting = Formatting.Indented;
@@ -80,26 +83,32 @@ namespace DemoProject.WebApi
         // x.IncludeXmlComments(Path.Combine(Environment.ContentRootPath, @"bin\Debug\netcoreapp2.0\DemoProject.WebApi.xml"));
         x.DescribeAllEnumsAsStrings();
       });
-
-      // services.AddCors();
     }
 
     public void Configure(IApplicationBuilder app)
     {
-      // app.UseCors(builder => builder.AllowAnyOrigin());
+      // cors policy
+      /*app.UseCors(x => x
+          .AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader()
+          .AllowCredentials());*/
+
+      // app.UseAuthentication();
 
       if (Environment.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
       }
 
-      app.SetupDefaultPage("swagger/index.html");
+      var appSettings = app.ApplicationServices.GetService<IOptions<AppSettings>>();
 
-      var isDatabaseRestore = Configuration.GetValue("DatabaseConfig:ShouldBeRestored", false);
-      app.ApplyMigrationAndDatabaseSeed(isDatabaseRestore);
+      app.ApplyMigrationAndDatabaseSeed(appSettings.Value.DatabaseRestore);
 
       app.UseMvc();
       app.UseFileServer();
+
+      app.SetupDefaultPage("swagger/index.html");
 
       app.UseSwagger();
       app.UseSwaggerUI(x =>
