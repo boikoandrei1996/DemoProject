@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Text;
 using DemoProject.BLL.Interfaces;
 using DemoProject.BLL.Services;
 using DemoProject.DAL;
@@ -6,12 +8,14 @@ using DemoProject.Shared;
 using DemoProject.Shared.Interfaces;
 using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -32,7 +36,8 @@ namespace DemoProject.WebApi
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+      var appSettingsSection = Configuration.GetSection("AppSettings");
+      services.Configure<AppSettings>(appSettingsSection);
 
       services.AddTransient<IPasswordManager, PasswordManager>();
 
@@ -49,7 +54,9 @@ namespace DemoProject.WebApi
       });
 
       services.AddTransient<ValidationService>();
+      services.AddTransient<AuthTokenGenerator>();
 
+      services.AddTransient<IUserService, UserService>();
       services.AddTransient<IContentGroupService, ContentGroupService>();
       services.AddTransient<IInfoObjectService, InfoObjectService>();
       services.AddTransient<IMenuItemService, MenuItemService>();
@@ -62,7 +69,7 @@ namespace DemoProject.WebApi
         .AddDbContext<EFContext>(options =>
           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-      // services.AddCors();
+      services.AddCors();
 
       services
         .AddMvc(x => { })
@@ -70,6 +77,43 @@ namespace DemoProject.WebApi
         {
           x.SerializerSettings.Formatting = Formatting.Indented;
           x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
+
+      // configure jwt authentication
+      var appSettings = appSettingsSection.Get<AppSettings>();
+      var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+      services
+        .AddAuthentication(x =>
+        {
+          x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+          x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(x =>
+        {
+          x.Events = new JwtBearerEvents
+          {
+            OnTokenValidated = async context =>
+            {
+              var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+              var userId = Guid.Parse(context.Principal.Identity.Name);
+
+              var userExist = await userService.ExistAsync(user => user.Id == userId);
+              if (userExist == false)
+              {
+                // return unauthorized if user no longer exists
+                context.Fail("Unauthorized");
+              }
+            }
+          };
+          x.RequireHttpsMetadata = false;
+          x.SaveToken = true;
+          x.TokenValidationParameters = new TokenValidationParameters
+          {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+          };
         });
 
       services.AddSwaggerGen(x =>
@@ -93,14 +137,13 @@ namespace DemoProject.WebApi
 
     public void Configure(IApplicationBuilder app)
     {
-      // cors policy
-      /*app.UseCors(x => x
+      app.UseCors(x => x
           .AllowAnyOrigin()
           .AllowAnyMethod()
           .AllowAnyHeader()
-          .AllowCredentials());*/
+          .AllowCredentials());
 
-      // app.UseAuthentication();
+      app.UseAuthentication();
 
       if (Environment.IsDevelopment())
       {

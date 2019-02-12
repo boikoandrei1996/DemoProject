@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DemoProject.DAL.Models
 {
@@ -14,6 +15,21 @@ namespace DemoProject.DAL.Models
         Role.Admin,
         Role.Moderator
       };
+    }
+
+    public static string GetRoleOrNull(string role)
+    {
+      if (string.Equals(role, Role.Admin, StringComparison.OrdinalIgnoreCase))
+      {
+        return Role.Admin;
+      }
+      
+      if (string.Equals(role, Role.Moderator, StringComparison.OrdinalIgnoreCase))
+      {
+        return Role.Moderator;
+      }
+
+      return null;
     }
   }
 }

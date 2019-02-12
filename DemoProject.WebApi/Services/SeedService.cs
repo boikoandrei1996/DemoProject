@@ -36,7 +36,7 @@ namespace DemoProject.WebApi.Services
     public async Task SeedDatabaseAsync(EFContext context)
     {
       var users = await this.LoadAsync<List<AppUser>>("Users.json");
-      this.ManagePasswords(users);
+      this.ManagePasswordsAndCreationTime(users);
       await this.SaveToDbAsync(context, users);
 
       var menuItems = await this.LoadAsync<List<MenuItem>>("MenuItems.json");
@@ -148,7 +148,7 @@ namespace DemoProject.WebApi.Services
       return orders;
     }
 
-    private void ManagePasswords(List<AppUser> users)
+    private void ManagePasswordsAndCreationTime(List<AppUser> users)
     {
       foreach (var user in users)
       {
@@ -156,6 +156,9 @@ namespace DemoProject.WebApi.Services
 
         user.PasswordHash = hash;
         user.PasswordSalt = salt;
+
+        user.DateOfCreation = DateTime.UtcNow;
+        user.LastModified = null;
       }
     }
   }

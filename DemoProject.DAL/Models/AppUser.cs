@@ -1,4 +1,6 @@
-﻿namespace DemoProject.DAL.Models
+﻿using System;
+
+namespace DemoProject.DAL.Models
 {
   public class AppUser : BaseEntity
   {
@@ -19,5 +21,9 @@
     public bool EmailConfirmed { get; set; }
 
     public string PhoneNumber { get; set; }
+
+    public DateTime DateOfCreation { get; set; }
+
+    public DateTime? LastModified { get; set; }
   }
 }
