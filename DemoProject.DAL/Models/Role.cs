@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace DemoProject.DAL.Models
 {
@@ -7,23 +6,24 @@ namespace DemoProject.DAL.Models
   {
     public const string Admin = "Admin";
     public const string Moderator = "Moderator";
+    public const string AdminAndModerator = Role.Admin + "," + Role.Moderator;
 
-    public static IReadOnlyList<string> GetAllRoles()
+    public static string[] GetAllRoles()
     {
-      return new List<string>
+      return new[]
       {
         Role.Admin,
         Role.Moderator
       };
     }
 
-    public static string GetRoleOrNull(string role)
+    public static string NormalizeRoleName(string role)
     {
       if (string.Equals(role, Role.Admin, StringComparison.OrdinalIgnoreCase))
       {
         return Role.Admin;
       }
-      
+
       if (string.Equals(role, Role.Moderator, StringComparison.OrdinalIgnoreCase))
       {
         return Role.Moderator;

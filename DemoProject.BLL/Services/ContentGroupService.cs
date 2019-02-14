@@ -24,10 +24,10 @@ namespace DemoProject.BLL.Services
 
     public Task<ChangeHistory> GetHistoryRecordAsync(GroupName group)
     {
-      var groupTableName = ChangeHistory.GetTableNameByGroupName(group);
+      var tableName = ChangeHistory.GetTableNameByGroupName(group);
 
       return _context.History
-        .LastOrDefaultAsync(x => x.TableName == groupTableName || x.TableName == TableNames.InfoObject);
+        .LastOrDefaultAsync(x => x.Table == tableName || x.Table == TableName.InfoObject);
     }
 
     public async Task<ContentGroupPage> GetPageAsync(GroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null)
@@ -105,7 +105,7 @@ namespace DemoProject.BLL.Services
 
       var tableName = ChangeHistory.GetTableNameByGroupName(model.GroupName);
       _context.ContentGroups.Add(model);
-      _context.History.Add(ChangeHistory.Create(tableName));
+      _context.History.Add(ChangeHistory.Create(tableName, ActionType.Add));
 
       return _context.SaveAsync(nameof(AddAsync), model.Id);
     }
@@ -121,7 +121,7 @@ namespace DemoProject.BLL.Services
 
       var tableName = ChangeHistory.GetTableNameByGroupName(model.GroupName);
       _context.ContentGroups.Update(model);
-      _context.History.Add(ChangeHistory.Create(tableName));
+      _context.History.Add(ChangeHistory.Create(tableName, ActionType.Modify));
 
       return await _context.SaveAsync(nameof(UpdateAsync));
     }
@@ -136,7 +136,7 @@ namespace DemoProject.BLL.Services
 
       var tableName = ChangeHistory.GetTableNameByGroupName(model.GroupName);
       _context.ContentGroups.Remove(model);
-      _context.History.Add(ChangeHistory.Create(tableName));
+      _context.History.Add(ChangeHistory.Create(tableName, ActionType.Delete));
 
       return await _context.SaveAsync(nameof(DeleteAsync));
     }

@@ -122,8 +122,7 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Email is already taken.");
       }
 
-      // transform to the correct role name
-      var role = Role.GetRoleOrNull(model.Role);
+      var role = Role.NormalizeRoleName(model.Role);
       if (role == null)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Incorrect role name.");

@@ -36,7 +36,7 @@ namespace DemoProject.BLL.Services
       }
 
       _context.InfoObjects.Add(model);
-      _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
+      _context.History.Add(ChangeHistory.Create(TableName.InfoObject, ActionType.Add));
 
       return await _context.SaveAsync(nameof(AddAsync), model.Id);
     }
@@ -55,7 +55,7 @@ namespace DemoProject.BLL.Services
       }
 
       _context.InfoObjects.Update(model);
-      _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
+      _context.History.Add(ChangeHistory.Create(TableName.InfoObject, ActionType.Modify));
 
       return await _context.SaveAsync(nameof(UpdateAsync));
     }
@@ -69,7 +69,7 @@ namespace DemoProject.BLL.Services
       }
 
       _context.InfoObjects.Remove(model);
-      _context.History.Add(ChangeHistory.Create(TableNames.InfoObject));
+      _context.History.Add(ChangeHistory.Create(TableName.InfoObject, ActionType.Delete));
 
       return await _context.SaveAsync(nameof(DeleteAsync));
     }

@@ -4,40 +4,49 @@ namespace DemoProject.DAL.Models
 {
   public class ChangeHistory : BaseEntity
   {
-    public string TableName { get; set; }
-    public DateTime TimeOfChange { get; set; }
+    public TableName Table { get; set; }
+    public ActionType Action { get; set; }
+    public DateTime TimeOfChange { get; private set; }
 
-    public static ChangeHistory Create(string tableName)
+    public static ChangeHistory Create(TableName table, ActionType action)
     {
       return new ChangeHistory
       {
-        TableName = tableName,
+        Table = table,
+        Action = action,
         TimeOfChange = DateTime.UtcNow
       };
     }
 
-    public static string GetTableNameByGroupName(GroupName groupName)
+    public static TableName GetTableNameByGroupName(GroupName groupName)
     {
       switch (groupName)
       {
         case GroupName.Discount:
-          return TableNames.Discount;
+          return TableName.Discount;
         case GroupName.Delivery:
-          return TableNames.Delivery;
+          return TableName.Delivery;
         case GroupName.AboutUs:
-          return TableNames.AboutUs;
+          return TableName.AboutUs;
         default:
           throw new NotImplementedException(nameof(GroupName));
       }
     }
   }
 
-  public static class TableNames
+  public enum ActionType : short
   {
-    public static readonly string Discount = "Discount";
-    public static readonly string Delivery = "Delivery";
-    public static readonly string AboutUs = "AboutUs";
-    public static readonly string InfoObject = "InfoObject";
-    public static readonly string MenuItem = "MenuItem";
+    Add = 0,
+    Modify = 1,
+    Delete = 2
+  }
+
+  public enum TableName : short
+  {
+    Discount = 0,
+    Delivery = 1,
+    AboutUs = 2,
+    InfoObject = 3,
+    MenuItem = 4
   }
 }

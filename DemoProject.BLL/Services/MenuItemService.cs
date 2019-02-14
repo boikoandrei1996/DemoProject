@@ -26,7 +26,7 @@ namespace DemoProject.BLL.Services
     public Task<ChangeHistory> GetHistoryRecordAsync()
     {
       return _context.History
-        .LastOrDefaultAsync(x => x.TableName == TableNames.MenuItem);
+        .LastOrDefaultAsync(x => x.Table == TableName.MenuItem);
     }
 
     public Task<IPage<MenuItem>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<MenuItem, bool>> filter = null)
@@ -67,7 +67,7 @@ namespace DemoProject.BLL.Services
       Check.NotNull(model, nameof(model));
 
       _context.MenuItems.Add(model);
-      _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
+      _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Add));
 
       return _context.SaveAsync(nameof(AddAsync), model.Id);
     }
@@ -82,7 +82,7 @@ namespace DemoProject.BLL.Services
       }
       
       _context.MenuItems.Update(model);
-      _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
+      _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Modify));
 
       return await _context.SaveAsync(nameof(UpdateAsync));
     }
@@ -96,7 +96,7 @@ namespace DemoProject.BLL.Services
       }
       
       _context.MenuItems.Remove(model);
-      _context.History.Add(ChangeHistory.Create(TableNames.MenuItem));
+      _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Delete));
 
       return await _context.SaveAsync(nameof(DeleteAsync));
     }

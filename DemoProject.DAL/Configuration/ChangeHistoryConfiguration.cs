@@ -9,7 +9,11 @@ namespace DemoProject.DAL.Configuration
     public void Configure(EntityTypeBuilder<ChangeHistory> builder)
     {
       builder
-        .Property(x => x.TableName)
+        .Property(x => x.Table)
+        .IsRequired();
+
+      builder
+        .Property(x => x.Action)
         .IsRequired();
     }
   }

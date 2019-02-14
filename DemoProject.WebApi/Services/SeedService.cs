@@ -40,19 +40,19 @@ namespace DemoProject.WebApi.Services
       await this.SaveToDbAsync(context, users);
 
       var menuItems = await this.LoadAsync<List<MenuItem>>("MenuItems.json");
-      await context.History.AddAsync(ChangeHistory.Create(TableNames.MenuItem));
+      await context.History.AddAsync(ChangeHistory.Create(TableName.MenuItem, ActionType.Add));
       await this.SaveToDbAsync(context, menuItems);
 
       var discounts = await this.LoadAsync<List<ContentGroup>>("Discounts.json");
-      await context.History.AddAsync(ChangeHistory.Create(TableNames.Discount));
+      await context.History.AddAsync(ChangeHistory.Create(TableName.Discount, ActionType.Add));
       await this.SaveToDbAsync(context, discounts);
 
       var delivery = await this.LoadAsync<List<ContentGroup>>("Delivery.json");
-      await context.History.AddAsync(ChangeHistory.Create(TableNames.Delivery));
+      await context.History.AddAsync(ChangeHistory.Create(TableName.Delivery, ActionType.Add));
       await this.SaveToDbAsync(context, delivery);
 
       var aboutUs = await this.LoadAsync<List<ContentGroup>>("AboutUs.json");
-      await context.History.AddAsync(ChangeHistory.Create(TableNames.AboutUs));
+      await context.History.AddAsync(ChangeHistory.Create(TableName.AboutUs, ActionType.Add));
       await this.SaveToDbAsync(context, aboutUs);
 
       var carts = this.LoadCarts(menuItems.First().Items.First().Details);
