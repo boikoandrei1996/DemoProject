@@ -12,7 +12,7 @@ namespace DemoProject.DAL.Models
 
     public ContentGroupName GroupName { get; set; }
 
-    public DateTime DateOfCreation { get; set; } = DateTime.UtcNow;
+    public DateTime DateOfCreation { get; private set; } = DateTime.UtcNow;
 
     public ICollection<InfoObject> Items { get; set; } = new List<InfoObject>();
   }

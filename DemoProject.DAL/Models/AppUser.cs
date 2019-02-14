@@ -24,7 +24,7 @@ namespace DemoProject.DAL.Models
 
     public string PhoneNumber { get; set; }
 
-    public DateTime DateOfCreation { get; set; } = DateTime.UtcNow;
+    public DateTime DateOfCreation { get; private set; } = DateTime.UtcNow;
 
     public DateTime? LastModified { get; set; }
 

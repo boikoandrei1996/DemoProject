@@ -12,7 +12,7 @@ namespace DemoProject.DAL.Models
 
     public string Comment { get; set; }
 
-    public DateTime DateOfCreation { get; set; } = DateTime.UtcNow;
+    public DateTime DateOfCreation { get; private set; } = DateTime.UtcNow;
 
     public Guid CartId { get; set; }
 

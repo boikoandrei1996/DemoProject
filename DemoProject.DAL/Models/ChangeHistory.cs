@@ -9,7 +9,7 @@ namespace DemoProject.DAL.Models
 
     public ActionType Action { get; set; }
 
-    public DateTime TimeOfChange { get; set; } = DateTime.UtcNow;
+    public DateTime TimeOfChange { get; private set; } = DateTime.UtcNow;
 
     public static ChangeHistory Create(TableName table, ActionType action)
     {

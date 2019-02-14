@@ -11,7 +11,7 @@ namespace DemoProject.DAL.Models
 
     public int SubOrder { get; set; }
 
-    public DateTime DateOfCreation { get; set; } = DateTime.UtcNow;
+    public DateTime DateOfCreation { get; private set; } = DateTime.UtcNow;
 
     public Guid ContentGroupId { get; set; }
 
