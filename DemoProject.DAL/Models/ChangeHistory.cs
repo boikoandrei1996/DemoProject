@@ -1,52 +1,38 @@
 ﻿using System;
+using DemoProject.DAL.Enums;
 
 namespace DemoProject.DAL.Models
 {
   public class ChangeHistory : BaseEntity
   {
     public TableName Table { get; set; }
+
     public ActionType Action { get; set; }
-    public DateTime TimeOfChange { get; private set; }
+
+    public DateTime TimeOfChange { get; set; } = DateTime.UtcNow;
 
     public static ChangeHistory Create(TableName table, ActionType action)
     {
       return new ChangeHistory
       {
         Table = table,
-        Action = action,
-        TimeOfChange = DateTime.UtcNow
+        Action = action
       };
     }
 
-    public static TableName GetTableNameByGroupName(GroupName groupName)
+    public static TableName GetTableNameByGroupName(ContentGroupName groupName)
     {
       switch (groupName)
       {
-        case GroupName.Discount:
+        case ContentGroupName.Discount:
           return TableName.Discount;
-        case GroupName.Delivery:
+        case ContentGroupName.Delivery:
           return TableName.Delivery;
-        case GroupName.AboutUs:
+        case ContentGroupName.AboutUs:
           return TableName.AboutUs;
         default:
-          throw new NotImplementedException(nameof(GroupName));
+          throw new NotImplementedException(nameof(ContentGroupName));
       }
     }
-  }
-
-  public enum ActionType : short
-  {
-    Add = 0,
-    Modify = 1,
-    Delete = 2
-  }
-
-  public enum TableName : short
-  {
-    Discount = 0,
-    Delivery = 1,
-    AboutUs = 2,
-    InfoObject = 3,
-    MenuItem = 4
   }
 }

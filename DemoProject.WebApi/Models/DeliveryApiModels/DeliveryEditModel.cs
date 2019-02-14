@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared.Attributes;
 
@@ -22,7 +23,7 @@ namespace DemoProject.WebApi.Models.DeliveryApiModels
       {
         Id = id,
         Order = model.Order,
-        GroupName = GroupName.Delivery
+        GroupName = ContentGroupName.Delivery
       };
     }
   }

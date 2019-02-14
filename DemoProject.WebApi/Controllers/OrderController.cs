@@ -66,21 +66,27 @@ namespace DemoProject.WebApi.Controllers
     [HttpPost("{id:guid}/approve")]
     public Task<ServiceResult> ApproveOrder(Guid id)
     {
-      return _orderService.ApproveAsync(id);
+      var userId = Guid.Empty;
+
+      return _orderService.ApproveAsync(id, userId);
     }
 
     // POST api/order/{id}/reject
     [HttpPost("{id:guid}/reject")]
     public Task<ServiceResult> RejectOrder(Guid id)
     {
-      return _orderService.RejectAsync(id);
+      var userId = Guid.Empty;
+
+      return _orderService.RejectAsync(id, userId);
     }
 
     // POST api/order/{id}/close
     [HttpPost("{id:guid}/close")]
     public Task<ServiceResult> CloseOrder(Guid id)
     {
-      return _orderService.CloseAsync(id);
+      var userId = Guid.Empty;
+
+      return _orderService.CloseAsync(id, userId);
     }
 
     // DELETE api/order/{id}

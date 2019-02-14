@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
@@ -34,7 +35,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("history")]
     public async Task<ChangeHistoryViewModel> GetHistoryRecord()
     {
-      var entity = await _contentGroupService.GetHistoryRecordAsync(GroupName.Discount);
+      var entity = await _contentGroupService.GetHistoryRecordAsync(ContentGroupName.Discount);
 
       return ChangeHistoryViewModel.Map(entity);
     }
@@ -43,7 +44,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("all")]
     public async Task<IEnumerable<DiscountViewModel>> GetAll()
     {
-      var entities = await _contentGroupService.GetListAsync(GroupName.Discount);
+      var entities = await _contentGroupService.GetListAsync(ContentGroupName.Discount);
 
       return entities.Select(DiscountViewModel.Map);
     }
@@ -53,7 +54,7 @@ namespace DemoProject.WebApi.Controllers
     public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _contentGroupService.GetPageAsync(
-        GroupName.Discount,
+        ContentGroupName.Discount,
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
@@ -64,7 +65,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("{id:guid}")]
     public async Task<DiscountViewModel> GetOne(Guid id)
     {
-      var entity = await _contentGroupService.FindByAsync(GroupName.Discount, x => x.Id == id);
+      var entity = await _contentGroupService.FindByAsync(ContentGroupName.Discount, x => x.Id == id);
 
       return DiscountViewModel.Map(entity);
     }

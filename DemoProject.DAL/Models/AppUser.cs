@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DemoProject.DAL.Models
 {
@@ -22,8 +24,17 @@ namespace DemoProject.DAL.Models
 
     public string PhoneNumber { get; set; }
 
-    public DateTime DateOfCreation { get; set; }
+    public DateTime DateOfCreation { get; set; } = DateTime.UtcNow;
 
     public DateTime? LastModified { get; set; }
+
+    [InverseProperty("ApproveUser")]
+    public ICollection<Order> ApprovedOrders { get; set; } = new List<Order>();
+
+    [InverseProperty("RejectUser")]
+    public ICollection<Order> RejectedOrders { get; set; } = new List<Order>();
+
+    [InverseProperty("CloseUser")]
+    public ICollection<Order> ClosedOrders { get; set; } = new List<Order>();
   }
 }

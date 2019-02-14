@@ -1,5 +1,7 @@
 ﻿using System;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
+using DemoProject.WebApi.Extensions;
 
 namespace DemoProject.WebApi.Models.InfoObjectApiModels
 {
@@ -10,6 +12,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
     public string Type { get; set; }
     public int SubOrder { get; set; }
     public Guid ContentGroupId { get; set; }
+    public DateTime DateOfCreation { get; set; }
 
     public static InfoObjectViewModel Map(InfoObject model)
     {
@@ -28,9 +31,10 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
       {
         Id = model.Id,
         Content = content,
-        Type = model.Type.ToString(),
+        Type = model.Type.ToCustomString(),
         SubOrder = model.SubOrder,
         ContentGroupId = model.ContentGroupId,
+        DateOfCreation = model.DateOfCreation
       };
     }
   }

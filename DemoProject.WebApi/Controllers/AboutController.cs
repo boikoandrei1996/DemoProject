@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
@@ -32,7 +33,7 @@ namespace DemoProject.WebApi.Controllers
     [ProducesResponseType(typeof(ChangeHistoryViewModel), StatusCodes.Status200OK)]
     public async Task<ChangeHistoryViewModel> GetHistoryRecord()
     {
-      var entity = await _contentGroupService.GetHistoryRecordAsync(GroupName.AboutUs);
+      var entity = await _contentGroupService.GetHistoryRecordAsync(ContentGroupName.AboutUs);
 
       return ChangeHistoryViewModel.Map(entity);
     }
@@ -42,7 +43,7 @@ namespace DemoProject.WebApi.Controllers
     [ProducesResponseType(typeof(IEnumerable<AboutUsViewModel>), StatusCodes.Status200OK)]
     public async Task<IEnumerable<AboutUsViewModel>> GetAll()
     {
-      var entities = await _contentGroupService.GetListAsync(GroupName.AboutUs);
+      var entities = await _contentGroupService.GetListAsync(ContentGroupName.AboutUs);
 
       return entities.Select(AboutUsViewModel.Map);
     }
@@ -53,7 +54,7 @@ namespace DemoProject.WebApi.Controllers
     public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _contentGroupService.GetPageAsync(
-        GroupName.AboutUs,
+        ContentGroupName.AboutUs,
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
@@ -65,7 +66,7 @@ namespace DemoProject.WebApi.Controllers
     [ProducesResponseType(typeof(AboutUsViewModel), StatusCodes.Status200OK)]
     public async Task<AboutUsViewModel> GetOne(Guid id)
     {
-      var entity = await _contentGroupService.FindByAsync(GroupName.AboutUs, x => x.Id == id);
+      var entity = await _contentGroupService.FindByAsync(ContentGroupName.AboutUs, x => x.Id == id);
 
       return AboutUsViewModel.Map(entity);
     }

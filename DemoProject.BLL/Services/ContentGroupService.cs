@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.BLL.PageModels;
 using DemoProject.DAL;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Extensions;
@@ -22,7 +23,7 @@ namespace DemoProject.BLL.Services
       _context = context;
     }
 
-    public Task<ChangeHistory> GetHistoryRecordAsync(GroupName group)
+    public Task<ChangeHistory> GetHistoryRecordAsync(ContentGroupName group)
     {
       var tableName = ChangeHistory.GetTableNameByGroupName(group);
 
@@ -30,7 +31,7 @@ namespace DemoProject.BLL.Services
         .LastOrDefaultAsync(x => x.Table == tableName || x.Table == TableName.InfoObject);
     }
 
-    public async Task<ContentGroupPage> GetPageAsync(GroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null)
+    public async Task<ContentGroupPage> GetPageAsync(ContentGroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null)
     {
       var query = _context.ContentGroups.AsNoTracking().Where(x => x.GroupName == group);
 
@@ -64,7 +65,7 @@ namespace DemoProject.BLL.Services
       return page;
     }
 
-    public async Task<List<ContentGroup>> GetListAsync(GroupName group, Expression<Func<ContentGroup, bool>> filter = null)
+    public async Task<List<ContentGroup>> GetListAsync(ContentGroupName group, Expression<Func<ContentGroup, bool>> filter = null)
     {
       var query = _context.ContentGroups.AsNoTracking().Where(x => x.GroupName == group);
 
@@ -82,7 +83,7 @@ namespace DemoProject.BLL.Services
       return items;
     }
 
-    public Task<ContentGroup> FindByAsync(GroupName group, Expression<Func<ContentGroup, bool>> filter)
+    public Task<ContentGroup> FindByAsync(ContentGroupName group, Expression<Func<ContentGroup, bool>> filter)
     {
       Check.NotNull(filter, nameof(filter));
 

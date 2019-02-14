@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DemoProject.DAL.Models;
+using DemoProject.WebApi.Models.OrderApiModels;
 
 namespace DemoProject.WebApi.Models.UserApiModels
 {
@@ -15,6 +18,9 @@ namespace DemoProject.WebApi.Models.UserApiModels
     public string PhoneNumber { get; set; }
     public DateTime DateOfCreation { get; set; }
     public DateTime? LastModified { get; set; }
+    public ICollection<OrderShortViewModel> ApprovedOrders { get; set; } = new List<OrderShortViewModel>();
+    public ICollection<OrderShortViewModel> RejectedOrders { get; set; } = new List<OrderShortViewModel>();
+    public ICollection<OrderShortViewModel> ClosedOrders { get; set; } = new List<OrderShortViewModel>();
 
     public static UserViewModel Map(AppUser model)
     {
@@ -34,7 +40,10 @@ namespace DemoProject.WebApi.Models.UserApiModels
         EmailConfirmed = model.EmailConfirmed,
         PhoneNumber = model.PhoneNumber,
         DateOfCreation = model.DateOfCreation,
-        LastModified = model.LastModified
+        LastModified = model.LastModified,
+        ApprovedOrders = model.ApprovedOrders.Select(OrderShortViewModel.Map).ToList(),
+        RejectedOrders = model.RejectedOrders.Select(OrderShortViewModel.Map).ToList(),
+        ClosedOrders = model.ClosedOrders.Select(OrderShortViewModel.Map).ToList()
       };
     }
   }

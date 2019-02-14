@@ -9,8 +9,13 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
   public class DiscountViewModel
   {
     public Guid Id { get; set; }
+
     public string Title { get; set; }
+
     public int Order { get; set; }
+
+    public DateTime DateOfCreation { get; set; }
+
     public ICollection<InfoObjectViewModel> Items { get; set; } = new List<InfoObjectViewModel>();
 
     public static DiscountViewModel Map(ContentGroup model)
@@ -30,6 +35,7 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
         Id = model.Id,
         Title = model.Title,
         Order = model.Order,
+        DateOfCreation = model.DateOfCreation,
         Items = model.Items.Select(x => InfoObjectViewModel.Map(x)).ToList()
       };
     }

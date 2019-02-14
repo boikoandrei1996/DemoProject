@@ -54,7 +54,6 @@ namespace DemoProject.WebApi.Models.UserApiModels
         LastName = model.LastName,
         Email = model.Email,
         PhoneNumber = model.PhoneNumber,
-        DateOfCreation = DateTime.UtcNow,
         LastModified = null,
         EmailConfirmed = false
       };

@@ -9,7 +9,11 @@ namespace DemoProject.WebApi.Models.DeliveryApiModels
   public class DeliveryViewModel
   {
     public Guid Id { get; set; }
+
     public int Order { get; set; }
+
+    public DateTime DateOfCreation { get; set; }
+
     public ICollection<InfoObjectViewModel> Items { get; set; } = new List<InfoObjectViewModel>();
 
     public static DeliveryViewModel Map(ContentGroup model)
@@ -28,6 +32,7 @@ namespace DemoProject.WebApi.Models.DeliveryApiModels
       {
         Id = model.Id,
         Order = model.Order,
+        DateOfCreation = model.DateOfCreation,
         Items = model.Items.Select(x => InfoObjectViewModel.Map(x)).ToList()
       };
     }

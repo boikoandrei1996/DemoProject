@@ -18,8 +18,7 @@ namespace DemoProject.WebApi.Models.CartApiModels
 
       return new Cart
       {
-        Id = model.Id,
-        DateOfCreation = DateTime.UtcNow
+        Id = model.Id
       };
     }
   }

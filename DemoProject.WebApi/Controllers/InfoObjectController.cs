@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
@@ -34,7 +35,8 @@ namespace DemoProject.WebApi.Controllers
     [HttpPost]
     public async Task<ServiceResult> Add([FromBody]InfoObjectAddModel apiEntity)
     {
-      if (string.Equals(apiEntity.Type, InfoObjectType.Image.ToString(), StringComparison.OrdinalIgnoreCase))
+      var type = Enum.Parse<InfoObjectType>(apiEntity.Type, ignoreCase: true);
+      if (type == InfoObjectType.Image)
       {
         // validate file exist
         var result = _validationService.ValidateFileExist(apiEntity.Content, nameof(apiEntity.Content));

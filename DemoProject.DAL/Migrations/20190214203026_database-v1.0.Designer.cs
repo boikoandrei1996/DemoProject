@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoProject.DAL.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20190212211620_add-DateOfCreation-and-LastModified-columns")]
-    partial class addDateOfCreationandLastModifiedcolumns
+    [Migration("20190214203026_database-v1.0")]
+    partial class databasev10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,8 +107,9 @@ namespace DemoProject.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("TableName")
-                        .IsRequired();
+                    b.Property<short>("Action");
+
+                    b.Property<short>("Table");
 
                     b.Property<DateTime>("TimeOfChange");
 
@@ -122,7 +123,9 @@ namespace DemoProject.DAL.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("GroupName");
+                    b.Property<DateTime>("DateOfCreation");
+
+                    b.Property<short>("GroupName");
 
                     b.Property<int>("Order");
 
@@ -144,9 +147,11 @@ namespace DemoProject.DAL.Migrations
 
                     b.Property<Guid>("ContentGroupId");
 
+                    b.Property<DateTime>("DateOfCreation");
+
                     b.Property<int>("SubOrder");
 
-                    b.Property<int>("Type");
+                    b.Property<short>("Type");
 
                     b.HasKey("Id");
 
@@ -186,7 +191,11 @@ namespace DemoProject.DAL.Migrations
                     b.Property<string>("Address")
                         .IsRequired();
 
+                    b.Property<Guid?>("ApproveUserId");
+
                     b.Property<Guid>("CartId");
+
+                    b.Property<Guid?>("CloseUserId");
 
                     b.Property<string>("Comment");
 
@@ -206,9 +215,17 @@ namespace DemoProject.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
+                    b.Property<Guid?>("RejectUserId");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ApproveUserId");
+
                     b.HasIndex("CartId");
+
+                    b.HasIndex("CloseUserId");
+
+                    b.HasIndex("RejectUserId");
 
                     b.ToTable("Orders");
                 });
@@ -289,10 +306,22 @@ namespace DemoProject.DAL.Migrations
 
             modelBuilder.Entity("DemoProject.DAL.Models.Order", b =>
                 {
+                    b.HasOne("DemoProject.DAL.Models.AppUser", "ApproveUser")
+                        .WithMany("ApprovedOrders")
+                        .HasForeignKey("ApproveUserId");
+
                     b.HasOne("DemoProject.DAL.Models.Cart", "Cart")
                         .WithMany()
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DemoProject.DAL.Models.AppUser", "CloseUser")
+                        .WithMany("ClosedOrders")
+                        .HasForeignKey("CloseUserId");
+
+                    b.HasOne("DemoProject.DAL.Models.AppUser", "RejectUser")
+                        .WithMany("RejectedOrders")
+                        .HasForeignKey("RejectUserId");
                 });
 
             modelBuilder.Entity("DemoProject.DAL.Models.ShopItem", b =>

@@ -45,9 +45,12 @@ namespace DemoProject.BLL.Services
         .Skip((pageIndex - 1) * pageSize)
         .Take(pageSize)
         .Include(x => x.Cart)
-        .ThenInclude(x => x.CartShopItems)
-        .ThenInclude(x => x.ShopItemDetail)
-        .ThenInclude(x => x.ShopItem)
+          .ThenInclude(x => x.CartShopItems)
+          .ThenInclude(x => x.ShopItemDetail)
+          .ThenInclude(x => x.ShopItem)
+        .Include(x => x.ApproveUser)
+        .Include(x => x.RejectUser)
+        .Include(x => x.CloseUser)
         .ToListAsync();
 
       return page;
@@ -64,9 +67,12 @@ namespace DemoProject.BLL.Services
 
       return await query
         .Include(x => x.Cart)
-        .ThenInclude(x => x.CartShopItems)
-        .ThenInclude(x => x.ShopItemDetail)
-        .ThenInclude(x => x.ShopItem)
+          .ThenInclude(x => x.CartShopItems)
+          .ThenInclude(x => x.ShopItemDetail)
+          .ThenInclude(x => x.ShopItem)
+        .Include(x => x.ApproveUser)
+        .Include(x => x.RejectUser)
+        .Include(x => x.CloseUser)
         .ToListAsync();
     }
 
@@ -76,9 +82,12 @@ namespace DemoProject.BLL.Services
 
       return _context.Orders.AsNoTracking()
         .Include(x => x.Cart)
-        .ThenInclude(x => x.CartShopItems)
-        .ThenInclude(x => x.ShopItemDetail)
-        .ThenInclude(x => x.ShopItem)
+          .ThenInclude(x => x.CartShopItems)
+          .ThenInclude(x => x.ShopItemDetail)
+          .ThenInclude(x => x.ShopItem)
+        .Include(x => x.ApproveUser)
+        .Include(x => x.RejectUser)
+        .Include(x => x.CloseUser)
         .FirstOrDefaultAsync(filter);
     }
 
@@ -137,7 +146,7 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
-    public async Task<ServiceResult> ApproveAsync(Guid id)
+    public async Task<ServiceResult> ApproveAsync(Guid id, Guid userId)
     {
       var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
       if (order == null)
@@ -155,14 +164,21 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "Order is already rejected.");
       }
 
+      var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
+      if (userExist == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "User not found.");
+      }
+
       order.DateOfApproved = DateTime.UtcNow;
+      order.ApproveUserId = userId;
 
       _context.Orders.Update(order);
 
       return await _context.SaveAsync(nameof(ApproveAsync));
     }
 
-    public async Task<ServiceResult> RejectAsync(Guid id)
+    public async Task<ServiceResult> RejectAsync(Guid id, Guid userId)
     {
       var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
       if (order == null)
@@ -180,14 +196,21 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already approved.");
       }
 
+      var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
+      if (userExist == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "User not found.");
+      }
+
       order.DateOfRejected = DateTime.UtcNow;
+      order.RejectUserId = userId;
 
       _context.Orders.Update(order);
 
       return await _context.SaveAsync(nameof(RejectAsync));
     }
 
-    public async Task<ServiceResult> CloseAsync(Guid id)
+    public async Task<ServiceResult> CloseAsync(Guid id, Guid userId)
     {
       var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
       if (order == null)
@@ -205,7 +228,14 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "Order should be approved or rejected.");
       }
 
+      var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
+      if (userExist == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "User not found.");
+      }
+
       order.DateOfClosed = DateTime.UtcNow;
+      order.CloseUserId = userId;
 
       _context.Orders.Update(order);
 

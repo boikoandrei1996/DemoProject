@@ -12,6 +12,7 @@ namespace DemoProject.WebApi.Models.CartApiModels
     public ICollection<CartShopItemViewModel> Items { get; set; } = new List<CartShopItemViewModel>();
     public int TotalCount { get; set; }
     public decimal TotalPrice { get; set; }
+    public DateTime DateOfCreation { get; set; }
 
     public static CartViewModel Map(Cart model)
     {
@@ -30,7 +31,8 @@ namespace DemoProject.WebApi.Models.CartApiModels
         Id = model.Id,
         Items = model.CartShopItems.Select(CartShopItemViewModel.Map).ToList(),
         TotalCount = model.CartShopItems.Sum(x => x.Count),
-        TotalPrice = model.CartShopItems.Sum(x => x.Price * x.Count)
+        TotalPrice = model.CartShopItems.Sum(x => x.Price * x.Count),
+        DateOfCreation = model.DateOfCreation
       };
     }
   }

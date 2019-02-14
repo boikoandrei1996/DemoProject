@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared.Attributes;
 
@@ -29,6 +30,7 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
       }
 
       var type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true);
+
       var content = model.Content;
       if (type == InfoObjectType.Image)
       {

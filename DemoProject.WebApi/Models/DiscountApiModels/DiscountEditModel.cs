@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared.Attributes;
 
@@ -27,7 +28,7 @@ namespace DemoProject.WebApi.Models.DiscountApiModels
         Id = id,
         Title = model.Title,
         Order = model.Order,
-        GroupName = GroupName.Discount
+        GroupName = ContentGroupName.Discount
       };
     }
   }

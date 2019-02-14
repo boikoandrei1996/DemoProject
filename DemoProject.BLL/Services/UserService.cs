@@ -34,7 +34,7 @@ namespace DemoProject.BLL.Services
         return null;
       }
 
-      var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+      var user = await this.FindByAsync(x => x.Username == username);
       if (user == null)
       {
         return null;
@@ -71,6 +71,9 @@ namespace DemoProject.BLL.Services
       page.Records = await query
         .Skip((pageIndex - 1) * pageSize)
         .Take(pageSize)
+        .Include(x => x.ApprovedOrders)
+        .Include(x => x.RejectedOrders)
+        .Include(x => x.ClosedOrders)
         .ToListAsync();
 
       return page;
@@ -85,7 +88,11 @@ namespace DemoProject.BLL.Services
         query = query.Where(filter);
       }
 
-      return await query.ToListAsync();
+      return await query
+        .Include(x => x.ApprovedOrders)
+        .Include(x => x.RejectedOrders)
+        .Include(x => x.ClosedOrders)
+        .ToListAsync();
     }
 
     public Task<AppUser> FindByAsync(Expression<Func<AppUser, bool>> filter)
@@ -93,6 +100,9 @@ namespace DemoProject.BLL.Services
       Check.NotNull(filter, nameof(filter));
 
       return _context.Users.AsNoTracking()
+        .Include(x => x.ApprovedOrders)
+        .Include(x => x.RejectedOrders)
+        .Include(x => x.ClosedOrders)
         .FirstOrDefaultAsync(filter);
     }
 

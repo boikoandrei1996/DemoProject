@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Extensions;

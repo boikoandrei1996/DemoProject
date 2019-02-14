@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared.Attributes;
 
@@ -20,7 +21,7 @@ namespace DemoProject.WebApi.Models.DeliveryApiModels
       return new ContentGroup
       {
         Order = model.Order,
-        GroupName = GroupName.Delivery
+        GroupName = ContentGroupName.Delivery
       };
     }
   }

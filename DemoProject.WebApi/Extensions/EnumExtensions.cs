@@ -1,12 +1,12 @@
-﻿using DemoProject.DAL.Models;
+﻿using DemoProject.DAL.Enums;
 
 namespace DemoProject.WebApi.Extensions
 {
   public static class EnumExtensions
   {
-    public static string ToCustomString(this TableName action)
+    public static string ToCustomString(this TableName table)
     {
-      switch (action)
+      switch (table)
       {
         case TableName.Discount:
           return "Discount";
@@ -33,6 +33,21 @@ namespace DemoProject.WebApi.Extensions
           return "Modified";
         case ActionType.Delete:
           return "Deleted";
+        default:
+          return "Undefined";
+      }
+    }
+
+    public static string ToCustomString(this InfoObjectType type)
+    {
+      switch (type)
+      {
+        case InfoObjectType.HTML:
+          return "HTML";
+        case InfoObjectType.Text:
+          return "Text";
+        case InfoObjectType.Image:
+          return "Image";
         default:
           return "Undefined";
       }

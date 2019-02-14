@@ -8,8 +8,8 @@ namespace DemoProject.BLL.Interfaces
 {
   public interface IOrderService : IChangeableService<Order>, IReadableService<Order>
   {
-    Task<ServiceResult> ApproveAsync(Guid id);
-    Task<ServiceResult> RejectAsync(Guid id);
-    Task<ServiceResult> CloseAsync(Guid id);
+    Task<ServiceResult> ApproveAsync(Guid id, Guid userId);
+    Task<ServiceResult> RejectAsync(Guid id, Guid userId);
+    Task<ServiceResult> CloseAsync(Guid id, Guid userId);
   }
 }

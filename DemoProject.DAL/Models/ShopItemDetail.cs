@@ -22,6 +22,7 @@ namespace DemoProject.DAL.Models
     public decimal Price { get; set; }
 
     public Guid ShopItemId { get; set; }
+
     public ShopItem ShopItem { get; set; }
 
     public ICollection<CartShopItem> CartShopItems { get; set; } = new List<CartShopItem>();

@@ -1,33 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using DemoProject.DAL.Enums;
 
 namespace DemoProject.DAL.Models
 {
   public class ContentGroup : BaseEntity
   {
     public string Title { get; set; }
+
     public int Order { get; set; }
-    public GroupName GroupName { get; set; }
+
+    public ContentGroupName GroupName { get; set; }
+
+    public DateTime DateOfCreation { get; set; } = DateTime.UtcNow;
+
     public ICollection<InfoObject> Items { get; set; } = new List<InfoObject>();
-  }
-
-  /// <summary>
-  /// Name of content group
-  /// </summary>
-  public enum GroupName : int
-  {
-    /// <summary>
-    /// Discount
-    /// </summary>
-    Discount = 1,
-
-    /// <summary>
-    /// Delivery
-    /// </summary>
-    Delivery = 2,
-
-    /// <summary>
-    /// About Us
-    /// </summary>
-    AboutUs = 3
   }
 }

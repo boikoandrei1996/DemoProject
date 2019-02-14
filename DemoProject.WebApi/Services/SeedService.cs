@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DemoProject.DAL;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,7 @@ namespace DemoProject.WebApi.Services
     public async Task SeedDatabaseAsync(EFContext context)
     {
       var users = await this.LoadAsync<List<AppUser>>("Users.json");
-      this.ManagePasswordsAndCreationTime(users);
+      this.ManagePasswords(users);
       await this.SaveToDbAsync(context, users);
 
       var menuItems = await this.LoadAsync<List<MenuItem>>("MenuItems.json");
@@ -120,7 +121,6 @@ namespace DemoProject.WebApi.Services
         };
         carts.Add(new Cart
         {
-          DateOfCreation = DateTime.UtcNow,
           CartShopItems = new List<CartShopItem>() { cartShopItem }
         });
       }
@@ -140,7 +140,6 @@ namespace DemoProject.WebApi.Services
           Name = $"Order #{i}",
           Mobile = "1234567",
           Address = $"Minsk pr.Pushkina {i}",
-          DateOfCreation = DateTime.UtcNow,
           CartId = cart.Id
         });
       }
@@ -148,7 +147,7 @@ namespace DemoProject.WebApi.Services
       return orders;
     }
 
-    private void ManagePasswordsAndCreationTime(List<AppUser> users)
+    private void ManagePasswords(List<AppUser> users)
     {
       foreach (var user in users)
       {
@@ -156,9 +155,6 @@ namespace DemoProject.WebApi.Services
 
         user.PasswordHash = hash;
         user.PasswordSalt = salt;
-
-        user.DateOfCreation = DateTime.UtcNow;
-        user.LastModified = null;
       }
     }
   }

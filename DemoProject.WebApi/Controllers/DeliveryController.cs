@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
+using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
@@ -30,7 +31,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("history")]
     public async Task<ChangeHistoryViewModel> GetHistoryRecord()
     {
-      var entity = await _contentGroupService.GetHistoryRecordAsync(GroupName.Delivery);
+      var entity = await _contentGroupService.GetHistoryRecordAsync(ContentGroupName.Delivery);
 
       return ChangeHistoryViewModel.Map(entity);
     }
@@ -39,7 +40,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("all")]
     public async Task<IEnumerable<DeliveryViewModel>> GetAll()
     {
-      var entities = await _contentGroupService.GetListAsync(GroupName.Delivery);
+      var entities = await _contentGroupService.GetListAsync(ContentGroupName.Delivery);
 
       return entities.Select(DeliveryViewModel.Map);
     }
@@ -49,7 +50,7 @@ namespace DemoProject.WebApi.Controllers
     public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _contentGroupService.GetPageAsync(
-        GroupName.Delivery,
+        ContentGroupName.Delivery,
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
@@ -60,7 +61,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("{id:guid}")]
     public async Task<DeliveryViewModel> GetOne(Guid id)
     {
-      var entity = await _contentGroupService.FindByAsync(GroupName.Delivery, x => x.Id == id);
+      var entity = await _contentGroupService.FindByAsync(ContentGroupName.Delivery, x => x.Id == id);
 
       return DeliveryViewModel.Map(entity);
     }
