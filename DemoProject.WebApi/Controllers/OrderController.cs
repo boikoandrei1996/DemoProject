@@ -6,7 +6,7 @@ using DemoProject.BLL.Interfaces;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.OrderApiModels;
-using DemoProject.WebApi.Models.Pages;
+using DemoProject.WebApi.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -35,13 +35,13 @@ namespace DemoProject.WebApi.Controllers
 
     // GET api/order/page/{index}
     [HttpGet("page/{index:int?}")]
-    public async Task<OrderPageModel> GetPage(int? index, [FromQuery]int? pageSize)
+    public async Task<PageModel<OrderViewModel>> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _orderService.GetPageAsync(
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
-      return OrderPageModel.Map(page);
+      return PageModel<OrderViewModel>.Map(page, OrderViewModel.Map);
     }
 
     // GET api/order/{id}

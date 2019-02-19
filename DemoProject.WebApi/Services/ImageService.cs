@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace DemoProject.WebApi.Services
 {
-  public class ImageService : IImageService
+  public class ImageService
   {
     private readonly string _webRootPath;
 
@@ -16,7 +16,9 @@ namespace DemoProject.WebApi.Services
 
     public async Task<ServiceResult> SaveAsync(IFormFile file)
     {
-      if (file == null || file.Length <= 0)
+      Check.NotNull(file, nameof(file));
+
+      if (file.Length <= 0)
       {
         return ServiceResultFactory.BadRequestResult(nameof(file), "File not found.");
       }

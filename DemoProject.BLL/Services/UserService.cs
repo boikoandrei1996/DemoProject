@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
-using DemoProject.BLL.PageModels;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
@@ -29,29 +28,27 @@ namespace DemoProject.BLL.Services
 
     public async Task<AppUser> AuthenticateAsync(string username, string password)
     {
-      if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-      {
-        return null;
-      }
+      Check.NotNullOrEmpty(username, nameof(username));
+      Check.NotNullOrEmpty(password, nameof(password));
 
       var user = await this.FindByAsync(x => x.Username == username);
-      if (user == null)
+      if (user != null)
       {
-        return null;
+        var success = _passwordManager.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+        if (success)
+        {
+          return user;
+        }
       }
 
-      if (_passwordManager.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-      {
-        // authentication successful
-        return user;
-      }
-
-      // authentication failed
       return null;
     }
 
-    public async Task<IPage<AppUser>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<AppUser, bool>> filter = null)
+    public async Task<Page<AppUser>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<AppUser, bool>> filter = null)
     {
+      Check.Positive(pageIndex, nameof(pageIndex));
+      Check.Positive(pageSize, nameof(pageSize));
+
       var query = _context.Users.AsNoTracking();
 
       if (filter != null)
@@ -61,25 +58,23 @@ namespace DemoProject.BLL.Services
 
       var totalCount = await query.CountAsync();
 
-      var page = new UserPage
-      {
-        CurrentPage = pageIndex,
-        PageSize = pageSize,
-        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
-      };
+      var page = Page<AppUser>.Create(pageSize, pageIndex, totalCount);
 
-      page.Records = await query
-        .Skip((pageIndex - 1) * pageSize)
-        .Take(pageSize)
-        .Include(x => x.ApprovedOrders)
-        .Include(x => x.RejectedOrders)
-        .Include(x => x.ClosedOrders)
-        .ToListAsync();
+      if (totalCount != 0)
+      {
+        page.Records = await query
+          .Skip((page.Current - 1) * page.Size)
+          .Take(page.Size)
+          .Include(x => x.ApprovedOrders)
+          .Include(x => x.RejectedOrders)
+          .Include(x => x.ClosedOrders)
+          .ToListAsync();
+      }
 
       return page;
     }
 
-    public async Task<List<AppUser>> GetListAsync(Expression<Func<AppUser, bool>> filter = null)
+    public Task<List<AppUser>> GetListAsync(Expression<Func<AppUser, bool>> filter = null)
     {
       var query = _context.Users.AsNoTracking();
 
@@ -88,7 +83,7 @@ namespace DemoProject.BLL.Services
         query = query.Where(filter);
       }
 
-      return await query
+      return query
         .Include(x => x.ApprovedOrders)
         .Include(x => x.RejectedOrders)
         .Include(x => x.ClosedOrders)
@@ -116,30 +111,28 @@ namespace DemoProject.BLL.Services
     public async Task<ServiceResult> AddAsync(AppUser model, string password)
     {
       Check.NotNull(model, nameof(model));
-      
-      if (string.IsNullOrWhiteSpace(password))
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Incorrect password.");
-      }
+      Check.NotNullOrEmpty(password, nameof(password));
 
-      if (await _context.Users.AnyAsync(x => x.Username == model.Username))
+      var usernameExist = await _context.Users.AnyAsync(x => x.Username == model.Username);
+      if (usernameExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Username is already taken.");
       }
 
-      if (await _context.Users.AnyAsync(x => x.Email == model.Email))
+      var emailExist = await _context.Users.AnyAsync(x => x.Email == model.Email);
+      if (emailExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Email is already taken.");
       }
 
       var role = Role.NormalizeRoleName(model.Role);
-      if (role == null)
+      if (role != null)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Incorrect role name.");
+        model.Role = role;
       }
       else
       {
-        model.Role = role;
+        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Incorrect role name.");
       }
 
       var (passwordHash, passwordSalt) = _passwordManager.CreatePasswordHash(password);
@@ -153,26 +146,23 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> UpdatePasswordAsync(Guid id, string newPassword)
     {
-      if (string.IsNullOrWhiteSpace(newPassword))
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(UpdatePasswordAsync), "Incorrect password.");
-      }
+      Check.NotNullOrEmpty(newPassword, nameof(newPassword));
 
-      var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+      var user = await this.FindByAsync(x => x.Id == id);
       if (user == null)
       {
         return ServiceResultFactory.BadRequestResult(nameof(UpdatePasswordAsync), $"User not found with id: {id}.");
       }
 
       var (passwordHash, passwordSalt) = _passwordManager.CreatePasswordHash(newPassword);
+
       user.PasswordHash = passwordHash;
       user.PasswordSalt = passwordSalt;
-
       user.LastModified = DateTime.UtcNow;
 
       _context.Users.Update(user);
 
-      return await _context.SaveAsync(nameof(UpdatePasswordAsync), id);
+      return await _context.SaveAsync(nameof(UpdatePasswordAsync));
     }
 
     public Task<ServiceResult> UpdateAsync(AppUser model)
@@ -182,7 +172,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+      var model = await this.FindByAsync(x => x.Id == id);
       if (model == null)
       {
         return ServiceResultFactory.Success;

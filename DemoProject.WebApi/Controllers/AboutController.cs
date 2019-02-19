@@ -4,11 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Enums;
-using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.AboutUsApiModels;
-using DemoProject.WebApi.Models.Pages;
 using DemoProject.WebApi.Models.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +31,7 @@ namespace DemoProject.WebApi.Controllers
     [ProducesResponseType(typeof(ChangeHistoryViewModel), StatusCodes.Status200OK)]
     public async Task<ChangeHistoryViewModel> GetHistoryRecord()
     {
-      var entity = await _contentGroupService.GetHistoryRecordAsync(ContentGroupName.AboutUs);
+      var entity = await _contentGroupService.GetHistoryRecordAsync(TableName.AboutUs);
 
       return ChangeHistoryViewModel.Map(entity);
     }
@@ -50,15 +48,15 @@ namespace DemoProject.WebApi.Controllers
 
     // GET api/about/page/{index}
     [HttpGet("page/{index:int?}")]
-    [ProducesResponseType(typeof(DiscountPageModel), StatusCodes.Status200OK)]
-    public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
+    [ProducesResponseType(typeof(PageModel<AboutUsViewModel>), StatusCodes.Status200OK)]
+    public async Task<PageModel<AboutUsViewModel>> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _contentGroupService.GetPageAsync(
         ContentGroupName.AboutUs,
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
-      return DiscountPageModel.Map(page);
+      return PageModel<AboutUsViewModel>.Map(page, AboutUsViewModel.Map);
     }
 
     // GET api/about/{id}

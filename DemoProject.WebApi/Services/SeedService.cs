@@ -20,13 +20,11 @@ namespace DemoProject.WebApi.Services
     private readonly ILogger _logger;
     private readonly IPasswordManager _passwordManager;
 
-    public SeedService(string dirPath, IPasswordManager passwordManager) : this(dirPath, passwordManager, null) { }
-
     public SeedService(string dirPath, IPasswordManager passwordManager, ILogger logger)
     {
       _dirPath = dirPath;
-      _logger = logger;
       _passwordManager = passwordManager;
+      _logger = logger;
     }
 
     public void SeedDatabase(EFContext context)
@@ -34,7 +32,7 @@ namespace DemoProject.WebApi.Services
       this.SeedDatabaseAsync(context).Wait();
     }
 
-    public async Task SeedDatabaseAsync(EFContext context)
+    private async Task SeedDatabaseAsync(EFContext context)
     {
       var users = await this.LoadAsync<List<AppUser>>("Users.json");
       this.ManagePasswords(users);

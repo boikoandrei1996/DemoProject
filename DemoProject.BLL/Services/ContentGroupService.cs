@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
-using DemoProject.BLL.PageModels;
 using DemoProject.DAL;
 using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
@@ -23,16 +22,16 @@ namespace DemoProject.BLL.Services
       _context = context;
     }
 
-    public Task<ChangeHistory> GetHistoryRecordAsync(ContentGroupName group)
+    public Task<ChangeHistory> GetHistoryRecordAsync(TableName table)
     {
-      var tableName = ChangeHistory.GetTableNameByGroupName(group);
-
-      return _context.History
-        .LastOrDefaultAsync(x => x.Table == tableName || x.Table == TableName.InfoObject);
+      return _context.History.LastOrDefaultAsync(x => x.Table == table || x.Table == TableName.InfoObject);
     }
 
-    public async Task<ContentGroupPage> GetPageAsync(ContentGroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null)
+    public async Task<Page<ContentGroup>> GetPageAsync(ContentGroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null)
     {
+      Check.Positive(pageIndex, nameof(pageIndex));
+      Check.Positive(pageSize, nameof(pageSize));
+
       var query = _context.ContentGroups.AsNoTracking().Where(x => x.GroupName == group);
 
       if (filter != null)
@@ -42,25 +41,22 @@ namespace DemoProject.BLL.Services
 
       var totalCount = await query.CountAsync();
 
-      var page = new ContentGroupPage
-      {
-        CurrentPage = pageIndex,
-        PageSize = pageSize,
-        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
-      };
+      var page = Page<ContentGroup>.Create(pageSize, pageIndex, totalCount);
 
-      var records = await query
-        .OrderBy(x => x.Order)
-        .Skip((pageIndex - 1) * pageSize)
-        .Take(pageSize)
-        .Include(x => x.Items)
-        .ToListAsync();
-      foreach (var record in records)
+      if (totalCount != 0)
       {
-        record.Items = record.Items.OrderBy(x => x.SubOrder).ToList();
+        page.Records = await query
+          .OrderBy(x => x.Order)
+          .Skip((page.Current - 1) * page.Size)
+          .Take(page.Size)
+          .Include(x => x.Items)
+          .ToListAsync();
+
+        foreach (var record in page.Records)
+        {
+          record.Items = record.Items.OrderBy(x => x.SubOrder).ToList();
+        }
       }
-
-      page.Records = records;
 
       return page;
     }
@@ -104,9 +100,8 @@ namespace DemoProject.BLL.Services
     {
       Check.NotNull(model, nameof(model));
 
-      var tableName = ChangeHistory.GetTableNameByGroupName(model.GroupName);
       _context.ContentGroups.Add(model);
-      _context.History.Add(ChangeHistory.Create(tableName, ActionType.Add));
+      _context.History.Add(ChangeHistory.Create(model.GroupName, ActionType.Add));
 
       return _context.SaveAsync(nameof(AddAsync), model.Id);
     }
@@ -120,9 +115,8 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.NotFound;
       }
 
-      var tableName = ChangeHistory.GetTableNameByGroupName(model.GroupName);
       _context.ContentGroups.Update(model);
-      _context.History.Add(ChangeHistory.Create(tableName, ActionType.Modify));
+      _context.History.Add(ChangeHistory.Create(model.GroupName, ActionType.Modify));
 
       return await _context.SaveAsync(nameof(UpdateAsync));
     }
@@ -135,9 +129,8 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.Success;
       }
 
-      var tableName = ChangeHistory.GetTableNameByGroupName(model.GroupName);
       _context.ContentGroups.Remove(model);
-      _context.History.Add(ChangeHistory.Create(tableName, ActionType.Delete));
+      _context.History.Add(ChangeHistory.Create(model.GroupName, ActionType.Delete));
 
       return await _context.SaveAsync(nameof(DeleteAsync));
     }

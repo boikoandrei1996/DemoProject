@@ -4,12 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
-using DemoProject.BLL.PageModels;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Extensions;
-using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
@@ -23,8 +21,11 @@ namespace DemoProject.BLL.Services
       _context = context;
     }
 
-    public async Task<IPage<ShopItem>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<ShopItem, bool>> filter = null)
+    public async Task<Page<ShopItem>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<ShopItem, bool>> filter = null)
     {
+      Check.Positive(pageIndex, nameof(pageIndex));
+      Check.Positive(pageSize, nameof(pageSize));
+
       var query = _context.ShopItems.AsNoTracking();
 
       if (filter != null)
@@ -34,25 +35,22 @@ namespace DemoProject.BLL.Services
 
       var totalCount = await query.CountAsync();
 
-      var page = new ShopItemPage
-      {
-        CurrentPage = pageIndex,
-        PageSize = pageSize,
-        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
-      };
+      var page = Page<ShopItem>.Create(pageSize, pageIndex, totalCount);
 
-      var records = await query
-        .OrderBy(x => x.Title)
-        .Skip((pageIndex - 1) * pageSize)
-        .Take(pageSize)
-        .Include(x => x.Details)
-        .ToListAsync();
-      foreach (var record in records)
+      if (totalCount != 0)
       {
-        record.Details = record.Details.OrderBy(x => x.SubOrder).ToList();
+        page.Records = await query
+          .OrderBy(x => x.Title)
+          .Skip((page.Current - 1) * page.Size)
+          .Take(page.Size)
+          .Include(x => x.Details)
+          .ToListAsync();
+
+        foreach (var record in page.Records)
+        {
+          record.Details = record.Details.OrderBy(x => x.SubOrder).ToList();
+        }
       }
-
-      page.Records = records;
 
       return page;
     }
@@ -91,32 +89,29 @@ namespace DemoProject.BLL.Services
       return _context.ShopItems.AnyAsync(filter);
     }
 
-    public Task<ServiceResult> AddAsync(ShopItem model)
+    public async Task<ServiceResult> AddAsync(ShopItem model)
     {
       Check.NotNull(model, nameof(model));
+
+      var menuItemExist = await _context.MenuItems.AnyAsync(x => x.Id == model.MenuItemId);
+      if (menuItemExist == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(model.MenuItemId), $"MenuItem not found with id: '{model.MenuItemId}'.");
+      }
 
       _context.ShopItems.Add(model);
 
-      return _context.SaveAsync(nameof(AddAsync), model.Id);
+      return await _context.SaveAsync(nameof(AddAsync), model.Id);
     }
 
-    public async Task<ServiceResult> UpdateAsync(ShopItem model)
+    public Task<ServiceResult> UpdateAsync(ShopItem model)
     {
-      Check.NotNull(model, nameof(model));
-
-      if (await _context.ShopItems.AnyAsync(x => x.Id == model.Id) == false)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      _context.ShopItems.Update(model);
-
-      return await _context.SaveAsync(nameof(UpdateAsync));
+      throw new NotImplementedException();
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await _context.ShopItems.FirstOrDefaultAsync(x => x.Id == id);
+      var model = await this.FindByAsync(x => x.Id == id);
       if (model == null)
       {
         return ServiceResultFactory.Success;

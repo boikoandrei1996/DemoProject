@@ -23,7 +23,7 @@ namespace DemoProject.Shared
       }
     }
 
-    public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+    public bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
     {
       if (string.IsNullOrWhiteSpace(password))
       {

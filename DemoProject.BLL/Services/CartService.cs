@@ -4,12 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
-using DemoProject.BLL.PageModels;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Extensions;
-using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
@@ -23,8 +21,11 @@ namespace DemoProject.BLL.Services
       _context = context;
     }
 
-    public async Task<IPage<Cart>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Cart, bool>> filter = null)
+    public async Task<Page<Cart>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Cart, bool>> filter = null)
     {
+      Check.Positive(pageIndex, nameof(pageIndex));
+      Check.Positive(pageSize, nameof(pageSize));
+
       var query = _context.Carts.AsNoTracking();
 
       if (filter != null)
@@ -34,25 +35,23 @@ namespace DemoProject.BLL.Services
 
       var totalCount = await query.CountAsync();
 
-      var page = new CartPage
-      {
-        CurrentPage = pageIndex,
-        PageSize = pageSize,
-        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
-      };
+      var page = Page<Cart>.Create(pageSize, pageIndex, totalCount);
 
-      page.Records = await query
-        .Skip((pageIndex - 1) * pageSize)
-        .Take(pageSize)
-        .Include(x => x.CartShopItems)
-        .ThenInclude(x => x.ShopItemDetail)
-        .ThenInclude(x => x.ShopItem)
-        .ToListAsync();
+      if (totalCount != 0)
+      {
+        page.Records = await query
+          .Skip((page.Current - 1) * page.Size)
+          .Take(page.Size)
+          .Include(x => x.CartShopItems)
+            .ThenInclude(x => x.ShopItemDetail)
+            .ThenInclude(x => x.ShopItem)
+          .ToListAsync();
+      }
 
       return page;
     }
 
-    public async Task<List<Cart>> GetListAsync(Expression<Func<Cart, bool>> filter = null)
+    public Task<List<Cart>> GetListAsync(Expression<Func<Cart, bool>> filter = null)
     {
       var query = _context.Carts.AsNoTracking();
 
@@ -61,10 +60,10 @@ namespace DemoProject.BLL.Services
         query = query.Where(filter);
       }
 
-      return await query
+      return query
         .Include(x => x.CartShopItems)
-        .ThenInclude(x => x.ShopItemDetail)
-        .ThenInclude(x => x.ShopItem)
+          .ThenInclude(x => x.ShopItemDetail)
+          .ThenInclude(x => x.ShopItem)
         .ToListAsync();
     }
 
@@ -74,19 +73,17 @@ namespace DemoProject.BLL.Services
 
       return _context.Carts.AsNoTracking()
         .Include(x => x.CartShopItems)
-        .ThenInclude(x => x.ShopItemDetail)
-        .ThenInclude(x => x.ShopItem)
+          .ThenInclude(x => x.ShopItemDetail)
+          .ThenInclude(x => x.ShopItem)
         .FirstOrDefaultAsync(filter);
     }
 
     public async Task<ServiceResult> AddItemToCartAsync(Guid cartId, Guid shopItemDetailId, int count)
     {
-      if (count < 1)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(count), $"'{count}' should be positive.");
-      }
+      Check.Positive(count, nameof(count));
 
-      if (await _context.Carts.AnyAsync(x => x.Id == cartId) == false)
+      var cartExist = await this.ExistAsync(x => x.Id == cartId);
+      if (cartExist == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
       }
@@ -103,13 +100,14 @@ namespace DemoProject.BLL.Services
       if (oldCartShopItem == null)
       {
         // add new item
-        await _context.CartShopItems.AddAsync(new CartShopItem
+        var newCartShopItem = new CartShopItem
         {
           CartId = cartId,
           ShopItemDetailId = shopItemDetailId,
           Price = shopItemDetail.Price,
           Count = count
-        });
+        };
+        await _context.CartShopItems.AddAsync(newCartShopItem);
       }
       else
       {
@@ -119,7 +117,7 @@ namespace DemoProject.BLL.Services
         _context.CartShopItems.Update(oldCartShopItem);
       }
 
-      var result =  await _context.SaveAsync(nameof(AddItemToCartAsync), null);
+      var result = await _context.SaveAsync(nameof(AddItemToCartAsync), null);
       if (result.Key == ServiceResultKey.ModelUpdated)
       {
         result.Model = await this.FindByAsync(x => x.Id == cartId);
@@ -128,35 +126,38 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
-    public async Task<ServiceResult> RemoveItemFromCartAsync(Guid cartId, Guid shopItemDetailId, bool shouldBeRemovedAllItems)
+    public async Task<ServiceResult> RemoveItemFromCartAsync(Guid cartId, Guid shopItemDetailId, bool removeAllItems)
     {
-      if (await _context.Carts.AnyAsync(x => x.Id == cartId) == false)
+      var cartExist = await this.ExistAsync(x => x.Id == cartId);
+      if (cartExist == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
       }
 
-      if (await _context.ShopItemDetails.AnyAsync(x => x.Id == shopItemDetailId) == false)
+      var shopItemDetailExist = await this.ExistAsync(x => x.Id == shopItemDetailId);
+      if (shopItemDetailExist == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(shopItemDetailId), $"ShopItemDetail not found with id: '{shopItemDetailId}'.");
       }
 
-      var cartShopItem = await _context.CartShopItems
+      var oldCartShopItem = await _context.CartShopItems
         .FirstOrDefaultAsync(x => x.CartId == cartId && x.ShopItemDetailId == shopItemDetailId);
-      if (cartShopItem == null)
+
+      if (oldCartShopItem == null)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(cartShopItem), $"CartShopItem not found with such complex id: '{cartId}-{shopItemDetailId}'.");
+        return ServiceResultFactory.BadRequestResult(nameof(oldCartShopItem), $"CartShopItem not found with complex id: '{cartId}-{shopItemDetailId}'.");
       }
 
-      if (shouldBeRemovedAllItems || cartShopItem.Count <= 1)
+      if (removeAllItems || oldCartShopItem.Count <= 1)
       {
         // remove cartshopitem record
-        _context.CartShopItems.Remove(cartShopItem);
+        _context.CartShopItems.Remove(oldCartShopItem);
       }
       else
       {
         // reduce count
-        cartShopItem.Count -= 1;
-        _context.CartShopItems.Update(cartShopItem);
+        oldCartShopItem.Count -= 1;
+        _context.CartShopItems.Update(oldCartShopItem);
       }
 
       var result = await _context.SaveAsync(nameof(RemoveItemFromCartAsync), null);
@@ -191,7 +192,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await _context.Carts.FirstOrDefaultAsync(x => x.Id == id);
+      var model = await this.FindByAsync(x => x.Id == id);
       if (model == null)
       {
         return ServiceResultFactory.Success;

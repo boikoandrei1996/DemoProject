@@ -20,19 +20,29 @@ namespace DemoProject.DAL.Models
       };
     }
 
-    public static TableName GetTableNameByGroupName(ContentGroupName groupName)
+    public static ChangeHistory Create(ContentGroupName groupName, ActionType action)
     {
+      TableName table;
       switch (groupName)
       {
         case ContentGroupName.Discount:
-          return TableName.Discount;
+          table = TableName.Discount;
+          break;
         case ContentGroupName.Delivery:
-          return TableName.Delivery;
+          table = TableName.Delivery;
+          break;
         case ContentGroupName.AboutUs:
-          return TableName.AboutUs;
+          table = TableName.AboutUs;
+          break;
         default:
           throw new NotImplementedException(nameof(ContentGroupName));
       }
+
+      return new ChangeHistory
+      {
+        Table = table,
+        Action = action
+      };
     }
   }
 }

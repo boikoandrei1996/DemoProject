@@ -4,11 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Enums;
-using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.DeliveryApiModels;
-using DemoProject.WebApi.Models.Pages;
 using DemoProject.WebApi.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +29,7 @@ namespace DemoProject.WebApi.Controllers
     [HttpGet("history")]
     public async Task<ChangeHistoryViewModel> GetHistoryRecord()
     {
-      var entity = await _contentGroupService.GetHistoryRecordAsync(ContentGroupName.Delivery);
+      var entity = await _contentGroupService.GetHistoryRecordAsync(TableName.Delivery);
 
       return ChangeHistoryViewModel.Map(entity);
     }
@@ -47,14 +45,14 @@ namespace DemoProject.WebApi.Controllers
 
     // GET api/delivery/page/{index}
     [HttpGet("page/{index:int?}")]
-    public async Task<DiscountPageModel> GetPage(int? index, [FromQuery]int? pageSize)
+    public async Task<PageModel<DeliveryViewModel>> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _contentGroupService.GetPageAsync(
         ContentGroupName.Delivery,
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
-      return DiscountPageModel.Map(page);
+      return PageModel<DeliveryViewModel>.Map(page, DeliveryViewModel.Map);
     }
 
     // GET api/delivery/{id}

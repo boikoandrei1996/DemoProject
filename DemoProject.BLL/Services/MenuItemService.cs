@@ -25,16 +25,15 @@ namespace DemoProject.BLL.Services
 
     public Task<ChangeHistory> GetHistoryRecordAsync()
     {
-      return _context.History
-        .LastOrDefaultAsync(x => x.Table == TableName.MenuItem);
+      return _context.History.LastOrDefaultAsync(x => x.Table == TableName.MenuItem);
     }
 
-    public Task<IPage<MenuItem>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<MenuItem, bool>> filter = null)
+    public Task<Page<MenuItem>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<MenuItem, bool>> filter = null)
     {
       throw new NotImplementedException();
     }
 
-    public async Task<List<MenuItem>> GetListAsync(Expression<Func<MenuItem, bool>> filter = null)
+    public Task<List<MenuItem>> GetListAsync(Expression<Func<MenuItem, bool>> filter = null)
     {
       var query = _context.MenuItems.AsNoTracking();
 
@@ -43,7 +42,7 @@ namespace DemoProject.BLL.Services
         query = query.Where(filter);
       }
 
-      return await query.OrderBy(x => x.Order).ToListAsync();
+      return query.OrderBy(x => x.Order).ToListAsync();
     }
 
     public Task<MenuItem> FindByAsync(Expression<Func<MenuItem, bool>> filter)
@@ -89,7 +88,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await _context.MenuItems.FirstOrDefaultAsync(x => x.Id == id);
+      var model = await this.FindByAsync(x => x.Id == id);
       if (model == null)
       {
         return ServiceResultFactory.Success;

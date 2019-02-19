@@ -31,9 +31,10 @@ namespace DemoProject.BLL.Services
     {
       Check.NotNull(model, nameof(model));
 
-      if (await _context.ContentGroups.AnyAsync(x => x.Id == model.ContentGroupId) == false)
+      var contentGroupExist = await _context.ContentGroups.AnyAsync(x => x.Id == model.ContentGroupId);
+      if (contentGroupExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.ContentGroupId), this.GetErrorMessage(model.ContentGroupId));
+        return ServiceResultFactory.BadRequestResult(nameof(model.ContentGroupId), $"Discount not found with id: '{model.ContentGroupId}'.");
       }
 
       _context.InfoObjects.Add(model);
@@ -52,7 +53,7 @@ namespace DemoProject.BLL.Services
       }
       else if (await _context.ContentGroups.AnyAsync(x => x.Id == model.ContentGroupId) == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.ContentGroupId), this.GetErrorMessage(model.ContentGroupId));
+        return ServiceResultFactory.BadRequestResult(nameof(model.ContentGroupId), $"Discount not found with id: '{model.ContentGroupId}'.");
       }
 
       _context.InfoObjects.Update(model);
@@ -78,11 +79,6 @@ namespace DemoProject.BLL.Services
     public void Dispose()
     {
       _context.Dispose();
-    }
-
-    private string GetErrorMessage(Guid id)
-    {
-      return $"Discount not found with id: '{id}'.";
     }
   }
 }

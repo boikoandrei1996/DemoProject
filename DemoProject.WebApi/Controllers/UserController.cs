@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
-using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Infrastructure;
-using DemoProject.WebApi.Models.Pages;
+using DemoProject.WebApi.Models.Shared;
 using DemoProject.WebApi.Models.UserApiModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -53,13 +51,13 @@ namespace DemoProject.WebApi.Controllers
 
     // GET api/user/page/{index}
     [HttpGet("page/{index:int?}")]
-    public async Task<UserPageModel> GetPage(int? index, [FromQuery]int? pageSize)
+    public async Task<PageModel<UserViewModel>> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _userService.GetPageAsync(
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
-      return UserPageModel.Map(page);
+      return PageModel<UserViewModel>.Map(page, UserViewModel.Map);
     }
 
     // GET api/user/{id}
@@ -95,8 +93,8 @@ namespace DemoProject.WebApi.Controllers
       return _userService.AddAsync(entity, apiEntity.Password);
     }
 
-    // PUT api/user/{id}
-    [HttpPut("{id:guid}")]
+    // PUT api/user/{id}/password
+    [HttpPut("{id:guid}/password")]
     public Task<ServiceResult> UpdatePassword(Guid id, [FromBody]string newPassword)
     {
       return _userService.UpdatePasswordAsync(id, newPassword);

@@ -29,10 +29,12 @@ namespace DemoProject.BLL.Services
     public async Task<ServiceResult> AddAsync(ShopItemDetail model)
     {
       Check.NotNull(model, nameof(model));
+      Check.Positive(model.Price, nameof(model.Price));
 
-      if (await _context.ShopItems.AnyAsync(x => x.Id == model.ShopItemId) == false)
+      var shopItemExist = await _context.ShopItems.AnyAsync(x => x.Id == model.ShopItemId);
+      if (shopItemExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.ShopItemId), this.GetErrorMessage(model.ShopItemId));
+        return ServiceResultFactory.BadRequestResult(nameof(model.ShopItemId), $"ShopItem not found with id: '{model.ShopItemId}'.");
       }
 
       _context.ShopItemDetails.Add(model);
@@ -40,22 +42,9 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync(nameof(AddAsync), model.Id);
     }
 
-    public async Task<ServiceResult> UpdateAsync(ShopItemDetail model)
+    public Task<ServiceResult> UpdateAsync(ShopItemDetail model)
     {
-      Check.NotNull(model, nameof(model));
-
-      if (await _context.ShopItemDetails.AnyAsync(x => x.Id == model.Id) == false)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-      else if (await _context.ShopItems.AnyAsync(x => x.Id == model.ShopItemId) == false)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(model.ShopItemId), this.GetErrorMessage(model.ShopItemId));
-      }
-
-      _context.ShopItemDetails.Update(model);
-
-      return await _context.SaveAsync(nameof(UpdateAsync));
+      throw new NotImplementedException();
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -74,11 +63,6 @@ namespace DemoProject.BLL.Services
     public void Dispose()
     {
       _context.Dispose();
-    }
-
-    private string GetErrorMessage(Guid id)
-    {
-      return $"ShopItem not found with id: '{id}'.";
     }
   }
 }

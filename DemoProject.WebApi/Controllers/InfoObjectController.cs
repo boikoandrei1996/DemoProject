@@ -2,11 +2,9 @@
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Enums;
-using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.InfoObjectApiModels;
-using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -21,14 +19,11 @@ namespace DemoProject.WebApi.Controllers
   public class InfoObjectController : Controller
   {
     private readonly IInfoObjectService _infoObjectService;
-    private readonly ValidationService _validationService;
 
     public InfoObjectController(
-      IInfoObjectService infoObjectService,
-      ValidationService validationService)
+      IInfoObjectService infoObjectService)
     {
       _infoObjectService = infoObjectService;
-      _validationService = validationService;
     }
 
     // POST api/infoobject
@@ -39,10 +34,10 @@ namespace DemoProject.WebApi.Controllers
       if (type == InfoObjectType.Image)
       {
         // validate file exist
-        var result = _validationService.ValidateFileExist(apiEntity.Content, nameof(apiEntity.Content));
-        if (result != null)
+        var fileExistValidationAttribute = new FileExistValidationAttribute(Constants.DEFAULT_PATH_TO_IMAGE);
+        if (fileExistValidationAttribute.IsValid(apiEntity.Content) == false)
         {
-          return result;
+          return ServiceResultFactory.BadRequestResult(nameof(apiEntity.Content), FileExistValidationAttribute.CustomMessage);
         }
       }
 
@@ -58,10 +53,10 @@ namespace DemoProject.WebApi.Controllers
       if (string.Equals(apiEntity.Type, InfoObjectType.Image.ToString(), StringComparison.OrdinalIgnoreCase))
       {
         // validate file exist
-        var result = _validationService.ValidateFileExist(apiEntity.Content, nameof(apiEntity.Content));
-        if (result != null)
+        var fileExistValidationAttribute = new FileExistValidationAttribute(Constants.DEFAULT_PATH_TO_IMAGE);
+        if (fileExistValidationAttribute.IsValid(apiEntity.Content) == false)
         {
-          return result;
+          return ServiceResultFactory.BadRequestResult(nameof(apiEntity.Content), FileExistValidationAttribute.CustomMessage);
         }
       }
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
-using DemoProject.WebApi.Models.Pages;
+using DemoProject.WebApi.Models.Shared;
 using DemoProject.WebApi.Models.ShopItemApiModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,14 +35,14 @@ namespace DemoProject.WebApi.Controllers
 
     // GET api/{menuItemId}/shopitem/page/{index}
     [HttpGet("/api/{menuItemId:guid}/shopitem/page/{index:int?}")]
-    public async Task<ShopItemPageModel> GetPage(Guid menuItemId, int? index, [FromQuery]int? pageSize)
+    public async Task<PageModel<ShopItemViewModel>> GetPage(Guid menuItemId, int? index, [FromQuery]int? pageSize)
     {
       var page = await _shopItemService.GetPageAsync(
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE,
         x => x.MenuItemId == menuItemId);
 
-      return ShopItemPageModel.Map(page);
+      return PageModel<ShopItemViewModel>.Map(page, ShopItemViewModel.Map);
     }
 
     // GET api/shopitem/{id}

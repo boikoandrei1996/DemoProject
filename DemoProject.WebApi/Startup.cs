@@ -45,15 +45,15 @@ namespace DemoProject.WebApi
       {
         return new SeedService(
           Path.Combine(Environment.WebRootPath, "Files"),
-          serviceProvider.GetService<IPasswordManager>());
+          serviceProvider.GetService<IPasswordManager>(),
+          null);
       });
 
-      services.AddTransient<IImageService>(serviceProvider =>
+      services.AddTransient<ImageService>(serviceProvider =>
       {
         return new ImageService(Environment.WebRootPath);
       });
 
-      services.AddTransient<ValidationService>();
       services.AddTransient<AuthTokenGenerator>();
 
       services.AddTransient<IUserService, UserService>();

@@ -25,7 +25,7 @@ namespace DemoProject.WebApi.Infrastructure
 
           context.Database.Migrate();
 
-          if (!isDatabaseExisted || isDatabaseRestore)
+          if (isDatabaseExisted == false || isDatabaseRestore)
           {
             context.ClearDatabase();
             scope.ServiceProvider.GetRequiredService<SeedService>().SeedDatabase(context);

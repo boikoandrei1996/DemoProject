@@ -7,7 +7,7 @@ using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.CartApiModels;
-using DemoProject.WebApi.Models.Pages;
+using DemoProject.WebApi.Models.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -36,13 +36,13 @@ namespace DemoProject.WebApi.Controllers
 
     // GET api/cart/page/{index}
     [HttpGet("page/{index:int?}")]
-    public async Task<CartPageModel> GetPage(int? index, [FromQuery]int? pageSize)
+    public async Task<PageModel<CartViewModel>> GetPage(int? index, [FromQuery]int? pageSize)
     {
       var page = await _cartService.GetPageAsync(
         index >= 1 ? index.Value : Constants.DEFAULT_PAGE_INDEX,
         pageSize >= 1 ? pageSize.Value : Constants.DEFAULT_PAGE_SIZE);
 
-      return CartPageModel.Map(page);
+      return PageModel<CartViewModel>.Map(page, CartViewModel.Map);
     }
 
     // GET api/cart/{id}

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
-using DemoProject.BLL.PageModels;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Extensions;
-using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
@@ -23,8 +21,11 @@ namespace DemoProject.BLL.Services
       _context = context;
     }
 
-    public async Task<IPage<Order>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Order, bool>> filter = null)
+    public async Task<Page<Order>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Order, bool>> filter = null)
     {
+      Check.Positive(pageIndex, nameof(pageIndex));
+      Check.Positive(pageSize, nameof(pageSize));
+
       var query = _context.Orders.AsNoTracking();
 
       if (filter != null)
@@ -34,29 +35,27 @@ namespace DemoProject.BLL.Services
 
       var totalCount = await query.CountAsync();
 
-      var page = new OrderPage
-      {
-        CurrentPage = pageIndex,
-        PageSize = pageSize,
-        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
-      };
+      var page = Page<Order>.Create(pageSize, pageIndex, totalCount);
 
-      page.Records = await query
-        .Skip((pageIndex - 1) * pageSize)
-        .Take(pageSize)
-        .Include(x => x.Cart)
-          .ThenInclude(x => x.CartShopItems)
-          .ThenInclude(x => x.ShopItemDetail)
-          .ThenInclude(x => x.ShopItem)
-        .Include(x => x.ApproveUser)
-        .Include(x => x.RejectUser)
-        .Include(x => x.CloseUser)
-        .ToListAsync();
+      if (totalCount != 0)
+      {
+        page.Records = await query
+          .Skip((page.Current - 1) * page.Size)
+          .Take(page.Size)
+          .Include(x => x.Cart)
+            .ThenInclude(x => x.CartShopItems)
+            .ThenInclude(x => x.ShopItemDetail)
+            .ThenInclude(x => x.ShopItem)
+          .Include(x => x.ApproveUser)
+          .Include(x => x.RejectUser)
+          .Include(x => x.CloseUser)
+          .ToListAsync();
+      }
 
       return page;
     }
 
-    public async Task<List<Order>> GetListAsync(Expression<Func<Order, bool>> filter = null)
+    public Task<List<Order>> GetListAsync(Expression<Func<Order, bool>> filter = null)
     {
       var query = _context.Orders.AsNoTracking();
 
@@ -65,7 +64,7 @@ namespace DemoProject.BLL.Services
         query = query.Where(filter);
       }
 
-      return await query
+      return query
         .Include(x => x.Cart)
           .ThenInclude(x => x.CartShopItems)
           .ThenInclude(x => x.ShopItemDetail)
@@ -102,7 +101,8 @@ namespace DemoProject.BLL.Services
     {
       Check.NotNull(model, nameof(model));
 
-      if (await _context.Carts.AnyAsync(x => x.Id == model.CartId) == false)
+      var cartExist = await _context.Carts.AnyAsync(x => x.Id == model.CartId);
+      if (cartExist == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(model.CartId), $"Cart not found with id: '{model.CartId}'.");
       }
@@ -115,27 +115,11 @@ namespace DemoProject.BLL.Services
     public Task<ServiceResult> UpdateAsync(Order model)
     {
       throw new NotImplementedException();
-
-      //Check.NotNull(model, nameof(model));
-
-      //var oldOrder = await _context.Orders.FirstOrDefaultAsync(x => x.Id == model.Id);
-      //if (oldOrder == null)
-      //{
-      //  return ServiceResultFactory.NotFound;
-      //}
-      //else
-      //{
-      //  model.CartId = oldOrder.CartId;
-      //}
-
-      //_context.Orders.Update(model);
-
-      //return await _context.SaveChangesSafeAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+      var model = await this.FindByAsync(x => x.Id == id);
       if (model == null)
       {
         return ServiceResultFactory.Success;
@@ -148,7 +132,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> ApproveAsync(Guid id, Guid userId)
     {
-      var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+      var order = await this.FindByAsync(x => x.Id == id);
       if (order == null)
       {
         return ServiceResultFactory.NotFound;
@@ -162,6 +146,11 @@ namespace DemoProject.BLL.Services
       if (order.DateOfRejected.HasValue)
       {
         return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "Order is already rejected.");
+      }
+
+      if (order.DateOfClosed.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "Order is already closed.");
       }
 
       var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
@@ -180,15 +169,10 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> RejectAsync(Guid id, Guid userId)
     {
-      var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+      var order = await this.FindByAsync(x => x.Id == id);
       if (order == null)
       {
         return ServiceResultFactory.NotFound;
-      }
-
-      if (order.DateOfRejected.HasValue)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already rejected.");
       }
 
       if (order.DateOfApproved.HasValue)
@@ -196,10 +180,20 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already approved.");
       }
 
+      if (order.DateOfRejected.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already rejected.");
+      }
+
+      if (order.DateOfClosed.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already closed.");
+      }
+
       var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
       if (userExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "User not found.");
+        return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "User not found.");
       }
 
       order.DateOfRejected = DateTime.UtcNow;
@@ -212,7 +206,7 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> CloseAsync(Guid id, Guid userId)
     {
-      var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+      var order = await this.FindByAsync(x => x.Id == id);
       if (order == null)
       {
         return ServiceResultFactory.NotFound;
@@ -222,8 +216,8 @@ namespace DemoProject.BLL.Services
       {
         return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "Order is already closed.");
       }
-
-      if (!order.DateOfApproved.HasValue && !order.DateOfRejected.HasValue)
+      
+      if (order.DateOfApproved.HasValue == false && order.DateOfRejected.HasValue == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "Order should be approved or rejected.");
       }
@@ -231,7 +225,7 @@ namespace DemoProject.BLL.Services
       var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
       if (userExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "User not found.");
+        return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "User not found.");
       }
 
       order.DateOfClosed = DateTime.UtcNow;

@@ -13,10 +13,10 @@ namespace DemoProject.WebApi.Controllers
   [ValidateModelState]
   public class ImageController : Controller
   {
-    private readonly IImageService _imageService;
+    private readonly ImageService _imageService;
 
     public ImageController(
-      IImageService imageService)
+      ImageService imageService)
     {
       _imageService = imageService;
     }
