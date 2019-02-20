@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Services;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
 {
-  [ApiExplorerSettings(IgnoreApi = true)]
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
@@ -21,11 +21,18 @@ namespace DemoProject.WebApi.Controllers
       _imageService = imageService;
     }
 
+    // GET api/image/all
+    [HttpGet("all")]
+    public IEnumerable<string> GetAll()
+    {
+      return _imageService.GetImages();
+    }
+
     // POST api/image/upload
     [HttpPost("upload")]
-    public Task<ServiceResult> Upload(IFormFile file)
+    public Task<ServiceResult> Upload(IFormFile file, string path)
     {
-      return _imageService.SaveAsync(file);
+      return _imageService.SaveAsync(file, path);
     }
   }
 }
