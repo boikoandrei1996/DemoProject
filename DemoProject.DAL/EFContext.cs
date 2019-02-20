@@ -1,6 +1,7 @@
 ﻿using DemoProject.DAL.Configuration;
 using DemoProject.DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DemoProject.DAL
 {
@@ -21,6 +22,8 @@ namespace DemoProject.DAL
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+      optionsBuilder.ConfigureWarnings(x => x.Throw(RelationalEventId.QueryClientEvaluationWarning));
+
       base.OnConfiguring(optionsBuilder);
     }
 

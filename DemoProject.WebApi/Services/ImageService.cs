@@ -1,17 +1,19 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using DemoProject.Shared;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
 namespace DemoProject.WebApi.Services
 {
   public class ImageService
   {
-    private readonly string _webRootPath;
+    private readonly IHostingEnvironment _environment;
 
-    public ImageService(string webRootPath)
+    public ImageService(
+      IHostingEnvironment environment)
     {
-      _webRootPath = webRootPath;
+      _environment = environment;
     }
 
     public async Task<ServiceResult> SaveAsync(IFormFile file)
@@ -24,7 +26,13 @@ namespace DemoProject.WebApi.Services
       }
 
       var relativePath = Constants.GetRelativePathToImage(file.FileName);
-      var fullPath = Path.Combine(_webRootPath, relativePath);
+      var fullPath = Path.Combine(_environment.WebRootPath, relativePath);
+
+      if (File.Exists(fullPath))
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(file), "File already exist.");
+      }
+
       using (var fileStream = new FileStream(fullPath, FileMode.Create))
       {
         await file.CopyToAsync(fileStream);

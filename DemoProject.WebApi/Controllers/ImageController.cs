@@ -21,7 +21,6 @@ namespace DemoProject.WebApi.Controllers
       _imageService = imageService;
     }
 
-    // TODO: should be tested
     // POST api/image/upload
     [HttpPost("upload")]
     public Task<ServiceResult> Upload(IFormFile file)

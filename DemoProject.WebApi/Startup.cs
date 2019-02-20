@@ -49,13 +49,8 @@ namespace DemoProject.WebApi
           null);
       });
 
-      services.AddTransient<ImageService>(serviceProvider =>
-      {
-        return new ImageService(Environment.WebRootPath);
-      });
-
+      services.AddTransient<ImageService>();
       services.AddTransient<AuthTokenGenerator>();
-
       services.AddTransient<IUserService, UserService>();
       services.AddTransient<IContentGroupService, ContentGroupService>();
       services.AddTransient<IInfoObjectService, InfoObjectService>();
