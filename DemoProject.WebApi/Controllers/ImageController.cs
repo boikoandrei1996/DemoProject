@@ -34,5 +34,12 @@ namespace DemoProject.WebApi.Controllers
     {
       return _imageService.SaveAsync(file, path);
     }
+
+    // DELETE api/image
+    [HttpDelete]
+    public ServiceResult Delete([FromQuery]string path)
+    {
+      return _imageService.Delete(path);
+    }
   }
 }
