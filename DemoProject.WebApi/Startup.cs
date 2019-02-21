@@ -144,6 +144,12 @@ namespace DemoProject.WebApi
       {
         app.UseDeveloperExceptionPage();
       }
+      else
+      {
+        app.ConfigureExceptionHandler();
+      }
+
+      app.ConfigureStatusCodePages();
 
       var appSettings = app.ApplicationServices.GetService<IOptions<AppSettings>>();
 

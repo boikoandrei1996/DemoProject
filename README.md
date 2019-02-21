@@ -15,11 +15,16 @@ ___
 * Realm
 * Picasso
 ___
+### Features:
+* Authentication via JWT Bearer token
+* File uploading
+* Global error handling
+___
 ### TODO:
 1. Admin page
 2. Moderator page
 3. Auth page
-4. Custom error page + global error handling
+4. Custom error page
 5. Logging 
     * bussines flow
     * data flow
