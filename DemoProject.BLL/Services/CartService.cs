@@ -134,7 +134,7 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
       }
 
-      var shopItemDetailExist = await this.ExistAsync(x => x.Id == shopItemDetailId);
+      var shopItemDetailExist = await _context.ShopItemDetails.AnyAsync(x => x.Id == shopItemDetailId);
       if (shopItemDetailExist == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(shopItemDetailId), $"ShopItemDetail not found with id: '{shopItemDetailId}'.");

@@ -19,16 +19,14 @@ ___
 1. Admin page
 2. Moderator page
 3. Auth page
-4. File uploading 
-    * local or external server
-5. Custom error page + global error handling
-6. Logging 
+4. Custom error page + global error handling
+5. Logging 
     * bussines flow
     * data flow
     * elmah
-7. Caching
-8. SignalR notification
-9. Tesing
+6. Caching
+7. SignalR notification
+8. Tesing
 	* Unit tests
 	* Integration tests
-10. Setup CI&CD
+9. Setup CI&CD
