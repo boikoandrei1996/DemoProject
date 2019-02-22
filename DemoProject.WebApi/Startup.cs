@@ -8,6 +8,7 @@ using DemoProject.Shared;
 using DemoProject.Shared.Interfaces;
 using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Services;
+using ElmahCore.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -77,6 +78,7 @@ namespace DemoProject.WebApi
       // configure jwt authentication
       var appSettings = appSettingsSection.Get<AppSettings>();
       var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
       services
         .AddAuthentication(x =>
         {
@@ -128,6 +130,11 @@ namespace DemoProject.WebApi
         // x.IncludeXmlComments(Path.Combine(Environment.ContentRootPath, @"bin\Debug\netcoreapp2.0\DemoProject.WebApi.xml"));
         x.DescribeAllEnumsAsStrings();
       });
+
+      services.AddElmah(options =>
+      {
+        // options.CheckPermissionAction = httpContext => httpContext.User.IsInRole(Role.Admin);
+      });
     }
 
     public void Configure(IApplicationBuilder app)
@@ -150,6 +157,8 @@ namespace DemoProject.WebApi
       }
 
       app.ConfigureStatusCodePages();
+
+      app.UseElmah();
 
       var appSettings = app.ApplicationServices.GetService<IOptions<AppSettings>>();
 
