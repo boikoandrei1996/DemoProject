@@ -6,6 +6,7 @@ ___
 * .NET Core 2.1
 * Entity Framework Core
 * Swagger
+* Elmah
 
 ### MobileApp: [GitHub](https://github.com/kresik3/DemoProject)
 * Kotlin
@@ -19,6 +20,7 @@ ___
 * Authentication via JWT Bearer token
 * File uploading
 * Global error handling
+* Logging by Elmah
 ___
 ### TODO:
 1. Admin page
@@ -28,7 +30,6 @@ ___
 5. Logging 
     * bussines flow
     * data flow
-    * elmah
 6. Caching
 7. SignalR notification
 8. Tesing
