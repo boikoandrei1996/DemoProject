@@ -24,7 +24,10 @@ namespace DemoProject.BLL.Services
 
     public Task<ChangeHistory> GetHistoryRecordAsync(TableName table)
     {
-      return _context.History.LastOrDefaultAsync(x => x.Table == table || x.Table == TableName.InfoObject);
+      return _context.History
+        .AsNoTracking()
+        .OrderByDescending(x => x.TimeOfChange)
+        .FirstOrDefaultAsync(x => x.Table == table || x.Table == TableName.InfoObject);
     }
 
     public async Task<Page<ContentGroup>> GetPageAsync(ContentGroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null)

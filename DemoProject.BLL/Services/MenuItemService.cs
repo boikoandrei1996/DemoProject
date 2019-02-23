@@ -9,7 +9,6 @@ using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Extensions;
-using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
@@ -25,7 +24,10 @@ namespace DemoProject.BLL.Services
 
     public Task<ChangeHistory> GetHistoryRecordAsync()
     {
-      return _context.History.LastOrDefaultAsync(x => x.Table == TableName.MenuItem);
+      return _context.History
+        .AsNoTracking()
+        .OrderByDescending(x => x.TimeOfChange)
+        .FirstOrDefaultAsync(x => x.Table == TableName.MenuItem);
     }
 
     public Task<Page<MenuItem>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<MenuItem, bool>> filter = null)

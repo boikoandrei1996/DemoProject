@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -63,7 +64,11 @@ namespace DemoProject.WebApi
 
       services
         .AddDbContext<EFContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        {
+          options
+            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            .ConfigureWarnings(x => x.Throw(RelationalEventId.QueryClientEvaluationWarning));
+        });
 
       services.AddCors();
 
