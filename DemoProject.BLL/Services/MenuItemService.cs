@@ -63,14 +63,20 @@ namespace DemoProject.BLL.Services
       return _context.MenuItems.AnyAsync(filter);
     }
 
-    public Task<ServiceResult> AddAsync(MenuItem model)
+    public async Task<ServiceResult> AddAsync(MenuItem model)
     {
       Check.NotNull(model, nameof(model));
+
+      var menuItemExist = await this.ExistAsync(x => x.Text.ToLower() == model.Text.ToLower());
+      if (menuItemExist)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), $"MenuItem already exist.");
+      }
 
       _context.MenuItems.Add(model);
       _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Add));
 
-      return _context.SaveAsync(nameof(AddAsync), model.Id);
+      return await _context.SaveAsync(nameof(AddAsync), model.Id);
     }
 
     public async Task<ServiceResult> UpdateAsync(MenuItem model)

@@ -9,16 +9,27 @@ namespace DemoProject.Shared.Attributes
   {
     public static readonly string CustomMessage = "File should exist on the server.";
 
-    private readonly string _relativePath;
+    private readonly string _rootPath;
+    private readonly string _dirPath;
 
-    public FileExistValidationAttribute(string relativePath)
+    public FileExistValidationAttribute(
+      string webContentRootPath, 
+      string fileDirectoryPath)
     {
-      _relativePath = relativePath;
+      _rootPath = webContentRootPath;
+      _dirPath = fileDirectoryPath;
+    }
+
+    public bool IsNotValid(string value)
+    {
+      return this.IsValid(value) == false;
     }
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-      if (File.Exists(_relativePath + (string)value))
+      var path = Path.Combine(_rootPath, _dirPath, (string)value);
+
+      if (File.Exists(path))
       {
         return ValidationResult.Success;
       }

@@ -16,7 +16,7 @@ namespace DemoProject.WebApi.Models.MenuItemApiModels
 
     [Required]
     [MaxLength(100)]
-    [FileExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
+    [FileExistValidation(Constants.WEB_CONTENT_ROOT_PATH, Constants.DEFAULT_PATH_TO_IMAGE)]
     public string IconFilename { get; set; }
 
     public static MenuItem Map(MenuItemAddModel model)

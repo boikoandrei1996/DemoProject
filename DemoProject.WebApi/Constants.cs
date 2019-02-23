@@ -3,6 +3,7 @@
   public static class Constants
   {
     // Should be const, because of used as attribute argument
+    public const string WEB_CONTENT_ROOT_PATH = "wwwroot/";
     public const string DEFAULT_PATH_TO_IMAGE = "images/";
 
     public static readonly int DEFAULT_PAGE_INDEX = 1;

@@ -15,7 +15,7 @@ namespace DemoProject.WebApi.Models.ShopItemApiModels
 
     [Required]
     [MaxLength(100)]
-    [FileExistValidation(Constants.DEFAULT_PATH_TO_IMAGE)]
+    [FileExistValidation(Constants.WEB_CONTENT_ROOT_PATH, Constants.DEFAULT_PATH_TO_IMAGE)]
     public string ImageFilename { get; set; }
 
     [Required]

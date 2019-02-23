@@ -34,8 +34,8 @@ namespace DemoProject.WebApi.Controllers
       if (type == InfoObjectType.Image)
       {
         // validate file exist
-        var fileExistValidationAttribute = new FileExistValidationAttribute(Constants.DEFAULT_PATH_TO_IMAGE);
-        if (fileExistValidationAttribute.IsValid(apiEntity.Content) == false)
+        var fileExistValidationAttribute = new FileExistValidationAttribute(Constants.WEB_CONTENT_ROOT_PATH, Constants.DEFAULT_PATH_TO_IMAGE);
+        if (fileExistValidationAttribute.IsNotValid(apiEntity.Content))
         {
           return ServiceResultFactory.BadRequestResult(nameof(apiEntity.Content), FileExistValidationAttribute.CustomMessage);
         }
@@ -53,8 +53,8 @@ namespace DemoProject.WebApi.Controllers
       if (string.Equals(apiEntity.Type, InfoObjectType.Image.ToString(), StringComparison.OrdinalIgnoreCase))
       {
         // validate file exist
-        var fileExistValidationAttribute = new FileExistValidationAttribute(Constants.DEFAULT_PATH_TO_IMAGE);
-        if (fileExistValidationAttribute.IsValid(apiEntity.Content) == false)
+        var fileExistValidationAttribute = new FileExistValidationAttribute(Constants.WEB_CONTENT_ROOT_PATH, Constants.DEFAULT_PATH_TO_IMAGE);
+        if (fileExistValidationAttribute.IsNotValid(apiEntity.Content))
         {
           return ServiceResultFactory.BadRequestResult(nameof(apiEntity.Content), FileExistValidationAttribute.CustomMessage);
         }
