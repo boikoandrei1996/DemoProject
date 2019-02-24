@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -142,8 +143,13 @@ namespace DemoProject.WebApi
       });
     }
 
-    public void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
+      loggerFactory.AddFile(Configuration.GetSection("Logging"));
+
+      var appSettings = app.ApplicationServices.GetRequiredService<IOptions<AppSettings>>();
+      var logger = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();
+
       app.UseCors(x => x
           .AllowAnyOrigin()
           .AllowAnyMethod()
@@ -158,16 +164,14 @@ namespace DemoProject.WebApi
       }
       else
       {
-        app.ConfigureExceptionHandler();
+        app.ConfigureExceptionHandler(logger);
       }
 
       app.ConfigureStatusCodePages();
 
       app.UseElmah();
 
-      var appSettings = app.ApplicationServices.GetService<IOptions<AppSettings>>();
-
-      app.ApplyMigrationAndDatabaseSeed(appSettings.Value.DatabaseRestore);
+      app.ApplyMigrationAndDatabaseSeed(appSettings.Value, logger);
 
       app.UseMvc();
       app.UseFileServer();

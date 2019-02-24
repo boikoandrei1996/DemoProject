@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
+using DemoProject.WebApi.Models.ImageApiModels;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,9 +31,9 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/image/upload
     [HttpPost("upload")]
-    public Task<ServiceResult> Upload(IFormFile file, string path)
+    public Task<ServiceResult> Upload(ImageUploadModel model)
     {
-      return _imageService.SaveAsync(file, path);
+      return _imageService.SaveAsync(model.File, model.Path);
     }
 
     // DELETE api/image

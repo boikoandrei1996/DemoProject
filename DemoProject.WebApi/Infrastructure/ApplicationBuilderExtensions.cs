@@ -17,7 +17,10 @@ namespace DemoProject.WebApi.Infrastructure
 {
   public static class ApplicationBuilderExtensions
   {
-    public static void ApplyMigrationAndDatabaseSeed(this IApplicationBuilder app, bool isDatabaseRestore)
+    public static void ApplyMigrationAndDatabaseSeed(
+      this IApplicationBuilder app,
+      AppSettings appSettings,
+      ILogger logger)
     {
       using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
       {
@@ -29,7 +32,7 @@ namespace DemoProject.WebApi.Infrastructure
 
           context.Database.Migrate();
 
-          if (isDatabaseExisted == false || isDatabaseRestore)
+          if (isDatabaseExisted == false || appSettings.DatabaseRestore)
           {
             context.ClearDatabase();
             scope.ServiceProvider.GetRequiredService<SeedService>().SeedDatabase(context);
@@ -37,11 +40,7 @@ namespace DemoProject.WebApi.Infrastructure
         }
         catch (Exception ex)
         {
-          var logger = scope.ServiceProvider.GetService<ILogger<Startup>>();
-          if (logger != null && logger.IsEnabled(LogLevel.Error))
-          {
-            logger.LogError(ex, "Failed to migrate or seed database.");
-          }
+          logger.LogCritical(ex, "Failed to migrate or seed database.");
         }
       }
     }
@@ -53,7 +52,7 @@ namespace DemoProject.WebApi.Infrastructure
       app.UseRewriter(options);
     }
 
-    public static void ConfigureExceptionHandler(this IApplicationBuilder app/*, ILoggerManager logger*/)
+    public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILogger logger)
     {
       app.UseExceptionHandler(appBuilder =>
       {
@@ -66,7 +65,7 @@ namespace DemoProject.WebApi.Infrastructure
           var exceptionHandlerFeature = httpContext.Features.Get<IExceptionHandlerPathFeature>();
           if (exceptionHandlerFeature != null)
           {
-            // logger.LogError($"Path: {exceptionHandlerFeature.Path} | Error: {exceptionHandlerFeature.Error}");
+            logger.LogError($"Path: {exceptionHandlerFeature.Path} | Error: {exceptionHandlerFeature.Error}");
             path = exceptionHandlerFeature.Path;
           }
 
