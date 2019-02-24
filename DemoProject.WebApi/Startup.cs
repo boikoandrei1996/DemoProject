@@ -6,6 +6,7 @@ using DemoProject.BLL.Services;
 using DemoProject.DAL;
 using DemoProject.Shared;
 using DemoProject.Shared.Interfaces;
+using DemoProject.WebApi.Extensions;
 using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Services;
 using ElmahCore.Mvc;
@@ -145,7 +146,7 @@ namespace DemoProject.WebApi
 
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
     {
-      loggerFactory.AddFile(Configuration.GetSection("Logging"));
+      loggerFactory.AddFile(Configuration.GetSection("SerilogFile"));
 
       var appSettings = app.ApplicationServices.GetRequiredService<IOptions<AppSettings>>();
       var logger = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();

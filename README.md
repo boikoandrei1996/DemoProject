@@ -36,3 +36,4 @@ ___
 	* Unit tests
 	* Integration tests
 9. Setup CI&CD
+10. i18n, l10n

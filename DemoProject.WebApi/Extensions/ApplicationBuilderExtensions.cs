@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using DemoProject.DAL;
+using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -13,7 +14,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace DemoProject.WebApi.Infrastructure
+namespace DemoProject.WebApi.Extensions
 {
   public static class ApplicationBuilderExtensions
   {
