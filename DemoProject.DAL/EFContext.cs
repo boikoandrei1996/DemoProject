@@ -1,10 +1,13 @@
-﻿using DemoProject.DAL.Configuration;
+﻿using System;
+using System.Threading.Tasks;
+using DemoProject.DAL.Configuration;
 using DemoProject.DAL.Models;
+using DemoProject.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DAL
 {
-  public class EFContext : DbContext
+  public class EFContext : DbContext, IDbContext
   {
     public EFContext(DbContextOptions<EFContext> options) : base(options) { }
 
@@ -18,11 +21,6 @@ namespace DemoProject.DAL
     public DbSet<CartShopItem> CartShopItems { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<ChangeHistory> History { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-      base.OnConfiguring(optionsBuilder);
-    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -52,6 +50,45 @@ namespace DemoProject.DAL
       this.ShopItemDetails.DeleteFromQuery();
       this.ShopItems.DeleteFromQuery();
       this.History.DeleteFromQuery();
+    }
+
+    public async Task<ServiceResult> SaveAsync(string code, Guid modelId)
+    {
+      var result = await this.SaveAsync(code);
+
+      return result.Key == ServiceResultKey.Success ?
+        ServiceResultFactory.EntityCreatedResult(modelId) :
+        result;
+    }
+
+    public async Task<ServiceResult> SaveAsync(string code, object model)
+    {
+      var result = await this.SaveAsync(code);
+
+      return result.Key == ServiceResultKey.Success ?
+        ServiceResultFactory.EntityUpdatedResult(model) :
+        result;
+    }
+
+    public async Task<ServiceResult> SaveAsync(string code)
+    {
+      try
+      {
+        await this.SaveChangesAsync();
+        return ServiceResultFactory.Success;
+      }
+      catch (DbUpdateConcurrencyException ex)
+      {
+        return ServiceResultFactory.BadRequestResult(code, ex.InnerException.Message);
+      }
+      catch (DbUpdateException ex)
+      {
+        return ServiceResultFactory.BadRequestResult(code, ex.InnerException.Message);
+      }
+      catch (Exception ex)
+      {
+        return ServiceResultFactory.InternalServerErrorResult(ex.InnerException.Message);
+      }
     }
   }
 }

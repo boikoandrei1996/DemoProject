@@ -65,7 +65,7 @@ namespace DemoProject.WebApi
       services.AddTransient<IOrderService, OrderService>();
 
       services
-        .AddDbContext<EFContext>(options =>
+        .AddDbContext<IDbContext, EFContext>(options =>
         {
           options
             .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))

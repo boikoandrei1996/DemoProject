@@ -30,12 +30,12 @@ namespace DemoProject.WebApi.Services
       _logger = logger;
     }
 
-    public void SeedDatabase(EFContext context)
+    public void SeedDatabase(IDbContext context)
     {
       this.SeedDatabaseAsync(context).Wait();
     }
 
-    private async Task SeedDatabaseAsync(EFContext context)
+    private async Task SeedDatabaseAsync(IDbContext context)
     {
       var users = await this.LoadAsync<List<AppUser>>("Users.json");
       this.ManagePasswords(users);
@@ -82,7 +82,7 @@ namespace DemoProject.WebApi.Services
       }
     }
 
-    private async Task SaveToDbAsync<T>(EFContext context, IEnumerable<T> entities)
+    private async Task SaveToDbAsync<T>(IDbContext context, IEnumerable<T> entities)
       where T : class
     {
       try
@@ -97,6 +97,10 @@ namespace DemoProject.WebApi.Services
       catch (DbUpdateException ex)
       {
         _logger.LogCritical(ex.InnerException, nameof(SaveToDbAsync));
+      }
+      catch (Exception ex)
+      {
+        _logger.LogCritical(ex, nameof(SaveToDbAsync));
       }
     }
 

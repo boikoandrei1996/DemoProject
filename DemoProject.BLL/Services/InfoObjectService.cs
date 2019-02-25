@@ -6,16 +6,15 @@ using DemoProject.DAL;
 using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
-using DemoProject.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
   public class InfoObjectService : IInfoObjectService
   {
-    private readonly EFContext _context;
+    private readonly IDbContext _context;
 
-    public InfoObjectService(EFContext context)
+    public InfoObjectService(IDbContext context)
     {
       _context = context;
     }

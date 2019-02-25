@@ -7,7 +7,6 @@ using DemoProject.BLL.Interfaces;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
-using DemoProject.Shared.Extensions;
 using DemoProject.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,11 +14,11 @@ namespace DemoProject.BLL.Services
 {
   public class UserService : IUserService
   {
-    private readonly EFContext _context;
+    private readonly IDbContext _context;
     private readonly IPasswordManager _passwordManager;
 
     public UserService(
-      EFContext context,
+      IDbContext context,
       IPasswordManager passwordManager)
     {
       _context = context;

@@ -5,16 +5,15 @@ using DemoProject.BLL.Interfaces;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
 using DemoProject.Shared;
-using DemoProject.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
   public class ShopItemDetailService : IShopItemDetailService
   {
-    private readonly EFContext _context;
+    private readonly IDbContext _context;
 
-    public ShopItemDetailService(EFContext context)
+    public ShopItemDetailService(IDbContext context)
     {
       _context = context;
     }

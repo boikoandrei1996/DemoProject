@@ -27,7 +27,7 @@ namespace DemoProject.WebApi.Extensions
       {
         try
         {
-          var context = scope.ServiceProvider.GetRequiredService<EFContext>();
+          var context = scope.ServiceProvider.GetRequiredService<IDbContext>();
           var databaseCreator = context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
           var isDatabaseExisted = databaseCreator.Exists();
 
