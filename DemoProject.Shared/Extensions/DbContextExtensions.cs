@@ -33,11 +33,11 @@ namespace DemoProject.Shared.Extensions
       }
       catch (DbUpdateConcurrencyException ex)
       {
-        return ServiceResultFactory.BadRequestResult(string.Empty, ex.InnerException.Message);
+        return ServiceResultFactory.BadRequestResult(code, ex.InnerException.Message);
       }
       catch (DbUpdateException ex)
       {
-        return ServiceResultFactory.BadRequestResult(string.Empty, ex.InnerException.Message);
+        return ServiceResultFactory.BadRequestResult(code, ex.InnerException.Message);
       }
       catch (Exception ex)
       {

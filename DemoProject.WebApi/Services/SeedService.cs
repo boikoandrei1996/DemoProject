@@ -20,7 +20,10 @@ namespace DemoProject.WebApi.Services
     private readonly ILogger _logger;
     private readonly IPasswordManager _passwordManager;
 
-    public SeedService(string dirPath, IPasswordManager passwordManager, ILogger logger)
+    public SeedService(
+      string dirPath,
+      IPasswordManager passwordManager,
+      ILogger logger)
     {
       _dirPath = dirPath;
       _passwordManager = passwordManager;
@@ -73,10 +76,7 @@ namespace DemoProject.WebApi.Services
       }
       catch (Exception ex)
       {
-        if (_logger != null && _logger.IsEnabled(LogLevel.Error))
-        {
-          _logger.LogError(ex, $"{nameof(LoadAsync)} exception: type: \"{ex.GetType()}\" message: \"{ex.Message}\"");
-        }
+        _logger.LogCritical(ex, nameof(LoadAsync));
 
         return default(T);
       }
@@ -92,17 +92,11 @@ namespace DemoProject.WebApi.Services
       }
       catch (DbUpdateConcurrencyException ex)
       {
-        if (_logger != null && _logger.IsEnabled(LogLevel.Error))
-        {
-          _logger.LogError(ex.InnerException, nameof(SaveToDbAsync));
-        }
+        _logger.LogCritical(ex.InnerException, nameof(SaveToDbAsync));
       }
       catch (DbUpdateException ex)
       {
-        if (_logger != null && _logger.IsEnabled(LogLevel.Error))
-        {
-          _logger.LogError(ex.InnerException, nameof(SaveToDbAsync));
-        }
+        _logger.LogCritical(ex.InnerException, nameof(SaveToDbAsync));
       }
     }
 
