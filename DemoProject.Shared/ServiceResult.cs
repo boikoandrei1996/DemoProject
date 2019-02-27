@@ -19,30 +19,29 @@ namespace DemoProject.Shared
 
     public ServiceResult(ServiceResultKey key, ServiceError error)
     {
-      Key = key;
-      Errors = new List<ServiceError>();
+      this.Key = key;
 
       if (error != null)
       {
-        Errors.Add(error);
+        this.Errors.Add(error);
       }
     }
 
     public ServiceResult(ServiceResultKey key, Guid modelId)
     {
-      Key = key;
-      ModelId = modelId;
+      this.Key = key;
+      this.ModelId = modelId;
     }
 
     public ServiceResult(ServiceResultKey key, object model)
     {
-      Key = key;
-      Model = model;
+      this.Key = key;
+      this.Model = model;
     }
 
     public ServiceResultKey Key { get; }
 
-    public ICollection<ServiceError> Errors { get; }
+    public ICollection<ServiceError> Errors { get; } = new List<ServiceError>();
 
     public Guid ModelId { get; }
 

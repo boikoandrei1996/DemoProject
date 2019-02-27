@@ -112,13 +112,13 @@ namespace DemoProject.BLL.Services
       Check.NotNull(model, nameof(model));
       Check.NotNullOrEmpty(password, nameof(password));
 
-      var usernameExist = await _context.Users.AnyAsync(x => x.Username == model.Username);
+      var usernameExist = await this.ExistAsync(x => x.Username == model.Username);
       if (usernameExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Username is already taken.");
       }
 
-      var emailExist = await _context.Users.AnyAsync(x => x.Email == model.Email);
+      var emailExist = await this.ExistAsync(x => x.Email == model.Email);
       if (emailExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Email is already taken.");
@@ -161,7 +161,7 @@ namespace DemoProject.BLL.Services
 
       _context.Users.Update(user);
 
-      return await _context.SaveAsync(nameof(UpdatePasswordAsync));
+      return await _context.SaveAsync(nameof(UpdatePasswordAsync), null);
     }
 
     public Task<ServiceResult> UpdateAsync(AppUser model)

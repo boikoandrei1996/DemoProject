@@ -9,10 +9,7 @@ namespace DemoProject.Shared
   {
     public (byte[] passwordHash, byte[] passwordSalt) CreatePasswordHash(string password)
     {
-      if (string.IsNullOrWhiteSpace(password))
-      {
-        throw new ArgumentException("Value cannot be null, empty or whitespace.", nameof(password));
-      }
+      Check.NotNullOrWhiteSpace(password, nameof(password));
 
       using (var hmac = new HMACSHA512())
       {
@@ -25,10 +22,7 @@ namespace DemoProject.Shared
 
     public bool VerifyPassword(string password, byte[] passwordHash, byte[] passwordSalt)
     {
-      if (string.IsNullOrWhiteSpace(password))
-      {
-        throw new ArgumentException("Value cannot be null, empty or whitespace.", nameof(password));
-      }
+      Check.NotNullOrWhiteSpace(password, nameof(password));
 
       if (passwordHash.Length != 64)
       {

@@ -5,8 +5,9 @@ namespace DemoProject.Shared
   public static class Check
   {
     public static void NotNull<T>(T value, string paramName)
+      where T : class
     {
-      if (ReferenceEquals(value, null))
+      if (value == null)
       {
         throw new ArgumentNullException(paramName);
       }
@@ -17,6 +18,14 @@ namespace DemoProject.Shared
       if (string.IsNullOrEmpty(value))
       {
         throw new ArgumentException($"{paramName} is null or empty.", paramName);
+      }
+    }
+
+    public static void NotNullOrWhiteSpace(string value, string paramName)
+    {
+      if (string.IsNullOrWhiteSpace(value))
+      {
+        throw new ArgumentException($"{paramName} is null, empty or whitespace.", paramName);
       }
     }
 
