@@ -7,6 +7,7 @@ ___
 * Entity Framework Core
 * Swagger
 * Elmah
+* xUnit and Moq
 
 ### MobileApp: [GitHub](https://github.com/kresik3/DemoProject)
 * Kotlin
@@ -21,6 +22,7 @@ ___
 * File uploading
 * Global error handling
 * Logging by Elmah
+* Logging by SeriLog
 ___
 ### TODO:
 1. Admin page
@@ -33,7 +35,6 @@ ___
 6. Caching
 7. SignalR notification
 8. Tesing
-	* Unit tests
 	* Integration tests
 9. Setup CI&CD
 10. i18n, l10n
