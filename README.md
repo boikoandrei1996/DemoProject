@@ -34,7 +34,5 @@ ___
     * data flow
 6. Caching
 7. SignalR notification
-8. Tesing
-	* Integration tests
-9. Setup CI&CD
-10. i18n, l10n
+8. Setup CI&CD
+9. i18n, l10n
