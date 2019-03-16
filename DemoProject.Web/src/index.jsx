@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from 'react-router-redux';
@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history';
 import phoneReducer from "./reducers/phoneReducer";
 import * as actionTypes from './constants/phoneActionTypeNames';
 import Layout from "./components/layout.jsx";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 var store = createStore(phoneReducer);
 store.dispatch({
@@ -20,7 +21,7 @@ var history = createBrowserHistory({
   basename: document.getElementsByTagName('base')[0].getAttribute('href')
 });
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Layout />
