@@ -1,4 +1,4 @@
-import { phoneConstants } from '../_constants';
+import { phoneConstants } from '@/_constants';
 
 function addPhone(phone) {
   return {

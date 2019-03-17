@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { phoneConstants } from '../_constants';
+import { phoneConstants } from '@/_constants';
 
 export function phoneReducer(state = Map(), action) {
   switch (action.type) {

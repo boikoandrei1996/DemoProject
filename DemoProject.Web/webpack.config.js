@@ -15,7 +15,10 @@ module.exports = {
     // publicPath: '/' // Live-reload
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      '@': path.resolve(__dirname, 'src/')
+    }
   },
   module: {
     rules: [
