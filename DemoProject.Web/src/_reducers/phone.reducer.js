@@ -1,27 +1,26 @@
 import { Map } from 'immutable';
-import * as actionTypes from '../constants/phoneActionTypeNames';
+import { phoneConstants } from '../_constants';
 
-var phoneReducer = function (state = Map(), action) {
+export function phoneReducer(state = Map(), action) {
   switch (action.type) {
-    case actionTypes.SET_INITIAL_STATE:
+    case phoneConstants.SET_INITIAL_STATE:
       return state.merge(action.defaultData);
 
-    case actionTypes.ADD_PHONE:
+    case phoneConstants.ADD_PHONE:
       return state.update(
         'phones',
         (phones) => phones.push(action.phone)
       );
 
-    case actionTypes.DELETE_PHONE:
+    case phoneConstants.DELETE_PHONE:
       return state.update(
         'phones',
         (phones) => phones.filterNot(
           (item) => item === action.phone
         )
       );
+
+    default:
+      return state;
   }
-
-  return state;
 }
-
-export default phoneReducer;

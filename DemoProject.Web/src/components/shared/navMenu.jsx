@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import '../styles/navMenu.sass';
+import './navMenu.sass';
 
 class NavMenu extends React.Component {
   render() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import phoneActions from '../actions/phoneActions';
+import { phoneActions } from '../_actions';
 import PhoneForm from '../components/phone/phoneForm.jsx';
 import PhonesList from '../components/phone/phoneList.jsx';
 

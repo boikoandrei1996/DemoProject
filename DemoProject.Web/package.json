@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "author": "BoikoAndrei1996@gmail.com",
   "scripts": {
+    "build": "webpack --mode=none",
     "dev": "webpack-dev-server --hot --open --mode=none",
-    "build": "webpack --mode=none"
+    "start": "webpack --mode=none && webpack-dev-server --hot --open --mode=none"
   },
   "dependencies": {
     "bootstrap": "3.3.7",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import '../../styles/title.sass';
+import './title.sass';
 
 class Title extends React.Component {
   render() {
