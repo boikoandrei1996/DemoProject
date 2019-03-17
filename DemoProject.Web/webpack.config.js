@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
   // mode: 'development',
-  entry: "./src/index.jsx",
+  entry: "./src/root.jsx",
   output: {
     path: path.resolve(__dirname, './public'),
     filename: "bundle.js",
