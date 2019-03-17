@@ -16,7 +16,7 @@ class HomePage extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    phones: state.get('phones')
+    phones: state.phoneState.get('phones')
   };
 }
 

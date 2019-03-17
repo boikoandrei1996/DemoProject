@@ -1,5 +1,4 @@
 ﻿import { createStore } from "redux";
-// import { rootReducer } from "@/_reducers";
-import { phoneReducer } from "@/_reducers/phone.reducer";
+import { rootReducer } from "@/_reducers";
 
-export const store = createStore(phoneReducer);
+export const store = createStore(rootReducer);

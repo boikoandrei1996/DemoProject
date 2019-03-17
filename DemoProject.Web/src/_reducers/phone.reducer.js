@@ -1,6 +1,7 @@
 import { Map } from 'immutable';
 import { phoneConstants } from '@/_constants';
 
+// (prevState, action) => newState
 export function phoneReducer(state = Map(), action) {
   switch (action.type) {
     case phoneConstants.SET_INITIAL_STATE:
