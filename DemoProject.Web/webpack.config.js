@@ -12,7 +12,6 @@ module.exports = {
     historyApiFallback: true,
     port: 8080,
     contentBase: 'public/'
-    // publicPath: '/' // Live-reload
   },
   resolve: {
     extensions: ['.js', '.jsx'],

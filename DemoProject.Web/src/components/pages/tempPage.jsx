@@ -8,13 +8,5 @@ class TempPage extends React.Component {
   }
 }
 
-function mapStateToProps(state, props) {
-  console.log(state);
-  console.log(props);
-  return {
-    // phones: state.get('phones')
-  };
-}
-
-const connectedComponent = connect(mapStateToProps)(TempPage);
+const connectedComponent = connect()(TempPage);
 export { connectedComponent as TempPage };
