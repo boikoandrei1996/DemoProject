@@ -16,11 +16,13 @@ class PhoneForm extends React.Component {
   }
 
   render() {
-    return <div>
-      <input ref='phoneInput' />
-      <button onClick={this.onClickAdd}>Добавить</button>
-    </div>
+    return (
+      <div>
+        <input ref='phoneInput' />
+        <button onClick={this.onClickAdd}>Добавить</button>
+      </div>
+    );
   }
-};
+}
 
-export default PhoneForm;
+export { PhoneForm };

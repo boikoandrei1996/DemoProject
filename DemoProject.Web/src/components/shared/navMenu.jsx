@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import './navMenu.sass';
+import '@/_styles/navMenu.sass';
 
 class NavMenu extends React.Component {
   render() {
@@ -63,4 +63,4 @@ class NavMenu extends React.Component {
   }
 }
 
-export default NavMenu;
+export { NavMenu };

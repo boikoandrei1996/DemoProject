@@ -5,7 +5,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 import { history, store } from '@/_helpers';
 import { phoneConstants } from '@/_constants';
-import Layout from "@/components/layout";
+import App from "@/components/app";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 store.dispatch({
@@ -18,7 +18,7 @@ store.dispatch({
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Layout />
+      <App />
     </ConnectedRouter>
   </Provider>,
   document.getElementById("root")

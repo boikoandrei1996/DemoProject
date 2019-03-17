@@ -1,9 +1,9 @@
 import React from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
-import NavMenu from './shared/navMenu';
-import Routes from './routes';
+import { NavMenu } from './shared';
+import { Routes } from './pages';
 
-class Layout extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <Grid fluid>
@@ -20,4 +20,4 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout;
+export default App;
