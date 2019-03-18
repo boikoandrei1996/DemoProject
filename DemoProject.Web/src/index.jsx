@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from 'react-router-redux';
 
-import { history, store } from '@/_helpers';
+import { store, history } from '@/_helpers';
 import { phoneConstants } from '@/_constants';
 import App from "@/components/app";
 import 'bootstrap/dist/css/bootstrap.min.css';
