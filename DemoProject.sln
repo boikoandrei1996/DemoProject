@@ -15,9 +15,30 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.AzureFunctions"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.UnitTest", "DemoProject.UnitTest\DemoProject.UnitTest.csproj", "{83919BB0-F15E-459E-9673-E6E5367A2F47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoProject.IntegrationTest", "DemoProject.IntegrationTest\DemoProject.IntegrationTest.csproj", "{E406D99A-47AD-42AF-830B-A48A69EA4800}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject.IntegrationTest", "DemoProject.IntegrationTest\DemoProject.IntegrationTest.csproj", "{E406D99A-47AD-42AF-830B-A48A69EA4800}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C759D1F8-CBC4-440D-9C39-F21991E0AAD3}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DemoProject.Web", "DemoProject.Web\", "{A0E70736-5FCC-4218-A56B-90C0A99FBA1C}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_42365"
+		Debug.AspNetCompiler.PhysicalPath = "DemoProject.Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_42365\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_42365"
+		Release.AspNetCompiler.PhysicalPath = "DemoProject.Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_42365\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "42365"
+		SlnRelativePath = "DemoProject.Web\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +74,10 @@ Global
 		{E406D99A-47AD-42AF-830B-A48A69EA4800}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E406D99A-47AD-42AF-830B-A48A69EA4800}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E406D99A-47AD-42AF-830B-A48A69EA4800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0E70736-5FCC-4218-A56B-90C0A99FBA1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E70736-5FCC-4218-A56B-90C0A99FBA1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0E70736-5FCC-4218-A56B-90C0A99FBA1C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E70736-5FCC-4218-A56B-90C0A99FBA1C}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,5 @@
+export const phoneConstants = {
+  ADD_PHONE: 'ADD_PHONE',
+  DELETE_PHONE: 'DELETE_PHONE',
+  SET_INITIAL_STATE: 'INITIAL_STATE'
+};

@@ -1,0 +1,40 @@
+{
+  "name": "demo-project-web",
+  "description": "A React.js project using Redux",
+  "version": "1.0.0",
+  "author": "BoikoAndrei1996@gmail.com",
+  "scripts": {
+    "build": "webpack --mode=none",
+    "dev": "webpack-dev-server --hot --open --mode=none",
+    "start": "webpack --mode=none && webpack-dev-server --hot --open --mode=none"
+  },
+  "dependencies": {
+    "bootstrap": "3.3.7",
+    "immutable": "^3.8.2",
+    "react": "^16.8.4",
+    "react-bootstrap": "^0.31.5",
+    "react-dom": "^16.8.4",
+    "react-redux": "^5.1.1",
+    "react-router-bootstrap": "^0.24.4",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.8",
+    "redux": "^4.0.0",
+    "redux-immutable": "^4.0.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^1.0.1",
+    "file-loader": "^3.0.1",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
