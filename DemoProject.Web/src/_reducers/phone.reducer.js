@@ -10,15 +10,13 @@ export function phoneReducer(state = Map(), action) {
     case phoneConstants.ADD_PHONE:
       return state.update(
         'phones',
-        (phones) => phones.push(action.phone)
+        phones => phones.push(action.phone)
       );
 
     case phoneConstants.DELETE_PHONE:
       return state.update(
         'phones',
-        (phones) => phones.filterNot(
-          (item) => item === action.phone
-        )
+        phones => phones.filter((item) => item !== action.phone)
       );
 
     default:
