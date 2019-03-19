@@ -8,9 +8,14 @@ function addPhone(phone) {
 }
 
 function deletePhone(phone) {
-  return {
-    type: phoneConstants.DELETE_PHONE,
-    phone
+  return (dispatch, getState) => {
+    let state = getState();
+    console.log('deletePhone', state);
+
+    dispatch({
+      type: phoneConstants.DELETE_PHONE,
+      phone
+    });
   };
 }
 

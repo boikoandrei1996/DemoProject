@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode=none",
     "dev": "webpack-dev-server --hot --open --mode=none",
-    "start": "webpack --mode=none && webpack-dev-server --hot --open --mode=none"
+    "start": "webpack && webpack-dev-server --hot --open"
   },
   "dependencies": {
     "bootstrap": "3.3.7",
@@ -20,6 +20,7 @@
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "^4.0.0",
     "redux-immutable": "^4.0.0",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
