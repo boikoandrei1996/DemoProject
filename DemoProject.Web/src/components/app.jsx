@@ -1,6 +1,6 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { Col, Grid, Row } from 'react-bootstrap';
+import { Switch, Route } from 'react-router-dom';
+import { Grid, Col, Row } from 'react-bootstrap';
 import { NavMenu } from './shared';
 import { HomePage, DiscountPage, TempPage, NotFoundPage } from './pages';
 
