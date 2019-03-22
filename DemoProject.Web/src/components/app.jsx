@@ -1,16 +1,20 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Grid, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 
 import { NavMenu } from './shared';
 import { HomePage, DiscountPage, TempPage, NotFoundPage } from './pages';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/_styles/index.sass';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faIgloo } from '@fortawesome/free-solid-svg-icons'
+library.add(faIgloo);
+
 class App extends React.Component {
   render() {
     return (
-      <Grid>
+      <Container>
         <Row>
           <NavMenu />
         </Row>
@@ -22,7 +26,7 @@ class App extends React.Component {
             <Route component={NotFoundPage} />
           </Switch>
         </Row>
-      </Grid>
+      </Container>
     );
   }
 }
