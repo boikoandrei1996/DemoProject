@@ -1,8 +1,8 @@
-import React from 'react';
+moveimport React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, Navbar } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as icons from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as icons from '@fortawesome/free-solid-svg-icons';
 
 class NavBarMenu extends React.Component {
   render() {

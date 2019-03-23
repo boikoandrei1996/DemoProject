@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { NavBarMenu, NavMenu, RouteSwitch } from './shared';
+import { NavBarMenu, NavMenu, RouteSwitch } from '.';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/_styles/index.sass';
 
