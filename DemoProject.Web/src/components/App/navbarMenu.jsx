@@ -7,7 +7,7 @@ import * as icons from '@fortawesome/free-solid-svg-icons';
 class NavBarMenu extends React.Component {
   render() {
     return (
-      <Navbar fixed='top' bg='dark' variant='dark' expand='lg'>
+      <Navbar fixed='top' bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Navbar.Brand>DemoProject Web</Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav' className="justify-content-center">
@@ -60,6 +60,17 @@ class NavBarMenu extends React.Component {
               </Nav.Link>
             </LinkContainer>
 
+            <LinkContainer to='/temp/10'>
+              <Nav.Link>
+                <FontAwesomeIcon icon={icons.faUserCircle} /> Account
+              </Nav.Link>
+            </LinkContainer>
+
+            <LinkContainer to='/temp/11'>
+              <Nav.Link>
+                <FontAwesomeIcon icon={icons.faUserShield} /> Admin
+              </Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
