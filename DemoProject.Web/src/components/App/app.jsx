@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { NavBarMenu, NavMenu, RouteSwitch } from '.';
+import { NavBarMenu } from '.';
+import { NavigationSwitch } from '@/components/_navigations';
+import { PageSwitch } from '@/components/pages';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/_styles/index.sass';
 
@@ -13,10 +15,10 @@ class App extends React.Component {
         </Row>
         <Row className='content-row'>
           <Col md={2} className='navmenu-col'>
-            <NavMenu />
+            <NavigationSwitch />
           </Col>
           <Col md={10} className='content-col'>
-            <RouteSwitch />
+            <PageSwitch />
           </Col>
         </Row>
       </Container>
@@ -24,4 +26,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export { App };

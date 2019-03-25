@@ -3,54 +3,49 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
+import { RoutePath } from '@/_helpers';
 
-class NavMenu extends React.Component {
+class MainNavMenu extends React.PureComponent {
   render() {
     return (
       <Nav variant='pills' className="flex-column">
-        <LinkContainer to='/' exact>
+        <LinkContainer to={RoutePath.MAIN} exact>
           <Nav.Link>
             Home <FontAwesomeIcon icon={icons.faHome} />
           </Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/discount'>
-          <Nav.Link>
-            Discount <FontAwesomeIcon icon={icons.faInfo} />
-          </Nav.Link>
-        </LinkContainer>
-
-        <LinkContainer to='/temp/1'>
+        <LinkContainer to={RoutePath.MAIN_ABOUT} exact>
           <Nav.Link>
             About <FontAwesomeIcon icon={icons.faQuestionCircle} />
           </Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/temp/2'>
+        <LinkContainer to={RoutePath.MAIN_CART} exact>
           <Nav.Link>
             Cart <FontAwesomeIcon icon={icons.faShoppingCart} />
           </Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/temp/3'>
+        <LinkContainer to={RoutePath.MAIN_DELIVERY} exact>
           <Nav.Link>
             Delivery <FontAwesomeIcon icon={icons.faTruck} />
           </Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/temp/4'>
+        <LinkContainer to={RoutePath.MAIN_MENUITEM} exact>
           <Nav.Link>
             MenuItem <FontAwesomeIcon icon={icons.faBars} />
           </Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/temp/5'>
+        <LinkContainer to={RoutePath.MAIN_SHOPITEM} exact>
           <Nav.Link>
             ShopItem <FontAwesomeIcon icon={icons.faListAlt} />
           </Nav.Link>
         </LinkContainer>
 
-        <LinkContainer to='/temp/6'>
+        <LinkContainer to={RoutePath.MAIN_ORDER} exact>
           <Nav.Link>
             Order <FontAwesomeIcon icon={icons.faInbox} />
           </Nav.Link>
@@ -60,4 +55,4 @@ class NavMenu extends React.Component {
   }
 }
 
-export { NavMenu };
+export { MainNavMenu };

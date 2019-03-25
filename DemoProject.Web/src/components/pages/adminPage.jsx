@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { phoneActions } from '@/_actions';
 import { PhoneForm, PhonesList } from '@/components/phone';
 
-class HomePage extends React.Component {
+class AdminPage extends React.Component {
   render() {
     return (
       <div>
@@ -20,5 +20,5 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedComponent = connect(mapStateToProps, phoneActions)(HomePage);
-export { connectedComponent as HomePage };
+const connectedComponent = connect(mapStateToProps, phoneActions)(AdminPage);
+export { connectedComponent as AdminPage };

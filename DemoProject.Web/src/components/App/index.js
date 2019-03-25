@@ -1,3 +1,2 @@
-﻿export * from './navbarMenu';
-export * from './navMenu';
-export * from './routeSwitch';
+﻿export * from './app';
+export * from './navbarMenu';
