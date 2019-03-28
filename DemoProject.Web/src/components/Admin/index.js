@@ -1,3 +1,3 @@
-﻿export * from './phoneForm';
-export * from './phoneItem';
-export * from './phoneList';
+﻿export * from './adminNavMenu';
+export * from './adminHomePage';
+export * from './usersPage';

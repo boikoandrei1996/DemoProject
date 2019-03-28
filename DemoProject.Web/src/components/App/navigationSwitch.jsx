@@ -1,7 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { MainNavMenu, AccountNavMenu, AdminNavMenu } from '.';
 import { RoutePath } from '@/_helpers';
+import { MainNavMenu } from '@/components/Main';
+import { AccountNavMenu } from '@/components/Account';
+import { AdminNavMenu } from '@/components/Admin';
 
 class NavigationSwitch extends React.Component {
   render() {

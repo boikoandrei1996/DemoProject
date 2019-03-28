@@ -14,6 +14,12 @@ class AdminNavMenu extends React.Component {
             Home <FontAwesomeIcon icon={icons.faHome} />
           </Nav.Link>
         </LinkContainer>
+
+        <LinkContainer to={RoutePath.ADMIN_USERS} exact>
+          <Nav.Link>
+            Users <FontAwesomeIcon icon={icons.faUserFriends} />
+          </Nav.Link>
+        </LinkContainer>
       </Nav>
     );
   }

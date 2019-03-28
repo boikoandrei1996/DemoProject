@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Title } from '@/components/_shared';
 
-class AccountPage extends React.Component {
+class AccountHomePage extends React.Component {
   render() {
     return (
       <div>
@@ -12,5 +12,5 @@ class AccountPage extends React.Component {
   }
 }
 
-const connectedComponent = connect()(AccountPage);
-export { connectedComponent as AccountPage };
+const connectedComponent = connect()(AccountHomePage);
+export { connectedComponent as AccountHomePage };

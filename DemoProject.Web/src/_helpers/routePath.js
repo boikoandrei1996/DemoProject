@@ -10,5 +10,6 @@ export const RoutePath = {
 
   ACCOUNT: '/account',
 
-  ADMIN: '/admin'
+  ADMIN: '/admin',
+  ADMIN_USERS: '/admin/users'
 };
