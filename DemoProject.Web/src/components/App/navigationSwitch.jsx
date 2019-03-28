@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { RoutePath } from '@/_helpers';
+import { RoutePath } from '@/_constants';
 import { MainNavMenu } from '@/components/Main';
 import { AccountNavMenu } from '@/components/Account';
 import { AdminNavMenu } from '@/components/Admin';

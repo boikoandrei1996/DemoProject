@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Title, LoadingSpinner, ErrorAlert, UsersList } from '@/components/_shared';
-import { userActions } from '../../_actions';
+import { Title, LoadingSpinner, ErrorAlert } from '@/components/_shared';
+import { UsersList } from './usersList';
+import { userActions } from '@/_actions';
 
 class UsersPage extends React.Component {
   componentDidMount() {

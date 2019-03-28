@@ -3,7 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, Navbar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
-import { RoutePath } from '@/_helpers';
+import { RoutePath } from '@/_constants';
 
 class NavBarMenu extends React.Component {
   render() {

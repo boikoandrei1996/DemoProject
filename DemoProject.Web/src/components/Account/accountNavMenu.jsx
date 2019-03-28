@@ -3,7 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
-import { RoutePath } from '@/_helpers';
+import { RoutePath } from '@/_constants';
 
 class AccountNavMenu extends React.Component {
   render() {

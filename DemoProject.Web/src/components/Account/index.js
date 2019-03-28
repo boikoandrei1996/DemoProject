@@ -1,2 +1,2 @@
 ﻿export * from './accountNavMenu';
-export * from './accountHomePage';
+export * from './HomePage/accountHomePage';

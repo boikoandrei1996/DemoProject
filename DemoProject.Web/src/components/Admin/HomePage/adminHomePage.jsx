@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { phoneActions } from '@/_actions';
-import { PhoneForm, PhonesList } from '@/components/_shared';
+import { PhonesList } from './phoneList';
+import { PhoneForm } from './phoneForm';
 
 class AdminHomePage extends React.Component {
   render() {

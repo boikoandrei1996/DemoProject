@@ -1,4 +1,4 @@
 ﻿export * from './adminNavMenu';
-export * from './adminHomePage';
-export * from './usersPage';
-export * from './registerUserPage';
+export * from './HomePage/adminHomePage';
+export * from './UsersPage/usersPage';
+export * from './RegisterPage/registerUserPage';

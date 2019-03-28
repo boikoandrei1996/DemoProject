@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { RoutePath } from '@/_helpers';
+import { RoutePath } from '@/_constants';
 import { NotFoundPage } from '@/components/_shared';
 import { MainHomePage } from '@/components/Main';
 import { AccountHomePage } from '@/components/Account';
