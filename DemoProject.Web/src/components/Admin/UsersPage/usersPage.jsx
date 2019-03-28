@@ -10,14 +10,14 @@ class UsersPage extends React.Component {
   }
 
   render() {
-    const { loading, users, error } = this.props;
+    const { loading, deleting, deletingId, users, error } = this.props;
 
     return (
       <div>
         <Title content='All Users' />
         {loading && <LoadingSpinner />}
         {error && <ErrorAlert error={error} />}
-        {users && <UsersList users={users} />}
+        {users && <UsersList users={users} loading={deleting} loadingId={deletingId} deleteUser={this.props.remove} />}
       </div>
     );
   }
@@ -26,6 +26,8 @@ class UsersPage extends React.Component {
 function mapStateToProps(state) {
   return {
     loading: state.getIn(['userState', 'loading']),
+    deleting: state.getIn(['userState', 'deleting']),
+    deletingId: state.getIn(['userState', 'deletingId']),
     users: state.getIn(['userState', 'users']),
     error: state.getIn(['userState', 'error'])
   };

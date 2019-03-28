@@ -1,9 +1,10 @@
 import config from 'config';
-import { handleResponse } from '../_helpers';
+import { handleResponse } from '@/_helpers';
 
 export const userService = {
   getAll,
-  getById
+  getById,
+  remove
 };
 
 function getAll() {
@@ -19,5 +20,14 @@ function getById(id) {
     method: 'GET',
     // headers: authHeader()
   };
+  return fetch(`${config.apiUrl}/user/${id}`, request).then(handleResponse);
+}
+
+function remove(id) {
+  const request = {
+    method: 'DELETE',
+    // headers: authHeader()
+  };
+
   return fetch(`${config.apiUrl}/user/${id}`, request).then(handleResponse);
 }

@@ -1,38 +1,48 @@
 import React from 'react';
-import { Button, ListGroupItem } from 'react-bootstrap';
+import { ButtonGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
-import '@/_styles/userItem.sass';
+import { LoadingSpinner } from '@/components/_shared';
 
 class UserItem extends React.Component {
   constructor(props) {
     super(props);
 
     this.onClickDelete = this.onClickDelete.bind(this);
-    this.onClickDetails = this.onClickDetails.bind(this);
   }
 
   onClickDelete() {
-    alert('delete');
-  }
-
-  onClickDetails() {
-    alert('details');
+    const id = this.props.user.get('id');
+    return this.props.deleteUser(id);
   }
 
   render() {
-    const { index, user } = this.props;
+    const { index, user, loading, loadingId } = this.props;
+    const dateOfCreation = new Date(user.get('dateOfCreation')).toLocaleDateString();
+    const confirmed = user.get('emailConfirmed');
+    const currentLoading = loading && user.get('id') === loadingId;
 
     return (
-      <ListGroupItem key={user.get('id')} className='user-item'>
-        <span class='user-item-content'>{index + 1}. {user.get('username')}</span>
-        <Button variant='info' onClick={this.onClickDetails}>
-          Подробнее <FontAwesomeIcon icon={icons.faInfo} />
-        </Button>
-        <Button variant='danger' onClick={this.onClickDelete}>
-          Удалить <FontAwesomeIcon icon={icons.faTrash} />
-        </Button>
-      </ListGroupItem>
+      <tr>
+        <td>{index + 1}</td>
+        <td>{user.get('username')}</td>
+        <td>{user.get('role')}</td>
+        <td>{user.get('email')}</td>
+        <td className={confirmed ? 'bg-success' : 'bg-danger'}>
+          {confirmed ? <FontAwesomeIcon icon={icons.faCheckCircle} /> : <FontAwesomeIcon icon={icons.faTimesCircle} />}
+        </td>
+        <td>{user.get('phoneNumber')}</td>
+        <td>{dateOfCreation}</td>
+        <td>
+          <ButtonGroup aria-label='user-item-actions'>
+            {
+              currentLoading ?
+                <Button variant='outline-danger' onClick={this.onClickDelete}><LoadingSpinner /></Button> :
+                <Button variant='danger' onClick={this.onClickDelete}>Удалить <FontAwesomeIcon icon={icons.faTrash} /></Button>
+            }
+          </ButtonGroup>
+        </td>
+      </tr>
     );
   }
 }
