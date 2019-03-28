@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Title } from '@/components/shared';
+import { Title } from '@/components/_shared';
 
 class AccountPage extends React.Component {
   render() {

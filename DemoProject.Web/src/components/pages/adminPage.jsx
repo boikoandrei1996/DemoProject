@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { phoneActions } from '@/_actions';
-import { PhoneForm, PhonesList } from '@/components/phone';
+import { PhoneForm, PhonesList } from '@/components/Admin';
 
 class AdminPage extends React.Component {
   render() {
