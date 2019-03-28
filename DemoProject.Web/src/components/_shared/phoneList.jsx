@@ -1,4 +1,5 @@
 import React from 'react';
+import { ListGroup } from 'react-bootstrap';
 import { PhoneItem } from "./phoneItem";
 
 class PhonesList extends React.Component {
@@ -8,10 +9,10 @@ class PhonesList extends React.Component {
 
   render() {
     return (
-      <div>
+      <ListGroup>
         {this.props.phones.map(item =>
           <PhoneItem key={item} text={item} deletePhone={this.props.deletePhone} />)}
-      </div>
+      </ListGroup>
     );
   }
 }

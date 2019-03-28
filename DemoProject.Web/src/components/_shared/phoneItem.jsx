@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroupItem } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
 
@@ -16,14 +16,14 @@ class PhoneItem extends React.Component {
 
   render() {
     return (
-      <div style={{ padding: '5px' }}>
+      <ListGroupItem style={{ padding: '5px', marginTop: '10px' }}>
         <span style={{ marginRight: '5px' }}>
           <b>{this.props.text}</b>
         </span>
         <Button variant='danger' onClick={this.onClickDelete}>
           Удалить <FontAwesomeIcon icon={icons.faTrash} />
         </Button>
-      </div>
+      </ListGroupItem>
     );
   }
 }
