@@ -1,4 +1,7 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as icons from '@fortawesome/free-solid-svg-icons';
 
 class PhoneItem extends React.Component {
   constructor(props) {
@@ -13,12 +16,13 @@ class PhoneItem extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>
+      <div style={{ padding: '5px' }}>
+        <span style={{ marginRight: '5px' }}>
           <b>{this.props.text}</b>
-          <br />
-          <button onClick={this.onClickDelete}>Удалить</button>
-        </p>
+        </span>
+        <Button variant='danger' onClick={this.onClickDelete}>
+          Удалить <FontAwesomeIcon icon={icons.faTrash} />
+        </Button>
       </div>
     );
   }

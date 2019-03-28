@@ -9,7 +9,8 @@ class PhonesList extends React.Component {
   render() {
     return (
       <div>
-        {this.props.phones.map(item => <PhoneItem key={item} text={item} deletePhone={this.props.deletePhone} /> )}
+        {this.props.phones.map(item =>
+          <PhoneItem key={item} text={item} deletePhone={this.props.deletePhone} />)}
       </div>
     );
   }

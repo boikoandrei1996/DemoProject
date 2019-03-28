@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 class PhoneForm extends React.Component {
   constructor(props) {
@@ -17,10 +18,12 @@ class PhoneForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <input ref='phoneInput' />
-        <button onClick={this.onClickAdd}>Добавить</button>
-      </div>
+      <Form>
+        <Form.Group controlId='formAddNewPhoneName'>
+          <Form.Control type='text' placeholder='some name' ref='phoneInput' />
+        </Form.Group>
+        <Button variant='primary' onClick={this.onClickAdd}>Добавить</Button>
+      </Form>
     );
   }
 }
