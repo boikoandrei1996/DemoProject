@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NavBarMenu, NavigationSwitch, PageSwitch } from '.';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@/_styles/index.sass';
+import '@/_styles/app.sass';
 
 class App extends React.Component {
   render() {

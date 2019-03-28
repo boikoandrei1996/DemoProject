@@ -11,7 +11,7 @@ class NavBarMenu extends React.Component {
       <Navbar fixed='top' bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Navbar.Brand>DemoProject Web</Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
-        <Navbar.Collapse id='basic-navbar-nav' className="justify-content-center">
+        <Navbar.Collapse id='basic-navbar-nav' className='justify-content-center'>
           <Nav>
             <LinkContainer to={RoutePath.MAIN}>
               <Nav.Link>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { Title } from '@/components/_shared';
+import { Title, LoadingSpinner, ErrorAlert, UsersList } from '@/components/_shared';
 import { userActions } from '../../_actions';
 
 class UsersPage extends React.Component {
@@ -14,17 +13,10 @@ class UsersPage extends React.Component {
 
     return (
       <div>
-        <Title content='Users Page Title' />
-        {loading && <em>Loading...</em>}
-        {error && <Alert variant='danger'>ERROR: {error}</Alert>}
-        {users &&
-          <ListGroup>
-            {users.map((user, index) => (
-              <ListGroupItem key={user.get('id')}>
-                {index + 1}. {user.get('username')}
-              </ListGroupItem>))}
-          </ListGroup>
-        }
+        <Title content='All Users' />
+        {loading && <LoadingSpinner />}
+        {error && <ErrorAlert error={error} />}
+        {users && <UsersList users={users} />}
       </div>
     );
   }

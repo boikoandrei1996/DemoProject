@@ -8,7 +8,7 @@ import { RoutePath } from '@/_helpers';
 class AccountNavMenu extends React.Component {
   render() {
     return (
-      <Nav variant='pills' className="flex-column">
+      <Nav variant='pills' className='flex-column'>
         <LinkContainer to={RoutePath.ACCOUNT} exact>
           <Nav.Link>
             Home <FontAwesomeIcon icon={icons.faHome} />

@@ -8,7 +8,7 @@ import { RoutePath } from '@/_helpers';
 class AdminNavMenu extends React.Component {
   render() {
     return (
-      <Nav variant='pills' className="flex-column">
+      <Nav variant='pills' className='flex-column'>
         <LinkContainer to={RoutePath.ADMIN} exact>
           <Nav.Link>
             Home <FontAwesomeIcon icon={icons.faHome} />
