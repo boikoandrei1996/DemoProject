@@ -1,5 +1,10 @@
 import { phoneConstants } from '@/_constants';
 
+export const phoneActions = {
+  addPhone,
+  deletePhone
+};
+
 function addPhone(phone) {
   return {
     type: phoneConstants.ADD_PHONE,
@@ -9,8 +14,7 @@ function addPhone(phone) {
 
 function deletePhone(phone) {
   return (dispatch, getState) => {
-    let state = getState();
-    console.log('deletePhone', state);
+    // let state = getState();
 
     dispatch({
       type: phoneConstants.DELETE_PHONE,
@@ -18,8 +22,3 @@ function deletePhone(phone) {
     });
   };
 }
-
-export const phoneActions = {
-  addPhone,
-  deletePhone
-};

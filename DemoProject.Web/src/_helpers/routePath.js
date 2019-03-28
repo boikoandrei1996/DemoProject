@@ -11,5 +11,6 @@ export const RoutePath = {
   ACCOUNT: '/account',
 
   ADMIN: '/admin',
-  ADMIN_USERS: '/admin/users'
+  ADMIN_USERS: '/admin/users',
+  ADMIN_REGISTER_USER: '/admin/register'
 };
