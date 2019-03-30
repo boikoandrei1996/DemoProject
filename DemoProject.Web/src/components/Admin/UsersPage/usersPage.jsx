@@ -10,14 +10,14 @@ class UsersPage extends React.Component {
   }
 
   render() {
-    const { loading, deleting, deletingId, users, error } = this.props;
+    const { loading, error, users } = this.props;
 
     return (
       <div>
         <Title content='All Users' />
         {loading && <LoadingSpinner />}
         {error && <ErrorAlert error={error} />}
-        {users && <UsersList users={users} loading={deleting} loadingId={deletingId} deleteUser={this.props.remove} />}
+        {users && <UsersList users={users} {...this.props} />}
       </div>
     );
   }

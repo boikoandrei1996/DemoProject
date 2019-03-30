@@ -13,14 +13,14 @@ class UserItem extends React.Component {
 
   onClickDelete() {
     const id = this.props.user.get('id');
-    return this.props.deleteUser(id);
+    return this.props.removeUser(id);
   }
 
   render() {
-    const { index, user, loading, loadingId } = this.props;
+    const { index, user, deleting, deletingId } = this.props;
+    const currentLoading = deleting && user.get('id') === deletingId;
     const dateOfCreation = new Date(user.get('dateOfCreation')).toLocaleDateString();
     const confirmed = user.get('emailConfirmed');
-    const currentLoading = loading && user.get('id') === loadingId;
 
     return (
       <tr>
@@ -29,7 +29,10 @@ class UserItem extends React.Component {
         <td>{user.get('role')}</td>
         <td>{user.get('email')}</td>
         <td className={confirmed ? 'bg-success' : 'bg-danger'}>
-          {confirmed ? <FontAwesomeIcon icon={icons.faCheckCircle} /> : <FontAwesomeIcon icon={icons.faTimesCircle} />}
+          {
+            confirmed ?
+              <FontAwesomeIcon icon={icons.faCheckCircle} /> :
+              <FontAwesomeIcon icon={icons.faTimesCircle} />}
         </td>
         <td>{user.get('phoneNumber')}</td>
         <td>{dateOfCreation}</td>

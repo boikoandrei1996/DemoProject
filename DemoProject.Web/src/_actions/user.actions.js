@@ -3,13 +3,12 @@ import { userService } from '@/_services';
 
 export const userActions = {
   getAll,
-  remove
+  removeUser
 };
 
 function getAll() {
   return (dispatch, getState) => {
     // let state = getState();
-
     dispatch(request());
 
     userService.getAll()
@@ -24,7 +23,7 @@ function getAll() {
   function failure(error) { return { type: userConstants.GETALL_FAILURE, error }; }
 }
 
-function remove(id) {
+function removeUser(id) {
   return dispatch => {
     dispatch(request(id));
 
