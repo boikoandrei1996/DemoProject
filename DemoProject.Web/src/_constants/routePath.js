@@ -1,6 +1,6 @@
 export const RoutePath = {
+  MAIN_TEMPLATE: '/main/:id(\\d+)?',
   MAIN: '/main',
-  MAIN_WITH_OPTIONAL_ID: '/main/:id(\\d+)?',
   MAIN_ABOUT: '/main/1',
   MAIN_CART: '/main/2',
   MAIN_DELIVERY: '/main/3',
@@ -11,6 +11,8 @@ export const RoutePath = {
   ACCOUNT: '/account',
 
   ADMIN: '/admin',
-  ADMIN_USERS: '/admin/users',
+  ADMIN_USERS_ALL: '/admin/users/all',
+  ADMIN_USERS_PAGE: '/admin/users/page',
+  ADMIN_USERS_PAGE_TEMPLATE: '/admin/users/page/:index(\\d+)?',
   ADMIN_REGISTER_USER: '/admin/register'
 };

@@ -3,7 +3,6 @@ import { userConstants } from '../_constants';
 
 const defaultState = Map({
   'loading': false,
-  // 'page': null,
   'users': null,
   'error': null
 });
@@ -19,7 +18,6 @@ export function userReducer(state = defaultState, action) {
 
     case userConstants.GETALL_SUCCESS:
       return defaultState.set('users', action.users);
-
 
     case userConstants.DELETE_REQUEST:
       return state
@@ -44,37 +42,16 @@ export function userReducer(state = defaultState, action) {
         )
         .set('error', action.error);
 
-    /*case userConstants.GETPAGE_REQUEST:
+    case userConstants.GETPAGE_REQUEST:
       return defaultState.set('loading', true);
 
     case userConstants.GETPAGE_FAILURE:
       return defaultState.set('error', action.error);
 
     case userConstants.GETPAGE_SUCCESS:
-      return defaultState.set('page', action.page);
-
-    case userConstants.DELETE_REQUEST:
-      return state
-        .updateIn(
-          ['page', 'records'],
-          items => items.map(item => item.get('id') === action.id ? item.set('deleting', true) : item)
-        )
-        .set('error', null);
-
-    case userConstants.DELETE_SUCCESS:
-      return state
-        .updateIn(
-          ['page', 'records'],
-          items => items.filter(item => item.get('id') !== action.id)
-        );
-
-    case userConstants.DELETE_FAILURE:
-      return state
-        .updateIn(
-          ['page', 'records'],
-          items => items.map(item => item.get('id') === action.id ? item.set('deleting', false) : item)
-        )
-        .set('error', action.error);*/
+      return defaultState
+        .set('totalPages', action.page.get('totalPages'))
+        .set('users', action.page.get('records'));
 
     default:
       return state;
