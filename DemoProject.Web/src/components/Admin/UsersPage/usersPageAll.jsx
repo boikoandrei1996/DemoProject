@@ -6,7 +6,9 @@ import { userActions } from '@/_actions';
 
 class UsersPageAll extends React.Component {
   componentDidMount() {
-    this.props.getAll();
+    if (!this.props.users) {
+      this.props.getAll();
+    }
   }
 
   render() {
