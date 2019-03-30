@@ -1,23 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Title, LoadingSpinner, ErrorAlert } from '@/components/_shared';
+import { generateArray } from '@/_helpers';
+import { Title, LoadingSpinner, ErrorAlert, MyPagination } from '@/components/_shared';
 import { UsersList } from './usersList';
 import { userActions } from '@/_actions';
 
 class UsersPage extends React.Component {
   componentDidMount() {
-    this.props.getAll();
+    this.props.getPage(1);
   }
 
   render() {
-    const { loading, error, users } = this.props;
+    const { loading, error, page } = this.props;
 
     return (
       <div>
-        <Title content='All Users' />
+        <Title content='Users Pagination' />
         {loading && <LoadingSpinner />}
         {error && <ErrorAlert error={error} />}
-        {users && <UsersList users={users} removeUser={this.props.removeUser} />}
+        {page && <UsersList users={page.get('records')} removeUser={this.props.removeUser} />}
+        {page && <MyPagination items={generateArray(page.get('totalPages'))} active={page.get('currentPage')} onClick={this.props.getPage} />}
       </div>
     );
   }
@@ -26,7 +28,7 @@ class UsersPage extends React.Component {
 function mapStateToProps(state) {
   return {
     loading: state.getIn(['userState', 'loading']),
-    users: state.getIn(['userState', 'users']),
+    page: state.getIn(['userState', 'page']),
     error: state.getIn(['userState', 'error'])
   };
 }

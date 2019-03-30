@@ -2,13 +2,30 @@ import { userConstants } from '@/_constants';
 import { userService } from '@/_services';
 
 export const userActions = {
+  getPage,
   getAll,
   removeUser
 };
 
-function getAll() {
+function getPage(index) {
   return (dispatch, getState) => {
     // let state = getState();
+    dispatch(request());
+
+    userService.getPage(index)
+      .then(
+        page => dispatch(success(page)),
+        error => dispatch(failure(error.toString()))
+      );
+  };
+
+  function request() { return { type: userConstants.GETPAGE_REQUEST }; }
+  function success(page) { return { type: userConstants.GETPAGE_SUCCESS, page }; }
+  function failure(error) { return { type: userConstants.GETPAGE_FAILURE, error }; }
+}
+
+function getAll() {
+  return dispatch => {
     dispatch(request());
 
     userService.getAll()

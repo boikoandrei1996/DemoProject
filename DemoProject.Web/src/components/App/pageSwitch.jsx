@@ -4,7 +4,7 @@ import { RoutePath } from '@/_constants';
 import { NotFoundPage } from '@/components/_shared';
 import { MainHomePage } from '@/components/Main';
 import { AccountHomePage } from '@/components/Account';
-import { AdminHomePage, UsersPage, RegisterUserPage } from '@/components/Admin';
+import { AdminHomePage, UsersPageAll, RegisterUserPage } from '@/components/Admin';
 
 class PageSwitch extends React.Component {
   render() {
@@ -13,7 +13,7 @@ class PageSwitch extends React.Component {
         <Route exact path={RoutePath.MAIN_WITH_OPTIONAL_ID} component={MainHomePage} />
         <Route exact path={RoutePath.ACCOUNT} component={AccountHomePage} />
         <Route exact path={RoutePath.ADMIN} component={AdminHomePage} />
-        <Route exact path={RoutePath.ADMIN_USERS} component={UsersPage} />
+        <Route exact path={RoutePath.ADMIN_USERS} component={UsersPageAll} />
         <Route exact path={RoutePath.ADMIN_REGISTER_USER} component={RegisterUserPage} />
         <Route component={NotFoundPage} />
       </Switch>

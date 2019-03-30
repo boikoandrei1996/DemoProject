@@ -2,10 +2,19 @@ import config from 'config';
 import { handleResponse } from '@/_helpers';
 
 export const userService = {
+  getPage,
   getAll,
   getById,
   remove
 };
+
+function getPage(index) {
+  const request = {
+    method: 'GET',
+    // headers: authHeader()
+  };
+  return fetch(`${config.apiUrl}/user/page/${index}`, request).then(handleResponse);
+}
 
 function getAll() {
   const request = {
