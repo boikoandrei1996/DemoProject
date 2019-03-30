@@ -3,7 +3,6 @@ import { userConstants } from '../_constants';
 
 const defaultState = Map({
   'loading': false,
-  'deleting': false,
   'users': null,
   'error': null
 });
@@ -22,13 +21,14 @@ export function userReducer(state = defaultState, action) {
 
     case userConstants.DELETE_REQUEST:
       return state
-        .set('deleting', true)
-        .set('deletingId', action.id)
+        .update(
+          'users',
+          items => items.map(item => item.get('id') === action.id ? item.set('deleting', true) : item)
+        )
         .set('error', null);
 
     case userConstants.DELETE_SUCCESS:
       return state
-        .set('deleting', false)
         .update(
           'users',
           items => items.filter(item => item.get('id') !== action.id)
@@ -36,7 +36,10 @@ export function userReducer(state = defaultState, action) {
 
     case userConstants.DELETE_FAILURE:
       return state
-        .set('deleting', false)
+        .update(
+          'users',
+          items => items.map(item => item.get('id') === action.id ? item.set('deleting', false) : item)
+        )
         .set('error', action.error);
 
     default:

@@ -17,8 +17,7 @@ class UserItem extends React.Component {
   }
 
   render() {
-    const { index, user, deleting, deletingId } = this.props;
-    const currentLoading = deleting && user.get('id') === deletingId;
+    const { index, user } = this.props;
     const dateOfCreation = new Date(user.get('dateOfCreation')).toLocaleDateString();
     const confirmed = user.get('emailConfirmed');
 
@@ -39,7 +38,7 @@ class UserItem extends React.Component {
         <td>
           <ButtonGroup aria-label='user-item-actions'>
             {
-              currentLoading ?
+              user.get('deleting') ?
                 <Button variant='outline-danger' onClick={this.onClickDelete}><LoadingSpinner /></Button> :
                 <Button variant='danger' onClick={this.onClickDelete}>Удалить <FontAwesomeIcon icon={icons.faTrash} /></Button>
             }
