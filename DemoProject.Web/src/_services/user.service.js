@@ -5,7 +5,8 @@ export const userService = {
   getPage,
   getAll,
   getById,
-  remove
+  remove,
+  register
 };
 
 function getPage(index) {
@@ -39,4 +40,18 @@ function remove(id) {
   };
 
   return fetch(`${config.apiUrl}/user/${id}`, request).then(handleResponse);
+}
+
+
+function register(user) {
+  const request = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      /*...authHeader()*/
+    },
+    body: JSON.stringify(user)
+  };
+
+  return fetch(`${config.apiUrl}/user`, request).then(handleResponse);
 }

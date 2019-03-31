@@ -1,10 +1,12 @@
+import { toast } from 'react-toastify';
 import { userConstants } from '@/_constants';
 import { userService } from '@/_services';
 
 export const userActions = {
   getPage,
   getAll,
-  removeUser
+  removeUser,
+  registerUser
 };
 
 function getPage(index) {
@@ -54,4 +56,26 @@ function removeUser(id) {
   function request(id) { return { type: userConstants.DELETE_REQUEST, id }; }
   function success(id) { return { type: userConstants.DELETE_SUCCESS, id }; }
   function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error }; }
+}
+
+function registerUser(user) {
+  const toastMessage = `User ${user && user.get('username')} successfully registered!`;
+
+  return dispatch => {
+    dispatch(request());
+
+    userService.register(user)
+      .then(
+        () => {
+          dispatch(success());
+          toast.success(toastMessage);
+          //history.push('/login');
+        },
+        error => dispatch(failure(error.toString()))
+      );
+  };
+
+  function request() { return { type: userConstants.REGISTER_REQUEST }; }
+  function success() { return { type: userConstants.REGISTER_SUCCESS }; }
+  function failure(error) { return { type: userConstants.REGISTER_FAILURE, error }; }
 }

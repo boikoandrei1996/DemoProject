@@ -4,7 +4,8 @@ import { userConstants } from '../_constants';
 const defaultState = Map({
   'loading': false,
   'users': null,
-  'error': null
+  'error': null,
+  'registering': false
 });
 
 // (prevState, action) => newState
@@ -52,6 +53,20 @@ export function userReducer(state = defaultState, action) {
       return defaultState
         .set('totalPages', action.page.get('totalPages'))
         .set('users', action.page.get('records'));
+
+    case userConstants.REGISTER_REQUEST:
+      return state
+        .set('registering', true)
+        .set('error', null);
+
+    case userConstants.REGISTER_SUCCESS:
+      return state
+        .set('registering', false);
+
+    case userConstants.REGISTER_FAILURE:
+      return state
+        .set('registering', false)
+        .set('error', action.error);
 
     default:
       return state;

@@ -27,7 +27,7 @@ class UserItem extends React.Component {
         <td>{user.get('username')}</td>
         <td>{user.get('role')}</td>
         <td>{user.get('email')}</td>
-        <td className={confirmed ? 'bg-success' : 'bg-danger'}>
+        <td className={confirmed ? 'bg-success' : 'bg-danger'} align='center'>
           {
             confirmed ?
               <FontAwesomeIcon icon={icons.faCheckCircle} /> :

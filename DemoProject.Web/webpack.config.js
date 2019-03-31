@@ -58,7 +58,8 @@ module.exports = {
   externals: {
     // global app config object
     config: JSON.stringify({
-      apiUrl: 'http://localhost:25768/api'
+      apiUrl: 'http://localhost:25768/api',
+      toastAutoClose: 3000 //ms
     })
   }
 };
