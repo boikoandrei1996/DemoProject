@@ -6,7 +6,8 @@ export const userActions = {
   getPage,
   getAll,
   removeUser,
-  registerUser
+  registerUser,
+  resetRegisterUserForm
 };
 
 function getPage(index) {
@@ -82,4 +83,8 @@ function registerUser(user) {
   function request() { return { type: userConstants.REGISTER_REQUEST }; }
   function success() { return { type: userConstants.REGISTER_SUCCESS }; }
   function failure(error) { return { type: userConstants.REGISTER_FAILURE, error }; }
+}
+
+function resetRegisterUserForm() {
+  return { type: userConstants.REGISTER_FORM_RESET };
 }

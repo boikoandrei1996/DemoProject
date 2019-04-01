@@ -60,13 +60,15 @@ export function userReducer(state = defaultState, action) {
         .set('error', null);
 
     case userConstants.REGISTER_SUCCESS:
-      return state
-        .set('registering', false);
+      return state.set('registering', false);
 
     case userConstants.REGISTER_FAILURE:
       return state
         .set('registering', false)
         .set('error', action.error);
+
+    case userConstants.REGISTER_FORM_RESET:
+      return state.set('error', null);
 
     default:
       return state;

@@ -39,11 +39,13 @@ class RegisterUserForm extends React.Component {
     }));
   }
 
-  handleReset() {
+  handleReset(event) {
+    event.preventDefault();
     const confirmed = confirm('Are you sure to reset form?');
 
     if (confirmed) {
       this.setState(initialState);
+      this.props.resetForm();
     }
   }
 
