@@ -59,7 +59,8 @@ function removeUser(id) {
 }
 
 function registerUser(user) {
-  const toastMessage = `User ${user && user.get('username')} successfully registered!`;
+  const toastSuccessMessage = `User ${user && user.get('username')} successfully registered!`;
+  const toastErrorMessage = `User ${user && user.get('username')} registration is failed!`;
 
   return dispatch => {
     dispatch(request());
@@ -68,10 +69,13 @@ function registerUser(user) {
       .then(
         () => {
           dispatch(success());
-          toast.success(toastMessage);
+          toast.success(toastSuccessMessage);
           //history.push('/login');
         },
-        error => dispatch(failure(error.toString()))
+        error => {
+          dispatch(failure(error.toString()));
+          toast.error(toastErrorMessage);
+        }
       );
   };
 
