@@ -2,4 +2,5 @@
 export * from './store';
 export * from './handleResponse';
 export * from './generator';
+export * from './filterItems';
 export * from './roles';
