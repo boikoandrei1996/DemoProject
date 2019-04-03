@@ -3,17 +3,19 @@ import { List } from 'immutable';
 export function filterItems(items, fields, filter) {
   const _items = List(items);
   const _fields = List(fields);
-  const _filter = filter || '';
+  let _filter = filter || '';
 
   if (_items.isEmpty() || _fields.isEmpty() || _filter === '') {
     return _items;
   }
 
-  const regExp = new RegExp(_filter, 'i');
+  // escape filter text
+  _filter = _filter.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
   // add tracking field
   let filteredItems = _items.map(item => item.set('valid', false));
 
+  const regExp = new RegExp(_filter, 'i');
   _fields.forEach(field => {
     filteredItems = filteredItems.map(item => _mapper(item, field, regExp));
   });

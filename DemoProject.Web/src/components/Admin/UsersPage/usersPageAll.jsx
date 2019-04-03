@@ -12,7 +12,11 @@ class UsersPageAll extends React.Component {
 
     this.state = {
       filter: '',
-      fields: ['username', 'role', 'email']
+      fields: {
+        username: true,
+        role: true,
+        email: true
+      }
     };
 
     this.handleFilter = this.handleFilter.bind(this);
@@ -27,18 +31,29 @@ class UsersPageAll extends React.Component {
   }
 
   handleFilter(event) {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
 
-    this.setState({
-      [name]: value && value.toLowerCase()
-    });
+    if (type === 'checkbox') {
+      this.setState(prevState => ({
+        fields: {
+          ...prevState.fields,
+          [name]: checked
+        }
+      }));
+    }
+    else {
+      this.setState({
+        [name]: value && value.toLowerCase()
+      });
+    }
   }
 
   render() {
     const { loading, errors, users } = this.props;
     const { filter, fields } = this.state;
+    const checkedkeys = Object.keys(fields).filter(key => fields[key] === true);
 
-    const filteredUsers = filterItems(users, fields, filter);
+    const filteredUsers = filterItems(users, checkedkeys, filter);
 
     return (
       <div>
@@ -48,7 +63,7 @@ class UsersPageAll extends React.Component {
             {loading && <LoadingSpinner />}
           </Col>
           <Col md={{ span: 4, offset: 4 }}>
-            <Filter name='filter' value={filter} placeholder='search' onChange={this.handleFilter} fields={fields}/>
+            <Filter name='filter' value={filter} placeholder='search' fields={fields} onChange={this.handleFilter} />
           </Col>
         </Row>
         {errors && errors.map((error, index) => <ErrorAlert key={index} error={error} />)}
