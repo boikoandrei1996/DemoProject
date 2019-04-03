@@ -6,19 +6,21 @@ import { userActions } from '@/_actions';
 
 class UsersPageAll extends React.Component {
   componentDidMount() {
-    if (!this.props.users) {
-      this.props.getAll();
-    }
+    this.props.getAll();
+    // TODO: will be updated when API return object after add or update
+    //if (!this.props.users) {
+    //  this.props.getAll();
+    //}
   }
 
   render() {
-    const { loading, error, users } = this.props;
+    const { loading, errors, users } = this.props;
 
     return (
       <div>
         <Title content='All Users' />
         {loading && <LoadingSpinner />}
-        {error && <ErrorAlert error={error} />}
+        {errors && errors.map((error, index) => <ErrorAlert key={index} error={error} />)}
         {users && <UsersList users={users} removeUser={this.props.removeUser} />}
       </div>
     );
@@ -29,7 +31,7 @@ function mapStateToProps(state) {
   return {
     loading: state.getIn(['userState', 'loading']),
     users: state.getIn(['userState', 'users']),
-    error: state.getIn(['userState', 'error'])
+    errors: state.getIn(['userState', 'errors'])
   };
 }
 

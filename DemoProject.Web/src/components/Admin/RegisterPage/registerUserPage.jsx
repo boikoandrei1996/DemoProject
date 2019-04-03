@@ -8,13 +8,13 @@ import { RegisterUserForm } from './registerUserForm';
 
 class RegisterUserPage extends React.Component {
   render() {
-    const { registering, error } = this.props;
+    const { registering, errors } = this.props;
 
     return (
       <div>
         <Title content='Register User Page' />
         {registering && <LoadingSpinner />}
-        {error && <ErrorAlert error={error} />}
+        {errors && errors.map((error, index) => <ErrorAlert key={index} error={error} />)}
         {<RegisterUserForm submitUser={this.props.registerUser} resetForm={this.props.resetRegisterUserForm} />}
         <ToastContainer autoClose={config.toastAutoClose} draggable={false} />
       </div>
@@ -25,7 +25,7 @@ class RegisterUserPage extends React.Component {
 function mapStateToProps(state) {
   return {
     registering: state.getIn(['userState', 'registering']),
-    error: state.getIn(['userState', 'error'])
+    errors: state.getIn(['userState', 'errors'])
   };
 }
 

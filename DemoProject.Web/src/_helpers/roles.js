@@ -4,15 +4,15 @@ export const roles = [
     value: ''
   },
   {
-    key: '#1',
-    value: '1'
+    key: 'Admin',
+    value: 'Admin'
   },
   {
-    key: '#2',
-    value: '2'
+    key: 'Moderator',
+    value: 'Moderator'
   },
   {
-    key: '#3',
-    value: '3'
+    key: 'wrong role name',
+    value: 'wrong role'
   }
 ];

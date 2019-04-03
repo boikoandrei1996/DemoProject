@@ -25,13 +25,13 @@ class UsersPage extends React.Component {
 
   render() {
     const pageIndex = Number(this.props.match.params.index) || 1;
-    const { loading, error, users, totalPages } = this.props;
+    const { loading, errors, users, totalPages } = this.props;
 
     return (
       <div>
         <Title content='Users Pagination' />
         {loading && <LoadingSpinner />}
-        {error && <ErrorAlert error={error} />}
+        {errors && errors.map((error, index) => <ErrorAlert key={index} error={error} />)}
         {users && <UsersList users={users} removeUser={this.props.removeUser} />}
         {users && <MyPagination items={generateArray(totalPages)} active={pageIndex} onClick={this.onClickPage} />}
       </div>
@@ -44,7 +44,7 @@ function mapStateToProps(state) {
     loading: state.getIn(['userState', 'loading']),
     users: state.getIn(['userState', 'users']),
     totalPages: state.getIn(['userState', 'totalPages']) || 1,
-    error: state.getIn(['userState', 'error'])
+    errors: state.getIn(['userState', 'errors'])
   };
 }
 

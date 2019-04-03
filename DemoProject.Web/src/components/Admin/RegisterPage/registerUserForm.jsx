@@ -101,36 +101,36 @@ class RegisterUserForm extends React.Component {
         <Form.Row>
           <Form.Group as={Col} controlId='formRegisterUser_Password'>
             <Form.Label>Password</Form.Label>
-            <Form.Control type='text' name='password' value={user.password} placeholder='password' onChange={this.handleChange} />
+            <Form.Control required type='password' name='password' value={user.password} placeholder='password' onChange={this.handleChange} />
           </Form.Group>
 
           <Form.Group as={Col} controlId='formRegisterUser_ConfirmPassword'>
             <Form.Label>Confirm password</Form.Label>
-            <Form.Control type='password' name='confirmPassword' value={user.confirmPassword} placeholder='Confirm password' onChange={this.handleChange} />
+            <Form.Control required type='password' name='confirmPassword' value={user.confirmPassword} placeholder='Confirm password' onChange={this.handleChange} />
           </Form.Group>
         </Form.Row>
 
         <Form.Row>
           <Form.Group as={Col} controlId='formRegisterUser_FirstName'>
             <Form.Label>First name</Form.Label>
-            <Form.Control type='text' name='firstName' value={user.firstName} placeholder='first name' onChange={this.handleChange} />
+            <Form.Control required type='text' name='firstName' value={user.firstName} placeholder='first name' onChange={this.handleChange} />
           </Form.Group>
 
           <Form.Group as={Col} controlId='formRegisterUser_LastName'>
             <Form.Label>Last name</Form.Label>
-            <Form.Control type='text' name='lastName' value={user.lastName} placeholder='last name' onChange={this.handleChange} />
+            <Form.Control required type='text' name='lastName' value={user.lastName} placeholder='last name' onChange={this.handleChange} />
           </Form.Group>
         </Form.Row>
 
         <Form.Row>
           <Form.Group as={Col} controlId='formRegisterUser_Email'>
             <Form.Label>Email</Form.Label>
-            <Form.Control type='email' name='email' value={user.email} placeholder='email@example.com' onChange={this.handleChange} />
+            <Form.Control required type='email' name='email' value={user.email} placeholder='email@example.com' onChange={this.handleChange} />
           </Form.Group>
 
           <Form.Group as={Col} controlId='formRegisterUser_Phone'>
             <Form.Label>Phone number</Form.Label>
-            <Form.Control type='text' name='phoneNumber' value={user.phoneNumber} placeholder='375(29)123-45-67' onChange={this.handleChange} />
+            <Form.Control required type='text' name='phoneNumber' value={user.phoneNumber} placeholder='375(29)123-45-67' onChange={this.handleChange} />
           </Form.Group>
         </Form.Row>
 

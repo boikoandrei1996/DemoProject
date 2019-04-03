@@ -13,8 +13,22 @@ export function handleResponse(response) {
           alert('Unauthorized or Forbidden response');
         }
 
-        const errorMessage = (data && data.message) || response.statusText;
-        return Promise.reject(errorMessage);
+        let errors;
+        if (data && Array.isArray(data)) {
+          errors = data.map(x => x.description.toString());
+        }
+        else if (data && data.message) {
+          errors = [data.message];
+        }
+        else {
+          errors = [response.statusText];
+        }
+
+        if (errors.length > 3) {
+          errors = errors.slice(0, 3)
+        }
+
+        return Promise.reject(fromJS(errors));
       }
 
       return fromJS(data);

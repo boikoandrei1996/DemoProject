@@ -4,7 +4,7 @@ import { userConstants } from '../_constants';
 const defaultState = Map({
   'loading': false,
   'users': null,
-  'error': null,
+  'errors': null,
   'registering': false
 });
 
@@ -15,7 +15,7 @@ export function userReducer(state = defaultState, action) {
       return defaultState.set('loading', true);
 
     case userConstants.GETALL_FAILURE:
-      return defaultState.set('error', action.error);
+      return defaultState.set('errors', action.errors);
 
     case userConstants.GETALL_SUCCESS:
       return defaultState.set('users', action.users);
@@ -26,7 +26,7 @@ export function userReducer(state = defaultState, action) {
           'users',
           items => items.map(item => item.get('id') === action.id ? item.set('deleting', true) : item)
         )
-        .set('error', null);
+        .set('errors', null);
 
     case userConstants.DELETE_SUCCESS:
       return state
@@ -41,13 +41,13 @@ export function userReducer(state = defaultState, action) {
           'users',
           items => items.map(item => item.get('id') === action.id ? item.set('deleting', false) : item)
         )
-        .set('error', action.error);
+        .set('errors', action.errors);
 
     case userConstants.GETPAGE_REQUEST:
       return defaultState.set('loading', true);
 
     case userConstants.GETPAGE_FAILURE:
-      return defaultState.set('error', action.error);
+      return defaultState.set('errors', action.errors);
 
     case userConstants.GETPAGE_SUCCESS:
       return defaultState
@@ -57,7 +57,7 @@ export function userReducer(state = defaultState, action) {
     case userConstants.REGISTER_REQUEST:
       return state
         .set('registering', true)
-        .set('error', null);
+        .set('errors', null);
 
     case userConstants.REGISTER_SUCCESS:
       return state.set('registering', false);
@@ -65,10 +65,10 @@ export function userReducer(state = defaultState, action) {
     case userConstants.REGISTER_FAILURE:
       return state
         .set('registering', false)
-        .set('error', action.error);
+        .set('errors', action.errors);
 
     case userConstants.REGISTER_FORM_RESET:
-      return state.set('error', null);
+      return state.set('errors', null);
 
     default:
       return state;

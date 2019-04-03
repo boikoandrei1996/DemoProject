@@ -18,13 +18,13 @@ function getPage(index) {
     userService.getPage(index)
       .then(
         page => dispatch(success(page)),
-        error => dispatch(failure(error.toString()))
+        errors => dispatch(failure(errors))
       );
   };
 
   function request() { return { type: userConstants.GETPAGE_REQUEST }; }
   function success(page) { return { type: userConstants.GETPAGE_SUCCESS, page }; }
-  function failure(error) { return { type: userConstants.GETPAGE_FAILURE, error }; }
+  function failure(errors) { return { type: userConstants.GETPAGE_FAILURE, errors }; }
 }
 
 function getAll() {
@@ -34,13 +34,13 @@ function getAll() {
     userService.getAll()
       .then(
         users => dispatch(success(users)),
-        error => dispatch(failure(error.toString()))
+        errors => dispatch(failure(errors))
       );
   };
 
   function request() { return { type: userConstants.GETALL_REQUEST }; }
   function success(users) { return { type: userConstants.GETALL_SUCCESS, users }; }
-  function failure(error) { return { type: userConstants.GETALL_FAILURE, error }; }
+  function failure(errors) { return { type: userConstants.GETALL_FAILURE, errors }; }
 }
 
 function removeUser(id) {
@@ -50,13 +50,13 @@ function removeUser(id) {
     userService.remove(id)
       .then(
         () => dispatch(success(id)),
-        error => dispatch(failure(id, error.toString()))
+        errors => dispatch(failure(id, errors))
       );
   };
 
   function request(id) { return { type: userConstants.DELETE_REQUEST, id }; }
   function success(id) { return { type: userConstants.DELETE_SUCCESS, id }; }
-  function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error }; }
+  function failure(id, errors) { return { type: userConstants.DELETE_FAILURE, id, errors }; }
 }
 
 function registerUser(user) {
@@ -73,8 +73,8 @@ function registerUser(user) {
           toast.success(toastSuccessMessage);
           //history.push('/login');
         },
-        error => {
-          dispatch(failure(error.toString()));
+        errors => {
+          dispatch(failure(errors));
           toast.error(toastErrorMessage);
         }
       );
@@ -82,7 +82,7 @@ function registerUser(user) {
 
   function request() { return { type: userConstants.REGISTER_REQUEST }; }
   function success() { return { type: userConstants.REGISTER_SUCCESS }; }
-  function failure(error) { return { type: userConstants.REGISTER_FAILURE, error }; }
+  function failure(errors) { return { type: userConstants.REGISTER_FAILURE, errors }; }
 }
 
 function resetRegisterUserForm() {
