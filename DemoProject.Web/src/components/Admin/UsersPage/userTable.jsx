@@ -1,9 +1,15 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { UserItem } from "./userItem";
+import { UserTableItem } from "./userTableItem";
 
-class UsersList extends React.Component {
+class UserTable extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const { users, removeUser } = this.props;
+
     return (
       <Table responsive bordered hover>
         <thead className='thead-dark'>
@@ -19,11 +25,14 @@ class UsersList extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.users.map((user, index) => <UserItem key={user.get('id')} user={user} index={index} {...this.props} />)}
+          {
+            users && users.map(
+              (user, index) => <UserTableItem key={index} user={user.set('index', index + 1)} removeUser={removeUser} />)
+          }
         </tbody>
       </Table>
     );
   }
 }
 
-export { UsersList };
+export { UserTable };

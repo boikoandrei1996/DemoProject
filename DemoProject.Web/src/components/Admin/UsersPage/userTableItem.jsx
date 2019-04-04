@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
 import { LoadingSpinner } from '@/components/_shared';
 
-class UserItem extends React.Component {
+class UserTableItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,36 +12,37 @@ class UserItem extends React.Component {
   }
 
   onClickDelete() {
-    const id = this.props.user.get('id');
-    return this.props.removeUser(id);
+    const { user, removeUser } = this.props;
+    return removeUser(user.get('id'));
   }
 
   render() {
-    const { index, user } = this.props;
+    const { user } = this.props;
+
     const dateOfCreation = new Date(user.get('dateOfCreation')).toLocaleDateString();
     const confirmed = user.get('emailConfirmed');
+    const deleting = user.get('deleting');
 
     return (
       <tr>
-        <td>{index + 1}</td>
+        <td>{user.get('index')}</td>
         <td>{user.get('username')}</td>
         <td>{user.get('role')}</td>
         <td>{user.get('email')}</td>
         <td className={confirmed ? 'bg-success' : 'bg-danger'} align='center'>
-          {
-            confirmed ?
-              <FontAwesomeIcon icon={icons.faCheckCircle} /> :
-              <FontAwesomeIcon icon={icons.faTimesCircle} />}
+          <FontAwesomeIcon icon={confirmed ? icons.faCheckCircle : icons.faTimesCircle} />
         </td>
         <td>{user.get('phoneNumber')}</td>
         <td>{dateOfCreation}</td>
         <td>
           <ButtonGroup aria-label='user-item-actions'>
-            {
-              user.get('deleting') ?
-                <Button variant='outline-danger' onClick={this.onClickDelete}><LoadingSpinner /></Button> :
-                <Button variant='danger' onClick={this.onClickDelete}>Удалить <FontAwesomeIcon icon={icons.faTrash} /></Button>
-            }
+            <Button variant={deleting ? 'outline-danger' : 'danger'} onClick={this.onClickDelete}>
+              {
+                deleting ?
+                  <LoadingSpinner /> :
+                  <span>Удалить <FontAwesomeIcon icon={icons.faTrash} /></span>
+              }
+            </Button>
           </ButtonGroup>
         </td>
       </tr>
@@ -49,4 +50,4 @@ class UserItem extends React.Component {
   }
 }
 
-export { UserItem };
+export { UserTableItem };

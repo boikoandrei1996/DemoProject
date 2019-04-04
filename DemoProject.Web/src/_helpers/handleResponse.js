@@ -14,7 +14,7 @@ export function handleResponse(response) {
         }
 
         let errors;
-        if (data && Array.isArray(data)) {
+        if (data && Array.isArray(data) && data.length > 0) {
           errors = data.map(x => x.description.toString());
         }
         else if (data && data.message) {

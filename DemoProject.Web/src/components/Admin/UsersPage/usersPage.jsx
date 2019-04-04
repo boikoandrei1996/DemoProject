@@ -1,40 +1,77 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { generateArray, history } from '@/_helpers';
-import { Title, LoadingSpinner, ErrorAlert, MyPagination } from '@/components/_shared';
-import { UsersList } from './usersList';
+import { Row, Col } from 'react-bootstrap';
+import { Title, LoadingSpinner, ErrorAlert, Filter } from '@/components/_shared';
+import { UserTable } from "./userTable";
 import { userActions } from '@/_actions';
-import { RoutePath } from '@/_constants';
+import { filterItems } from '@/_helpers';
 
 class UsersPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onClickPage = this.onClickPage.bind(this);
-  }
+    this.state = {
+      filter: '',
+      fields: {
+        username: true,
+        role: true,
+        email: true
+      }
+    };
 
-  onClickPage(index) {
-    history.push(RoutePath.ADMIN_USERS_PAGE + '/' + index);
-    return this.props.getPage(index);
+    this.handleFilter = this.handleFilter.bind(this);
   }
 
   componentDidMount() {
-    const index = this.props.match.params.index || 1;
-    this.props.getPage(index);
+    this.props.getAll();
+    // TODO: will be updated when API return object after add or update
+    //if (!this.props.users) {
+    //  this.props.getAll();
+    //}
+  }
+
+  handleFilter(event) {
+    const { name, value, type, checked } = event.target;
+
+    if (type === 'checkbox') {
+      this.setState(prevState => ({
+        fields: {
+          ...prevState.fields,
+          [name]: checked
+        }
+      }));
+    }
+    else {
+      this.setState({
+        [name]: value && value.toLowerCase()
+      });
+    }
   }
 
   render() {
-    const pageIndex = Number(this.props.match.params.index) || 1;
-    const { loading, errors, users, totalPages } = this.props;
+    const { loading, errors, users, removeUser } = this.props;
+    const { filter, fields } = this.state;
+
+    const checkedkeys = Object.keys(fields).filter(key => fields[key] === true);
+    const filteredUsers = filterItems(users, checkedkeys, filter);
 
     return (
-      <div>
-        <Title content='Users Pagination' />
-        {loading && <LoadingSpinner />}
+      <React.Fragment>
+        <Title content='All Users' />
+
+        <Row>
+          <Col md={4}>
+            {loading && <LoadingSpinner />}
+          </Col>
+          <Col md={{ span: 4, offset: 4 }}>
+            <Filter name='filter' value={filter} placeholder='search' fields={fields} onChange={this.handleFilter} />
+          </Col>
+        </Row>
+
         {errors && errors.map((error, index) => <ErrorAlert key={index} error={error} />)}
-        {users && <UsersList users={users} removeUser={this.props.removeUser} />}
-        {users && <MyPagination items={generateArray(totalPages)} active={pageIndex} onClick={this.onClickPage} />}
-      </div>
+
+        <UserTable users={filteredUsers} removeUser={removeUser} />
+      </React.Fragment>
     );
   }
 }
@@ -43,7 +80,6 @@ function mapStateToProps(state) {
   return {
     loading: state.getIn(['userState', 'loading']),
     users: state.getIn(['userState', 'users']),
-    totalPages: state.getIn(['userState', 'totalPages']) || 1,
     errors: state.getIn(['userState', 'errors'])
   };
 }
