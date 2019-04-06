@@ -19,7 +19,7 @@ class UserTableItem extends React.Component {
   render() {
     const { user } = this.props;
 
-    const dateOfCreation = new Date(user.get('dateOfCreation')).toLocaleDateString();
+    const dateOfCreation = user.get('dateOfCreation');
     const confirmed = user.get('emailConfirmed');
     const deleting = user.get('deleting');
 
@@ -33,7 +33,7 @@ class UserTableItem extends React.Component {
           <FontAwesomeIcon icon={confirmed ? icons.faCheckCircle : icons.faTimesCircle} />
         </td>
         <td>{user.get('phoneNumber')}</td>
-        <td>{dateOfCreation}</td>
+        <td>{dateOfCreation && dateOfCreation.toLocaleDateString()}</td>
         <td>
           <ButtonGroup aria-label='user-item-actions'>
             <Button variant={deleting ? 'outline-danger' : 'danger'} onClick={this.onClickDelete}>

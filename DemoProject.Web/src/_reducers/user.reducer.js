@@ -18,7 +18,9 @@ export function userReducer(state = defaultState, action) {
       return defaultState.set('errors', action.errors);
 
     case userConstants.GETALL_SUCCESS:
-      return defaultState.set('users', action.users);
+      return defaultState.set(
+        'users',
+        action.users.map(x => x.update('dateOfCreation', value => new Date(value))));
 
     case userConstants.DELETE_REQUEST:
       return state
