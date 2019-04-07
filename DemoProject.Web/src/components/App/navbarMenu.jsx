@@ -5,10 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
 import { RoutePath } from '@/_constants';
 import { userService } from '@/_services';
+import { RoleEnum } from '@/_helpers';
 
 class NavBarMenu extends React.Component {
   render() {
     const loggedInUser = userService.getCurrentUser();
+    const isLoggedIn = loggedInUser && loggedInUser.user && loggedInUser.user.role;
+    const isAdmin = isLoggedIn && loggedInUser.user.role.toLowerCase() === RoleEnum.Admin;
 
     return (
       <Navbar fixed='top' bg='dark' variant='dark' expand='lg' collapseOnSelect>
@@ -22,22 +25,30 @@ class NavBarMenu extends React.Component {
               </Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to={RoutePath.ACCOUNT}>
-              <Nav.Link>
-                <FontAwesomeIcon icon={icons.faUserCircle} /> Account
-              </Nav.Link>
-            </LinkContainer>
+            {
+              isLoggedIn ? (
+                <LinkContainer to={RoutePath.ACCOUNT}>
+                  <Nav.Link>
+                    <FontAwesomeIcon icon={icons.faUserCircle} /> Account
+                  </Nav.Link>
+                </LinkContainer>
+              ) : null
+            }
 
-            <LinkContainer to={RoutePath.ADMIN}>
-              <Nav.Link>
-                <FontAwesomeIcon icon={icons.faUserShield} /> Admin
-              </Nav.Link>
-            </LinkContainer>
+            {
+              isAdmin ? (
+                <LinkContainer to={RoutePath.ADMIN}>
+                  <Nav.Link>
+                    <FontAwesomeIcon icon={icons.faUserShield} /> Admin
+                  </Nav.Link>
+                </LinkContainer>
+              ) : null
+            }
           </Nav>
 
           <Nav>
             {
-              loggedInUser && loggedInUser.user ?
+              isLoggedIn ?
                 (
                   <LinkContainer to={RoutePath.LOGOUT}>
                     <Nav.Link>
@@ -49,7 +60,7 @@ class NavBarMenu extends React.Component {
                   <LinkContainer to={RoutePath.LOGIN}>
                     <Nav.Link>
                       <FontAwesomeIcon icon={icons.faSignInAlt} /> Login
-                    </Nav.Link>
+                  </Nav.Link>
                   </LinkContainer>
                 )
             }

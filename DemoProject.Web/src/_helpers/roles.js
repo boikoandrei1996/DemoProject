@@ -5,11 +5,11 @@ export const roles = [
   },
   {
     key: 'Admin',
-    value: 'Admin'
+    value: RoleEnum.Admin
   },
   {
     key: 'Moderator',
-    value: 'Moderator'
+    value: RoleEnum.Moderator
   },
   {
     key: 'wrong role name',
@@ -17,8 +17,13 @@ export const roles = [
   }
 ];
 
+export const RoleAccessesEnum = Object.freeze({
+  Admin: [RoleEnum.Admin], // only admin has access
+  Moderator: [RoleEnum.Admin, RoleEnum.Moderator] // both admin and moderator have access
+});
+
 // value should be lowercase
 export const RoleEnum = Object.freeze({
-  Admin: ['admin'], // only admin has access
-  Moderator: ['admin', 'moderator'] // both admin and moderator have access
+  Admin: 'admin',
+  Moderator: 'moderator'
 });
