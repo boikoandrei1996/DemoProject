@@ -7,7 +7,10 @@ export const userActions = {
   getAll,
   removeUser,
   registerUser,
-  resetRegisterUserForm
+  resetRegisterUserForm,
+  loginUser,
+  resetLoginForm,
+  logoutUser
 };
 
 function getPage(index) {
@@ -87,4 +90,46 @@ function registerUser(user) {
 
 function resetRegisterUserForm() {
   return { type: userConstants.REGISTER_FORM_RESET };
+}
+
+function loginUser(username, password) {
+  const toastErrorMessage = `Login is failed!`;
+  const loginFailMessage = 'Username or password are wrong!';
+
+  return dispatch => {
+    dispatch(request());
+
+    userService.login(username, password)
+      .then(
+        user => {
+          if (user) {
+            userService.setCurrentUser(user);
+            dispatch(success());
+            // history.push('/');
+          }
+          else {
+            dispatch(failure([loginFailMessage]));
+            toast.error(toastErrorMessage);
+          }
+        },
+        errors => {
+          dispatch(failure(errors));
+          toast.error(toastErrorMessage);
+        }
+      );
+  };
+
+  function request() { return { type: userConstants.LOGIN_REQUEST }; }
+  function success() { return { type: userConstants.LOGIN_SUCCESS }; }
+  function failure(errors) { return { type: userConstants.LOGIN_FAILURE, errors }; }
+}
+
+function resetLoginForm() {
+  return { type: userConstants.LOGIN_FORM_RESET };
+}
+
+function logoutUser() {
+  userService.logout();
+
+  return { type: userConstants.LOGOUT };
 }

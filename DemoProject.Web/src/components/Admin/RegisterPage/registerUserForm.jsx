@@ -61,16 +61,12 @@ class RegisterUserForm extends React.Component {
     }
 
     if (isValid) {
-      this.props.submitUser(fromJS(user));
-      this.setState({
-        validated: false
-      });
+      this.props.submitForm(fromJS(user));
     }
-    else {
-      this.setState({
-        validated: true
-      });
-    }
+
+    this.setState({
+      validated: !isValid
+    });
   }
 
   render() {

@@ -14,5 +14,8 @@ export const RoutePath = {
   ADMIN_USERS_ALL: '/admin/users/all',
   ADMIN_USERS_PAGE: '/admin/users/page',
   ADMIN_USERS_PAGE_TEMPLATE: '/admin/users/page/:index(\\d+)?',
-  ADMIN_REGISTER_USER: '/admin/register'
+  ADMIN_REGISTER_USER: '/admin/register',
+
+  LOGIN: '/login',
+  LOGOUT: '/logout'
 };

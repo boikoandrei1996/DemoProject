@@ -5,3 +5,4 @@ export * from './generator';
 export * from './filterItems';
 export * from './sortItems';
 export * from './roles';
+export * from './authHeader';

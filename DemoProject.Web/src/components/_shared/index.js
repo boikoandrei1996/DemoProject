@@ -6,3 +6,4 @@ export * from './filter';
 export * from './switch';
 export * from './notFoundPage';
 export * from './sortableTh';
+export * from './authRoute';

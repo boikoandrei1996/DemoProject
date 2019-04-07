@@ -15,7 +15,7 @@ class RegisterUserPage extends React.Component {
         <Title content='Register User Page' />
         {registering && <LoadingSpinner />}
         {errors && errors.map((error, index) => <ErrorAlert key={index} error={error} />)}
-        {<RegisterUserForm submitUser={this.props.registerUser} resetForm={this.props.resetRegisterUserForm} />}
+        {<RegisterUserForm submitForm={this.props.registerUser} resetForm={this.props.resetRegisterUserForm} />}
         <ToastContainer autoClose={config.toastAutoClose} draggable={false} />
       </div>
     );

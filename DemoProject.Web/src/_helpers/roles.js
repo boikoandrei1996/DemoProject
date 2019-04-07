@@ -16,3 +16,9 @@ export const roles = [
     value: 'wrong role'
   }
 ];
+
+// value should be lowercase
+export const RoleEnum = Object.freeze({
+  Admin: ['admin'], // only admin has access
+  Moderator: ['admin', 'moderator'] // both admin and moderator have access
+});

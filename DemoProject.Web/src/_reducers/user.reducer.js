@@ -5,7 +5,8 @@ const defaultState = Map({
   'loading': false,
   'users': null,
   'errors': null,
-  'registering': false
+  'registering': false,
+  'loggingIn': false
 });
 
 // (prevState, action) => newState
@@ -71,6 +72,25 @@ export function userReducer(state = defaultState, action) {
 
     case userConstants.REGISTER_FORM_RESET:
       return state.set('errors', null);
+
+    case userConstants.LOGIN_REQUEST:
+      return state
+        .set('loggingIn', true)
+        .set('errors', null);
+
+    case userConstants.LOGIN_SUCCESS:
+      return state.set('loggingIn', false);
+
+    case userConstants.LOGIN_FAILURE:
+      return state
+        .set('loggingIn', false)
+        .set('errors', action.errors);
+
+    case userConstants.LOGIN_FORM_RESET:
+      return state.set('errors', null);
+
+    case userConstants.LOGOUT:
+      return state;
 
     default:
       return state;
