@@ -18,7 +18,8 @@ namespace DemoProject.Shared.Attributes
     {
       private readonly bool _isDevelopment;
 
-      public HandleServiceResultInnerAttribute(IHostingEnvironment environment)
+      public HandleServiceResultInnerAttribute(
+        IHostingEnvironment environment)
       {
         _isDevelopment = environment.IsDevelopment();
       }
@@ -45,15 +46,18 @@ namespace DemoProject.Shared.Attributes
         switch (result.Key)
         {
           case ServiceResultKey.Success:
-            return new OkResult();
-          case ServiceResultKey.ModelCreated:
-            return new OkObjectResult(result.ModelId);
-          case ServiceResultKey.ModelUpdated:
-            return new OkObjectResult(result.Model);
-          case ServiceResultKey.NotFound:
-            return new NotFoundResult();
+            if (result.Model == null)
+            {
+              return new OkResult();
+            }
+            else
+            {
+              return new OkObjectResult(result.Model);
+            }
           case ServiceResultKey.BadRequest:
             return new BadRequestObjectResult(result.Errors);
+          case ServiceResultKey.NotFound:
+            return new NotFoundResult();
           case ServiceResultKey.InternalServerError:
             if (_isDevelopment)
             {

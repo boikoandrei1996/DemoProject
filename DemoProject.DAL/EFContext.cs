@@ -52,30 +52,15 @@ namespace DemoProject.DAL
       this.History.DeleteFromQuery();
     }
 
-    public async Task<ServiceResult> SaveAsync(string code, Guid modelId)
-    {
-      var result = await this.SaveAsync(code);
-
-      return result.Key == ServiceResultKey.Success ?
-        ServiceResultFactory.EntityCreatedResult(modelId) :
-        result;
-    }
-
-    public async Task<ServiceResult> SaveAsync(string code, object model)
-    {
-      var result = await this.SaveAsync(code);
-
-      return result.Key == ServiceResultKey.Success ?
-        ServiceResultFactory.EntityUpdatedResult(model) :
-        result;
-    }
-
-    public async Task<ServiceResult> SaveAsync(string code)
+    public async Task<ServiceResult> SaveAsync<TModel>(string code, TModel model = null)
+      where TModel : class
     {
       try
       {
         await this.SaveChangesAsync();
-        return ServiceResultFactory.Success;
+        return model == null ? 
+          ServiceResultFactory.Success : 
+          ServiceResultFactory.SuccessResult(model);
       }
       catch (DbUpdateConcurrencyException ex)
       {

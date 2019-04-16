@@ -90,7 +90,7 @@ namespace DemoProject.BLL.Services
       _context.MenuItems.Update(model);
       _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Modify));
 
-      return await _context.SaveAsync(nameof(UpdateAsync));
+      return await _context.SaveAsync<MenuItem>(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -104,7 +104,7 @@ namespace DemoProject.BLL.Services
       _context.MenuItems.Remove(model);
       _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Delete));
 
-      return await _context.SaveAsync(nameof(DeleteAsync));
+      return await _context.SaveAsync<MenuItem>(nameof(DeleteAsync));
     }
 
     public void Dispose()

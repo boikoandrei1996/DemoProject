@@ -1,12 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace DemoProject.Shared.Interfaces
 {
   public interface IDbContextSave
   {
-    Task<ServiceResult> SaveAsync(string code, Guid modelId);
-    Task<ServiceResult> SaveAsync(string code, object model);
-    Task<ServiceResult> SaveAsync(string code);
+    Task<ServiceResult> SaveAsync<TModel>(string code, TModel model = null) where TModel : class;
   }
 }

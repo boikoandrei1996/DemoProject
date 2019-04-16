@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace DemoProject.Shared
 {
@@ -10,6 +9,11 @@ namespace DemoProject.Shared
       get { return new ServiceResult(ServiceResultKey.Success); }
     }
 
+    public static ServiceResult SuccessResult<TModel>(TModel model)
+    {
+      return new ServiceResult(ServiceResultKey.Success, model);
+    }
+
     public static ServiceResult NotFound
     {
       get { return new ServiceResult(ServiceResultKey.NotFound); }
@@ -18,16 +22,6 @@ namespace DemoProject.Shared
     public static ServiceResult InternalServerError
     {
       get { return new ServiceResult(ServiceResultKey.InternalServerError); }
-    }
-
-    public static ServiceResult EntityCreatedResult(Guid modelId)
-    {
-      return new ServiceResult(ServiceResultKey.ModelCreated, modelId);
-    }
-
-    public static ServiceResult EntityUpdatedResult(object model)
-    {
-      return new ServiceResult(ServiceResultKey.ModelUpdated, model);
     }
 
     public static ServiceResult InternalServerErrorResult(string message)

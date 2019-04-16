@@ -39,7 +39,7 @@ namespace DemoProject.BLL.Services
       _context.InfoObjects.Add(model);
       _context.History.Add(ChangeHistory.Create(TableName.InfoObject, ActionType.Add));
 
-      return await _context.SaveAsync(nameof(AddAsync), model.Id);
+      return await _context.SaveAsync(nameof(AddAsync), model);
     }
 
     public async Task<ServiceResult> UpdateAsync(InfoObject model)
@@ -58,7 +58,7 @@ namespace DemoProject.BLL.Services
       _context.InfoObjects.Update(model);
       _context.History.Add(ChangeHistory.Create(TableName.InfoObject, ActionType.Modify));
 
-      return await _context.SaveAsync(nameof(UpdateAsync));
+      return await _context.SaveAsync<InfoObject>(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -72,7 +72,7 @@ namespace DemoProject.BLL.Services
       _context.InfoObjects.Remove(model);
       _context.History.Add(ChangeHistory.Create(TableName.InfoObject, ActionType.Delete));
 
-      return await _context.SaveAsync(nameof(DeleteAsync));
+      return await _context.SaveAsync<InfoObject>(nameof(DeleteAsync));
     }
 
     public void Dispose()
