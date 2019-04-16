@@ -3,6 +3,7 @@ using DemoProject.BLL.Services;
 using DemoProject.DAL;
 using DemoProject.Shared;
 using DemoProject.Shared.Interfaces;
+using DemoProject.WebApi.Infrastructure;
 using DemoProject.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

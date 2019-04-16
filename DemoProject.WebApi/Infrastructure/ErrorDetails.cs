@@ -8,7 +8,6 @@ namespace DemoProject.WebApi.Infrastructure
     public string Message { get; set; }
     public string Path { get; set; }
 
-
     public string ToJsonString()
     {
       return JsonConvert.SerializeObject(this);
