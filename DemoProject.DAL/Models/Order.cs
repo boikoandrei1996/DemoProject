@@ -1,8 +1,9 @@
 ﻿using System;
+using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class Order : BaseEntity
+  public class Order : BaseEntity<Guid>
   {
     public string Name { get; set; }
 

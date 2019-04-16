@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class ShopItemDetail : BaseEntity
+  public class ShopItemDetail : BaseEntity<Guid>
   {
     public int SubOrder { get; set; }
 

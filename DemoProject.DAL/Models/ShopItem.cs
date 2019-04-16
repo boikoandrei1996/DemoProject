@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class ShopItem : BaseEntity
+  public class ShopItem : BaseEntity<Guid>
   {
     public string Title { get; set; }
 

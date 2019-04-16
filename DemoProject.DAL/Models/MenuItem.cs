@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class MenuItem : BaseEntity
+  public class MenuItem : BaseEntity<Guid>
   {
     public int Order { get; set; }
 

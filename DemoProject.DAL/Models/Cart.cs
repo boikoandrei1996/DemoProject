@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class Cart : BaseEntity
+  public class Cart : BaseEntity<Guid>
   {
     public DateTime DateOfCreation { get; private set; } = DateTime.UtcNow;
 

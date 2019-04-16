@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using DemoProject.DAL.Enums;
+using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class ContentGroup : BaseEntity
+  public class ContentGroup : BaseEntity<Guid>
   {
     public string Title { get; set; }
 

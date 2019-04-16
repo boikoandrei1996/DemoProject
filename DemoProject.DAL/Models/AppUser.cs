@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class AppUser : BaseEntity
+  public class AppUser : BaseEntity<Guid>
   {
     public string Username { get; set; }
 

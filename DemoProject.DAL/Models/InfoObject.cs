@@ -1,9 +1,10 @@
 ﻿using System;
 using DemoProject.DAL.Enums;
+using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class InfoObject : BaseEntity
+  public class InfoObject : BaseEntity<Guid>
   {
     public string Content { get; set; }
 
