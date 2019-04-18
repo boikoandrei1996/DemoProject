@@ -4,7 +4,7 @@ using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class ChangeHistory : BaseEntity<Guid>
+  public sealed class ChangeHistory : BaseEntity<Guid>
   {
     public TableName Table { get; set; }
 

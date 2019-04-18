@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.DAL
 {
-  public class EFContext : DbContext, IDbContext
+  public sealed class EFContext : DbContext, IDbContext
   {
     public EFContext(DbContextOptions<EFContext> options) : base(options) { }
 
@@ -58,6 +58,7 @@ namespace DemoProject.DAL
       try
       {
         await this.SaveChangesAsync();
+
         return model == null ? 
           ServiceResultFactory.Success : 
           ServiceResultFactory.SuccessResult(model);

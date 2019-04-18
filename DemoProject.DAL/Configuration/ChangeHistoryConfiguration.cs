@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DemoProject.DAL.Configuration
 {
-  class ChangeHistoryConfiguration : IEntityTypeConfiguration<ChangeHistory>
+  internal sealed class ChangeHistoryConfiguration : IEntityTypeConfiguration<ChangeHistory>
   {
     public void Configure(EntityTypeBuilder<ChangeHistory> builder)
     {

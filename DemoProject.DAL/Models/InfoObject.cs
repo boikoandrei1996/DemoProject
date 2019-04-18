@@ -4,7 +4,7 @@ using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class InfoObject : BaseEntity<Guid>
+  public sealed class InfoObject : BaseEntity<Guid>
   {
     public string Content { get; set; }
 

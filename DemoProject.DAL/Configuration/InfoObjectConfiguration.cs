@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DemoProject.DAL.Configuration
 {
-  class InfoObjectConfiguration : IEntityTypeConfiguration<InfoObject>
+  internal sealed class InfoObjectConfiguration : IEntityTypeConfiguration<InfoObject>
   {
     public void Configure(EntityTypeBuilder<InfoObject> builder)
     {

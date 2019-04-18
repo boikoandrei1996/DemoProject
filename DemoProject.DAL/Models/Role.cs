@@ -17,14 +17,14 @@ namespace DemoProject.DAL.Models
       };
     }
 
-    public static string NormalizeRoleName(string role)
+    public static string Normalize(string role)
     {
-      if (string.Equals(role, Role.Admin, StringComparison.OrdinalIgnoreCase))
+      if (Role.Admin.Equals(role, StringComparison.OrdinalIgnoreCase))
       {
         return Role.Admin;
       }
 
-      if (string.Equals(role, Role.Moderator, StringComparison.OrdinalIgnoreCase))
+      if (Role.Moderator.Equals(role, StringComparison.OrdinalIgnoreCase))
       {
         return Role.Moderator;
       }

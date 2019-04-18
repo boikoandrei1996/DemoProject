@@ -4,7 +4,7 @@ using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class ShopItem : BaseEntity<Guid>
+  public sealed class ShopItem : BaseEntity<Guid>
   {
     public string Title { get; set; }
 

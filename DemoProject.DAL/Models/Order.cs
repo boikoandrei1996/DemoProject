@@ -3,7 +3,7 @@ using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class Order : BaseEntity<Guid>
+  public sealed class Order : BaseEntity<Guid>
   {
     public string Name { get; set; }
 

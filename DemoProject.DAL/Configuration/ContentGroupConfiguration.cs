@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DemoProject.DAL.Configuration
 {
-  class ContentGroupConfiguration : IEntityTypeConfiguration<ContentGroup>
+  internal sealed class ContentGroupConfiguration : IEntityTypeConfiguration<ContentGroup>
   {
     public void Configure(EntityTypeBuilder<ContentGroup> builder)
     {

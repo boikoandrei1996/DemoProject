@@ -124,14 +124,14 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Email is already taken.");
       }
 
-      var role = Role.NormalizeRoleName(model.Role);
-      if (role != null)
+      var role = Role.Normalize(model.Role);
+      if (string.IsNullOrEmpty(role))
       {
-        model.Role = role;
+        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Incorrect role name.");
       }
       else
       {
-        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Incorrect role name.");
+        model.Role = role;
       }
 
       var (passwordHash, passwordSalt) = _passwordManager.CreatePasswordHash(password);

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DemoProject.DAL.Configuration
 {
-  class CartShopItemConfiguration : IEntityTypeConfiguration<CartShopItem>
+  internal sealed class CartShopItemConfiguration : IEntityTypeConfiguration<CartShopItem>
   {
     public void Configure(EntityTypeBuilder<CartShopItem> builder)
     {

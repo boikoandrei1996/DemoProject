@@ -4,7 +4,7 @@ using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class Cart : BaseEntity<Guid>
+  public sealed class Cart : BaseEntity<Guid>
   {
     public DateTime DateOfCreation { get; private set; } = DateTime.UtcNow;
 

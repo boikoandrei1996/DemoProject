@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DemoProject.DAL.Configuration
 {
-  class MenuItemConfiguration : IEntityTypeConfiguration<MenuItem>
+  internal sealed class MenuItemConfiguration : IEntityTypeConfiguration<MenuItem>
   {
     public void Configure(EntityTypeBuilder<MenuItem> builder)
     {

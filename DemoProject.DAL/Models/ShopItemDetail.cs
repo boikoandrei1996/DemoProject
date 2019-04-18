@@ -5,7 +5,7 @@ using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class ShopItemDetail : BaseEntity<Guid>
+  public sealed class ShopItemDetail : BaseEntity<Guid>
   {
     public int SubOrder { get; set; }
 

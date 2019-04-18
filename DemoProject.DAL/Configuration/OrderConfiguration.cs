@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DemoProject.DAL.Configuration
 {
-  class OrderConfiguration : IEntityTypeConfiguration<Order>
+  internal sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
   {
     public void Configure(EntityTypeBuilder<Order> builder)
     {

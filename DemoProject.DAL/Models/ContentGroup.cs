@@ -5,7 +5,7 @@ using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class ContentGroup : BaseEntity<Guid>
+  public sealed class ContentGroup : BaseEntity<Guid>
   {
     public string Title { get; set; }
 

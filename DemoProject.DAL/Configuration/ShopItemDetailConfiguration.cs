@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DemoProject.DAL.Configuration
 {
-  class ShopItemDetailConfiguration : IEntityTypeConfiguration<ShopItemDetail>
+  internal sealed class ShopItemDetailConfiguration : IEntityTypeConfiguration<ShopItemDetail>
   {
     public void Configure(EntityTypeBuilder<ShopItemDetail> builder)
     {

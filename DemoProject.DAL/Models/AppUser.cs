@@ -5,7 +5,7 @@ using DemoProject.Shared.Models;
 
 namespace DemoProject.DAL.Models
 {
-  public class AppUser : BaseEntity<Guid>
+  public sealed class AppUser : BaseEntity<Guid>
   {
     public string Username { get; set; }
 

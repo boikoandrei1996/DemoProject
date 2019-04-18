@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DemoProject.DAL.Models
 {
-  public class CartShopItem
+  public sealed class CartShopItem
   {
     public Guid CartId { get; set; }
 

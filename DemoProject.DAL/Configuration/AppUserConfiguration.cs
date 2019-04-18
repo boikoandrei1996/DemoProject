@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DemoProject.DAL.Configuration
 {
-  class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
+  internal sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
   {
     public void Configure(EntityTypeBuilder<AppUser> builder)
     {
