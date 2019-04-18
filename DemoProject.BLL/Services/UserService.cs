@@ -182,6 +182,11 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync<AppUser>(nameof(DeleteAsync));
     }
 
+    public Task<ServiceResult> AddAsync(AppUser model)
+    {
+      throw new NotImplementedException();
+    }
+
     public void Dispose()
     {
       _context.Dispose();

@@ -129,7 +129,22 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync<Order>(nameof(DeleteAsync));
     }
 
-    public async Task<ServiceResult> ApproveAsync(Guid id, Guid userId)
+    public Task<ServiceResult> ProccessOrderAsync(ProcessOrderType processOrder, Guid id, Guid userId)
+    {
+      switch (processOrder)
+      {
+        case ProcessOrderType.Approve:
+          return this.ApproveAsync(id, userId);
+        case ProcessOrderType.Reject:
+          return this.RejectAsync(id, userId);
+        case ProcessOrderType.Close:
+          return this.CloseAsync(id, userId);
+        default:
+          throw new NotImplementedException(nameof(ProcessOrderType));
+      }
+    }
+
+    private async Task<ServiceResult> ApproveAsync(Guid id, Guid userId)
     {
       var order = await this.FindByAsync(x => x.Id == id);
       if (order == null)
@@ -166,7 +181,7 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync<Order>(nameof(ApproveAsync));
     }
 
-    public async Task<ServiceResult> RejectAsync(Guid id, Guid userId)
+    private async Task<ServiceResult> RejectAsync(Guid id, Guid userId)
     {
       var order = await this.FindByAsync(x => x.Id == id);
       if (order == null)
@@ -203,7 +218,7 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync<Order>(nameof(RejectAsync));
     }
 
-    public async Task<ServiceResult> CloseAsync(Guid id, Guid userId)
+    private async Task<ServiceResult> CloseAsync(Guid id, Guid userId)
     {
       var order = await this.FindByAsync(x => x.Id == id);
       if (order == null)

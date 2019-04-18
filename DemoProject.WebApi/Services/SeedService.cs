@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace DemoProject.WebApi.Services
 {
-  public class SeedService
+  public sealed class SeedService
   {
     private readonly string _dirPath;
     private readonly ILogger _logger;
@@ -57,10 +57,10 @@ namespace DemoProject.WebApi.Services
       await context.History.AddAsync(ChangeHistory.Create(TableName.AboutUs, ActionType.Add));
       await this.SaveToDbAsync(context, aboutUs);
 
-      var carts = this.LoadCarts(menuItems.First().Items.First().Details);
+      var carts = SeedData.LoadCarts(menuItems.First().Items.First().Details);
       await this.SaveToDbAsync(context, carts);
 
-      var orders = this.LoadOrders(carts);
+      var orders = SeedData.LoadOrders(carts);
       await this.SaveToDbAsync(context, orders);
     }
 
@@ -68,9 +68,9 @@ namespace DemoProject.WebApi.Services
     {
       try
       {
-        string path = Path.Combine(_dirPath, fileName);
+        var path = Path.Combine(_dirPath, fileName);
 
-        string json = await File.ReadAllTextAsync(path, Encoding.UTF8);
+        var json = await File.ReadAllTextAsync(path, Encoding.UTF8);
 
         return JsonConvert.DeserializeObject<T>(json);
       }
@@ -78,7 +78,14 @@ namespace DemoProject.WebApi.Services
       {
         _logger.LogCritical(ex, nameof(LoadAsync));
 
-        return default(T);
+        if (Startup.Debug)
+        {
+          throw ex;
+        }
+        else
+        {
+          return default(T);
+        }
       }
     }
 
@@ -93,57 +100,30 @@ namespace DemoProject.WebApi.Services
       catch (DbUpdateConcurrencyException ex)
       {
         _logger.LogCritical(ex.InnerException, nameof(SaveToDbAsync));
+        if (Startup.Debug)
+        {
+          throw ex;
+        }
       }
       catch (DbUpdateException ex)
       {
         _logger.LogCritical(ex.InnerException, nameof(SaveToDbAsync));
+        if (Startup.Debug)
+        {
+          throw ex;
+        }
       }
       catch (Exception ex)
       {
         _logger.LogCritical(ex, nameof(SaveToDbAsync));
+        if (Startup.Debug)
+        {
+          throw ex;
+        }
       }
     }
 
-    private List<Cart> LoadCarts(IEnumerable<ShopItemDetail> shopItemDetails)
-    {
-      var carts = new List<Cart>();
-      foreach (var shopItemDetail in shopItemDetails)
-      {
-        var cartShopItem = new CartShopItem
-        {
-          Count = 1,
-          Price = shopItemDetail.Price,
-          ShopItemDetailId = shopItemDetail.Id
-        };
-        carts.Add(new Cart
-        {
-          CartShopItems = new List<CartShopItem>() { cartShopItem }
-        });
-      }
-
-      return carts;
-    }
-
-    private List<Order> LoadOrders(IEnumerable<Cart> carts)
-    {
-      var orders = new List<Order>();
-      var i = 0;
-      foreach (var cart in carts)
-      {
-        i += 1;
-        orders.Add(new Order
-        {
-          Name = $"Order #{i}",
-          Mobile = "1234567",
-          Address = $"Minsk pr.Pushkina {i}",
-          CartId = cart.Id
-        });
-      }
-
-      return orders;
-    }
-
-    private void ManagePasswords(List<AppUser> users)
+    private void ManagePasswords(IEnumerable<AppUser> users)
     {
       foreach (var user in users)
       {

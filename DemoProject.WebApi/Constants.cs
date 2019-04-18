@@ -6,10 +6,10 @@
     public const string WEB_CONTENT_ROOT_PATH = "wwwroot/";
     public const string DEFAULT_PATH_TO_IMAGE = "images/";
 
-    public static readonly int DEFAULT_PAGE_INDEX = 1;
-    public static readonly int DEFAULT_PAGE_SIZE = 2;
+    public const int DEFAULT_PAGE_INDEX = 1;
+    public const int DEFAULT_PAGE_SIZE = 2;
 
-    private static readonly string BASE_URL = "https://demoprojectapi.azurewebsites.net/";
+    private const string BASE_URL = "https://demoprojectapi.azurewebsites.net/";
 
     public static string GetRelativePathToImage(string filename)
     {

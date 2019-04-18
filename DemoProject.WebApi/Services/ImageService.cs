@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace DemoProject.WebApi.Services
 {
-  public class ImageService
+  public sealed class ImageService
   {
     private readonly IHostingEnvironment _environment;
 

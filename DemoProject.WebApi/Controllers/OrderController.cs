@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DemoProject.BLL;
 using DemoProject.BLL.Interfaces;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
@@ -68,7 +69,7 @@ namespace DemoProject.WebApi.Controllers
     {
       var userId = Guid.Empty;
 
-      return _orderService.ApproveAsync(id, userId);
+      return _orderService.ProccessOrderAsync(ProcessOrderType.Approve, id, userId) ;
     }
 
     // POST api/order/{id}/reject
@@ -77,7 +78,7 @@ namespace DemoProject.WebApi.Controllers
     {
       var userId = Guid.Empty;
 
-      return _orderService.RejectAsync(id, userId);
+      return _orderService.ProccessOrderAsync(ProcessOrderType.Reject, id, userId);
     }
 
     // POST api/order/{id}/close
@@ -86,7 +87,7 @@ namespace DemoProject.WebApi.Controllers
     {
       var userId = Guid.Empty;
 
-      return _orderService.CloseAsync(id, userId);
+      return _orderService.ProccessOrderAsync(ProcessOrderType.Close, id, userId);
     }
 
     // DELETE api/order/{id}

@@ -27,6 +27,8 @@ namespace DemoProject.WebApi
 {
   public class Startup
   {
+    public static readonly bool Debug = true;
+
     public IConfiguration Configuration { get; }
     public IHostingEnvironment Environment { get; }
 
@@ -41,20 +43,20 @@ namespace DemoProject.WebApi
     public void ConfigureServices(IServiceCollection services)
     {
       var appSettingsSection = Configuration.GetSection("AppSettings");
+      var appSettings = appSettingsSection.Get<AppSettings>();
       services.Configure<AppSettings>(appSettingsSection);
-
-      services.AddTransient<IPasswordManager, PasswordManager>();
 
       services.AddTransient<SeedService>(serviceProvider =>
       {
         return new SeedService(
-          Path.Combine(Environment.WebRootPath, "Files"),
-          serviceProvider.GetService<IPasswordManager>(),
+          Path.Combine(Environment.WebRootPath, appSettings.SeedFilesFolderPath),
+          serviceProvider.GetRequiredService<IPasswordManager>(),
           null);
       });
 
-      services.AddTransient<ImageService>();
       services.AddTransient<AuthTokenGenerator>();
+      services.AddTransient<ImageService>();
+      services.AddTransient<IPasswordManager, PasswordManager>();
       services.AddTransient<IUserService, UserService>();
       services.AddTransient<IContentGroupService, ContentGroupService>();
       services.AddTransient<IInfoObjectService, InfoObjectService>();
@@ -83,7 +85,6 @@ namespace DemoProject.WebApi
         });
 
       // configure jwt authentication
-      var appSettings = appSettingsSection.Get<AppSettings>();
       var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
       services
@@ -152,14 +153,14 @@ namespace DemoProject.WebApi
       var logger = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();
 
       app.UseCors(x => x
-          .AllowAnyOrigin()
-          .AllowAnyMethod()
-          .AllowAnyHeader()
-          .AllowCredentials());
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
 
       app.UseAuthentication();
 
-      if (Environment.IsDevelopment())
+      if (this.Environment.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
       }

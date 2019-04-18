@@ -18,7 +18,7 @@ namespace DemoProject.WebApi.Extensions
 {
   public static class ApplicationBuilderExtensions
   {
-    public static void ApplyMigrationAndDatabaseSeed(
+    public static IApplicationBuilder ApplyMigrationAndDatabaseSeed(
       this IApplicationBuilder app,
       AppSettings appSettings,
       ILogger logger)
@@ -42,18 +42,26 @@ namespace DemoProject.WebApi.Extensions
         catch (Exception ex)
         {
           logger.LogCritical(ex, "Failed to migrate or seed database.");
+          if (Startup.Debug)
+          {
+            throw ex;
+          }
         }
       }
+
+      return app;
     }
 
-    public static void SetupDefaultPage(this IApplicationBuilder app, string url)
+    public static IApplicationBuilder SetupDefaultPage(this IApplicationBuilder app, string url)
     {
       var options = new RewriteOptions();
       options.AddRedirect("^$", url);
       app.UseRewriter(options);
+
+      return app;
     }
 
-    public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILogger logger)
+    public static IApplicationBuilder ConfigureExceptionHandler(this IApplicationBuilder app, ILogger logger)
     {
       app.UseExceptionHandler(appBuilder =>
       {
@@ -62,7 +70,7 @@ namespace DemoProject.WebApi.Extensions
           httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
           httpContext.Response.ContentType = "application/json";
 
-          string path = string.Empty;
+          var path = string.Empty;
           var exceptionHandlerFeature = httpContext.Features.Get<IExceptionHandlerPathFeature>();
           if (exceptionHandlerFeature != null)
           {
@@ -80,9 +88,11 @@ namespace DemoProject.WebApi.Extensions
           await httpContext.Response.WriteAsync(errorDetails.ToJsonString());
         });
       });
+
+      return app;
     }
 
-    public static void ConfigureStatusCodePages(this IApplicationBuilder app)
+    public static IApplicationBuilder ConfigureStatusCodePages(this IApplicationBuilder app)
     {
       app.UseStatusCodePages(appBuilder =>
       {
@@ -99,6 +109,8 @@ namespace DemoProject.WebApi.Extensions
           await httpContext.Response.WriteAsync(statusCodeDetails.ToJsonString());
         });
       });
+
+      return app;
     }
   }
 }

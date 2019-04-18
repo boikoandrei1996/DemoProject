@@ -3,7 +3,7 @@
   public sealed class AppSettings
   {
     public bool DatabaseRestore { get; set; }
-
     public string Secret { get; set; }
+    public string SeedFilesFolderPath { get; set; }
   }
 }
