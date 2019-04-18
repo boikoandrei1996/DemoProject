@@ -15,11 +15,11 @@ namespace DemoProject.Shared.Attributes
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-      return _minValue > (int)value ?
+      return value is int && _minValue <= (int)value ?
+        ValidationResult.Success :
         new ValidationResult(
-          $"The {validationContext.DisplayName} field should be more than {_minValue}.", 
-          new[] { validationContext.MemberName }) :
-        ValidationResult.Success;
+          $"The {validationContext.DisplayName} field should be more than {_minValue}.",
+          new[] { validationContext.MemberName });
     }
   }
 }

@@ -1,9 +1,10 @@
-﻿using DemoProject.DAL.Models;
+﻿using System;
+using DemoProject.DAL.Models;
 using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces
 {
-  public interface IInfoObjectService : IChangeableService<InfoObject>
+  public interface IInfoObjectService : IChangeableService<InfoObject, Guid>, IDisposable
   {
   }
 }

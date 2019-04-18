@@ -2,9 +2,9 @@
 
 namespace DemoProject.Shared.Models
 {
-  public abstract class BaseEntity<T>
+  public abstract class BaseEntity<TId>
   {
     [Key]
-    public T Id { get; set; }
+    public TId Id { get; set; }
   }
 }

@@ -10,7 +10,7 @@ namespace DemoProject.Shared
     InternalServerError = 3
   }
 
-  public class ServiceResult
+  public sealed class ServiceResult
   {
     internal ServiceResult(ServiceResultKey key, object model = null)
     {

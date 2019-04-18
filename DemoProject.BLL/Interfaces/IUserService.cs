@@ -7,7 +7,7 @@ using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces
 {
-  public interface IUserService : IReadableService<AppUser>
+  public interface IUserService : IReadableService<AppUser>, IDisposable
   {
     Task<AppUser> AuthenticateAsync(string username, string password);
     Task<bool> ExistAsync(Expression<Func<AppUser, bool>> filter);

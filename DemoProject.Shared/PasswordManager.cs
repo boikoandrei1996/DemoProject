@@ -24,11 +24,13 @@ namespace DemoProject.Shared
     {
       Check.NotNullOrWhiteSpace(password, nameof(password));
 
+      Check.NotNull(passwordHash, nameof(passwordHash));
       if (passwordHash.Length != 64)
       {
         throw new ArgumentException("Invalid length of password hash (64 bytes expected).", nameof(passwordHash));
       }
 
+      Check.NotNull(passwordSalt, nameof(passwordSalt));
       if (passwordSalt.Length != 128)
       {
         throw new ArgumentException("Invalid length of password salt (128 bytes expected).", nameof(passwordSalt));

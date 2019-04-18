@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace DemoProject.Shared.Interfaces
 {
-  public interface IChangeableService<TModel> : IDisposable
+  public interface IChangeableService<TModel, TModelId>
   {
     Task<bool> ExistAsync(Expression<Func<TModel, bool>> filter);
     Task<ServiceResult> AddAsync(TModel model);
     Task<ServiceResult> UpdateAsync(TModel model);
-    Task<ServiceResult> DeleteAsync(Guid id);
+    Task<ServiceResult> DeleteAsync(TModelId id);
   }
 }

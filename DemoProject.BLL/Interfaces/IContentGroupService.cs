@@ -9,7 +9,7 @@ using DemoProject.Shared.Interfaces;
 
 namespace DemoProject.BLL.Interfaces
 {
-  public interface IContentGroupService : IChangeableService<ContentGroup>
+  public interface IContentGroupService : IChangeableService<ContentGroup, Guid>, IDisposable
   {
     Task<ChangeHistory> GetHistoryRecordAsync(TableName table);
     Task<Page<ContentGroup>> GetPageAsync(ContentGroupName group, int pageIndex, int pageSize, Expression<Func<ContentGroup, bool>> filter = null);

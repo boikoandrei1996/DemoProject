@@ -29,6 +29,14 @@ namespace DemoProject.Shared
       }
     }
 
+    public static void Positive(decimal value, string paramName)
+    {
+      if (value <= 0)
+      {
+        throw new ArgumentException($"{paramName} should be positive.", paramName);
+      }
+    }
+
     public static void Positive(int value, string paramName)
     {
       if (value <= 0)
@@ -42,14 +50,6 @@ namespace DemoProject.Shared
       if (value < 0)
       {
         throw new ArgumentException($"{paramName} should be positive or 0.", paramName);
-      }
-    }
-
-    public static void Positive(decimal value, string paramName)
-    {
-      if (value <= 0)
-      {
-        throw new ArgumentException($"{paramName} should be positive.", paramName);
       }
     }
   }

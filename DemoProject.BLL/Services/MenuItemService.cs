@@ -75,7 +75,7 @@ namespace DemoProject.BLL.Services
       _context.MenuItems.Add(model);
       _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Add));
 
-      return await _context.SaveAsync(nameof(AddAsync), model.Id);
+      return await _context.SaveAsync(nameof(AddAsync), model);
     }
 
     public async Task<ServiceResult> UpdateAsync(MenuItem model)

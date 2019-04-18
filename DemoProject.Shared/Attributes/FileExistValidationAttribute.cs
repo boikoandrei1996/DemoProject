@@ -7,8 +7,6 @@ namespace DemoProject.Shared.Attributes
   [AttributeUsage(AttributeTargets.Property)]
   public sealed class FileExistValidationAttribute : ValidationAttribute
   {
-    public static readonly string CustomMessage = "File should exist on the server.";
-
     private readonly string _rootPath;
     private readonly string _dirPath;
 
@@ -20,14 +18,19 @@ namespace DemoProject.Shared.Attributes
       _dirPath = fileDirectoryPath;
     }
 
-    public bool IsNotValid(string value)
+    public ValidationResult IsValid(string value)
     {
-      return this.IsValid(value) == false;
+      return this.IsValidValue(value, string.Empty);
     }
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-      var path = Path.Combine(_rootPath, _dirPath, (string)value);
+      return this.IsValidValue((string)value, validationContext.MemberName);
+    }
+
+    private ValidationResult IsValidValue(string value, string memberName)
+    {
+      var path = Path.Combine(_rootPath, _dirPath, value);
 
       if (File.Exists(path))
       {
@@ -35,9 +38,7 @@ namespace DemoProject.Shared.Attributes
       }
       else
       {
-        return new ValidationResult(
-          FileExistValidationAttribute.CustomMessage,
-          new[] { validationContext.MemberName });
+        return new ValidationResult("File should exist on the server.", new[] { memberName });
       }
     }
   }

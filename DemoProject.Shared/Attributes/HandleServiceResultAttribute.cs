@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace DemoProject.Shared.Attributes
 {
   /// <summary>
-  /// Need for using DI in HandleServiceResultInnerAttribute.
+  /// Wrapper need for using DI for IHostingEnvironment in HandleServiceResultInnerAttribute.
   /// </summary>
   [AttributeUsage(AttributeTargets.Class)]
   public sealed class HandleServiceResultAttribute : TypeFilterAttribute

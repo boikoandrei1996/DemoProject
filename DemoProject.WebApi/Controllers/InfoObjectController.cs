@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Enums;
@@ -35,9 +36,10 @@ namespace DemoProject.WebApi.Controllers
       {
         // validate file exist
         var fileExistValidationAttribute = new FileExistValidationAttribute(Constants.WEB_CONTENT_ROOT_PATH, Constants.DEFAULT_PATH_TO_IMAGE);
-        if (fileExistValidationAttribute.IsNotValid(apiEntity.Content))
+        var validationResult = fileExistValidationAttribute.IsValid(apiEntity.Content);
+        if (validationResult != ValidationResult.Success)
         {
-          return ServiceResultFactory.BadRequestResult(nameof(apiEntity.Content), FileExistValidationAttribute.CustomMessage);
+          return ServiceResultFactory.BadRequestResult(nameof(apiEntity.Content), validationResult.ErrorMessage);
         }
       }
 
@@ -54,9 +56,10 @@ namespace DemoProject.WebApi.Controllers
       {
         // validate file exist
         var fileExistValidationAttribute = new FileExistValidationAttribute(Constants.WEB_CONTENT_ROOT_PATH, Constants.DEFAULT_PATH_TO_IMAGE);
-        if (fileExistValidationAttribute.IsNotValid(apiEntity.Content))
+        var validationResult = fileExistValidationAttribute.IsValid(apiEntity.Content);
+        if (validationResult != ValidationResult.Success)
         {
-          return ServiceResultFactory.BadRequestResult(nameof(apiEntity.Content), FileExistValidationAttribute.CustomMessage);
+          return ServiceResultFactory.BadRequestResult(nameof(apiEntity.Content), validationResult.ErrorMessage);
         }
       }
 

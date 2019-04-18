@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace DemoProject.Shared
 {
-  public sealed class Page<T>
+  public sealed class Page<TModel>
   {
     public int Current { get; set; }
     public int Size { get; set; }
     public int Total { get; set; }
-    public ICollection<T> Records { get; set; } = new List<T>();
+    public ICollection<TModel> Records { get; set; } = new List<TModel>();
 
-    public static Page<T> Create(int pageSize, int pageIndex, int totalItemsCount)
+    public static Page<TModel> Create(int pageSize, int pageIndex, int totalItemsCount)
     {
       Check.Positive(pageSize, nameof(pageSize));
       Check.Positive(pageIndex, nameof(pageIndex));
@@ -18,7 +18,7 @@ namespace DemoProject.Shared
 
       if (totalItemsCount == 0)
       {
-        return new Page<T>
+        return new Page<TModel>
         {
           Size = pageSize,
           Current = 1,
@@ -29,7 +29,7 @@ namespace DemoProject.Shared
       var totalPages = (int)Math.Ceiling(totalItemsCount / (decimal)pageSize);
       var currentPage = pageIndex > totalPages ? totalPages : pageIndex;
 
-      return new Page<T>
+      return new Page<TModel>
       {
         Size = pageSize,
         Current = currentPage,

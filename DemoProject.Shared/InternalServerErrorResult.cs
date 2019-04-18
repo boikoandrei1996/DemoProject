@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.Shared
 {
-  public class InternalServerErrorResult : StatusCodeResult
+  public sealed class InternalServerErrorResult : StatusCodeResult
   {
     public InternalServerErrorResult() : base(StatusCodes.Status500InternalServerError)
     {

@@ -1,17 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace DemoProject.Shared
+﻿namespace DemoProject.Shared
 {
   public static class ServiceResultFactory
   {
     public static ServiceResult Success
     {
       get { return new ServiceResult(ServiceResultKey.Success); }
-    }
-
-    public static ServiceResult SuccessResult<TModel>(TModel model)
-    {
-      return new ServiceResult(ServiceResultKey.Success, model);
     }
 
     public static ServiceResult NotFound
@@ -24,12 +17,9 @@ namespace DemoProject.Shared
       get { return new ServiceResult(ServiceResultKey.InternalServerError); }
     }
 
-    public static ServiceResult InternalServerErrorResult(string message)
+    public static ServiceResult SuccessResult<TModel>(TModel model)
     {
-      return new ServiceResult(ServiceResultKey.InternalServerError, new ServiceError
-      {
-        Description = message
-      });
+      return new ServiceResult(ServiceResultKey.Success, model);
     }
 
     public static ServiceResult BadRequestResult(string code, string description)
@@ -41,23 +31,12 @@ namespace DemoProject.Shared
       });
     }
 
-    public static ServiceResult BadRequestResult(ModelStateDictionary modelState)
+    public static ServiceResult InternalServerErrorResult(string message)
     {
-      var result = new ServiceResult(ServiceResultKey.BadRequest);
-
-      foreach (var field in modelState)
+      return new ServiceResult(ServiceResultKey.InternalServerError, new ServiceError
       {
-        foreach (var error in field.Value.Errors)
-        {
-          result.Errors.Add(new ServiceError
-          {
-            Code = field.Key,
-            Description = error.ErrorMessage
-          });
-        }
-      }
-
-      return result;
+        Description = message
+      });
     }
   }
 }
