@@ -17,11 +17,6 @@
       get { return new ServiceResult(ServiceResultKey.InternalServerError); }
     }
 
-    public static ServiceResult SuccessResult<TModel>(TModel model)
-    {
-      return new ServiceResult(ServiceResultKey.Success, model);
-    }
-
     public static ServiceResult BadRequestResult(string code, string description)
     {
       return new ServiceResult(ServiceResultKey.BadRequest, new ServiceError
@@ -37,6 +32,11 @@
       {
         Description = message
       });
+    }
+
+    public static ServiceResult SuccessResult(object model)
+    {
+      return new ServiceResult(ServiceResultKey.Success, model);
     }
   }
 }

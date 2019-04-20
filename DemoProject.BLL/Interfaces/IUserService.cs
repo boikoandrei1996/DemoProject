@@ -8,7 +8,7 @@ namespace DemoProject.BLL.Interfaces
 {
   public interface IUserService : IChangeableService<AppUser, Guid>, IReadableService<AppUser>, IDisposable
   {
-    Task<AppUser> AuthenticateAsync(string username, string password);
+    Task<ServiceResult> AuthenticateAsync(string username, string password);
     Task<ServiceResult> AddAsync(AppUser model, string password);
     Task<ServiceResult> UpdatePasswordAsync(Guid id, string newPassword);
   }

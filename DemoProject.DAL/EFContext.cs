@@ -52,16 +52,13 @@ namespace DemoProject.DAL
       this.History.DeleteFromQuery();
     }
 
-    public async Task<ServiceResult> SaveAsync<TModel>(string code, TModel model = null)
-      where TModel : class
+    public async Task<ServiceResult> SaveAsync(string code)
     {
       try
       {
         await this.SaveChangesAsync();
 
-        return model == null ? 
-          ServiceResultFactory.Success : 
-          ServiceResultFactory.SuccessResult(model);
+        return ServiceResultFactory.Success;
       }
       catch (DbUpdateConcurrencyException ex)
       {

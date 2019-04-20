@@ -46,13 +46,17 @@ namespace DemoProject.Shared.Attributes
         switch (result.Key)
         {
           case ServiceResultKey.Success:
-            if (result.Model == null)
+            if (result.ViewModel != null)
             {
-              return new OkResult();
+              return new OkObjectResult(result.ViewModel);
+            }
+            else if (result.Model != null)
+            {
+              return new OkObjectResult(result.Model);
             }
             else
             {
-              return new OkObjectResult(result.Model);
+              return new OkResult();
             }
           case ServiceResultKey.BadRequest:
             return new BadRequestObjectResult(result.Errors);

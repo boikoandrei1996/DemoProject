@@ -98,14 +98,17 @@ namespace DemoProject.BLL.Services
       return _context.ContentGroups.AnyAsync(filter);
     }
 
-    public Task<ServiceResult> AddAsync(ContentGroup model)
+    public async Task<ServiceResult> AddAsync(ContentGroup model)
     {
       Check.NotNull(model, nameof(model));
 
       _context.ContentGroups.Add(model);
       _context.History.Add(ChangeHistory.Create(model.GroupName, ActionType.Add));
 
-      return _context.SaveAsync(nameof(AddAsync), model);
+      var result = await _context.SaveAsync(nameof(AddAsync));
+      result.SetModelIfSuccess(model);
+
+      return result;
     }
 
     public async Task<ServiceResult> UpdateAsync(ContentGroup model)
@@ -120,7 +123,7 @@ namespace DemoProject.BLL.Services
       _context.ContentGroups.Update(model);
       _context.History.Add(ChangeHistory.Create(model.GroupName, ActionType.Modify));
 
-      return await _context.SaveAsync<ContentGroup>(nameof(UpdateAsync));
+      return await _context.SaveAsync(nameof(UpdateAsync));
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -134,7 +137,7 @@ namespace DemoProject.BLL.Services
       _context.ContentGroups.Remove(model);
       _context.History.Add(ChangeHistory.Create(model.GroupName, ActionType.Delete));
 
-      return await _context.SaveAsync<ContentGroup>(nameof(DeleteAsync));
+      return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
     public void Dispose()

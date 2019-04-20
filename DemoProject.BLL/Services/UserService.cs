@@ -25,22 +25,24 @@ namespace DemoProject.BLL.Services
       _passwordManager = passwordManager;
     }
 
-    public async Task<AppUser> AuthenticateAsync(string username, string password)
+    public async Task<ServiceResult> AuthenticateAsync(string username, string password)
     {
       Check.NotNullOrEmpty(username, nameof(username));
       Check.NotNullOrEmpty(password, nameof(password));
 
       var user = await this.FindByAsync(x => x.Username == username);
-      if (user != null)
+      if (user == null)
       {
-        var success = _passwordManager.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
-        if (success)
-        {
-          return user;
-        }
+        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Username was not found.");
       }
 
-      return null;
+      var success = _passwordManager.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+      if (success == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Password is wrong.");
+      }
+
+      return ServiceResultFactory.SuccessResult(user);
     }
 
     public async Task<Page<AppUser>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<AppUser, bool>> filter = null)
@@ -140,7 +142,10 @@ namespace DemoProject.BLL.Services
 
       _context.Users.Add(model);
 
-      return await _context.SaveAsync(nameof(AddAsync), model);
+      var result = await _context.SaveAsync(nameof(AddAsync));
+      result.SetModelIfSuccess(model);
+
+      return result;
     }
 
     public async Task<ServiceResult> UpdatePasswordAsync(Guid id, string newPassword)
@@ -161,7 +166,9 @@ namespace DemoProject.BLL.Services
 
       _context.Users.Update(user);
 
-      return await _context.SaveAsync<AppUser>(nameof(UpdatePasswordAsync), null);
+      var result = await _context.SaveAsync(nameof(UpdatePasswordAsync));
+
+      return result;
     }
 
     public Task<ServiceResult> UpdateAsync(AppUser model)
@@ -179,7 +186,7 @@ namespace DemoProject.BLL.Services
 
       _context.Users.Remove(model);
 
-      return await _context.SaveAsync<AppUser>(nameof(DeleteAsync));
+      return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
     public Task<ServiceResult> AddAsync(AppUser model)

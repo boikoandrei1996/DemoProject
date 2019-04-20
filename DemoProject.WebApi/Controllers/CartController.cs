@@ -76,7 +76,10 @@ namespace DemoProject.WebApi.Controllers
     {
       var result = await _cartService.AddItemToCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.Count ?? 1);
       
-      result.Model = CartViewModel.Map(result.Model as Cart);
+      if (result.HasModel)
+      {
+        result.ViewModel = CartViewModel.Map(result.Model as Cart);
+      }
       
       return result;
     }
@@ -86,8 +89,11 @@ namespace DemoProject.WebApi.Controllers
     public async Task<ServiceResult> RemoveItemFromCart(Guid id, [FromBody]RemoveItemFromCartModel apiEntity)
     {
       var result = await _cartService.RemoveItemFromCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems ?? false);
-      
-      result.Model = CartViewModel.Map(result.Model as Cart);
+
+      if (result.HasModel)
+      {
+        result.ViewModel = CartViewModel.Map(result.Model as Cart);
+      }
       
       return result;
     }

@@ -38,7 +38,10 @@ namespace DemoProject.BLL.Services
 
       _context.ShopItemDetails.Add(model);
 
-      return await _context.SaveAsync(nameof(AddAsync), model);
+      var result = await _context.SaveAsync(nameof(AddAsync));
+      result.SetModelIfSuccess(model);
+
+      return result;
     }
 
     public Task<ServiceResult> UpdateAsync(ShopItemDetail model)
@@ -56,7 +59,7 @@ namespace DemoProject.BLL.Services
 
       _context.ShopItemDetails.Remove(model);
 
-      return await _context.SaveAsync<ShopItemDetail>(nameof(DeleteAsync));
+      return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
     public void Dispose()
