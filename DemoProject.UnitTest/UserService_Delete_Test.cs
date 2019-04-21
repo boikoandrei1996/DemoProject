@@ -49,8 +49,7 @@ namespace DemoProject.UnitTest
 
       // Assert
       Assert.NotNull(result);
-      Assert.Equal(ServiceResultKey.Success, result.Key);
-      Assert.Empty(result.Errors);
+      Assert.Equal(ServiceResultKey.NotFound, result.Key);
     }
 
     [Fact]

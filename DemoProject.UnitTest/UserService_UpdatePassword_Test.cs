@@ -68,16 +68,15 @@ namespace DemoProject.UnitTest
 
       // Assert
       Assert.NotNull(result);
-      Assert.Equal(ServiceResultKey.BadRequest, result.Key);
-      Assert.NotEmpty(result.Errors);
+      Assert.Equal(ServiceResultKey.NotFound, result.Key);
     }
 
     [Fact]
     public async Task UpdatePassword_Params_Valid_Result_EntityUpdated()
     {
       _context
-        .Setup(x => x.SaveAsync(It.IsAny<string>(), null))
-        .Returns(Task.FromResult(ServiceResultFactory.EntityUpdatedResult(null)));
+        .Setup(x => x.SaveAsync(It.IsAny<string>()))
+        .Returns(Task.FromResult(ServiceResultFactory.Success));
 
       // Arrange
       var userService = new UserService(_context.Object, _passwordManager.Object);
@@ -87,7 +86,7 @@ namespace DemoProject.UnitTest
 
       // Assert
       Assert.NotNull(result);
-      Assert.Equal(ServiceResultKey.ModelUpdated, result.Key);
+      Assert.Equal(ServiceResultKey.Success, result.Key);
       Assert.Empty(result.Errors);
     }
 
@@ -95,7 +94,7 @@ namespace DemoProject.UnitTest
     public async Task UpdatePassword_Params_Valid_Result_BadRequest()
     {
       _context
-        .Setup(x => x.SaveAsync(It.IsAny<string>(), null))
+        .Setup(x => x.SaveAsync(It.IsAny<string>()))
         .Returns(Task.FromResult(ServiceResultFactory.BadRequestResult(It.IsAny<string>(), It.IsAny<string>())));
 
       // Arrange
@@ -114,7 +113,7 @@ namespace DemoProject.UnitTest
     public async Task Add_Model_Valid_Result_InternalServerError()
     {
       _context
-        .Setup(x => x.SaveAsync(It.IsAny<string>(), null))
+        .Setup(x => x.SaveAsync(It.IsAny<string>()))
         .Returns(Task.FromResult(ServiceResultFactory.InternalServerErrorResult(It.IsAny<string>())));
 
       // Arrange

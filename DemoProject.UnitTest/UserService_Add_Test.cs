@@ -66,7 +66,7 @@ namespace DemoProject.UnitTest
       // Act & Assert
       await Assert.ThrowsAsync<ArgumentException>(
         nameof(password),
-        () => userService.AddAsync(new AppUser(), password));
+        () => userService.AddAsync(_user, password));
     }
 
     [Fact]
@@ -77,6 +77,7 @@ namespace DemoProject.UnitTest
       var user = new AppUser
       {
         Username = Constants.USERNAME_VALID,
+        Email = Constants.EMAIL_VALID
       };
 
       // Act
@@ -133,8 +134,8 @@ namespace DemoProject.UnitTest
     public async Task Add_ModelRole_Normalized_Result_EntityCreated()
     {
       _context
-        .Setup(x => x.SaveAsync(It.IsAny<string>(), Guid.Empty))
-        .Returns(Task.FromResult(ServiceResultFactory.EntityCreatedResult(Guid.Empty)));
+        .Setup(x => x.SaveAsync(It.IsAny<string>()))
+        .Returns(Task.FromResult(ServiceResultFactory.Success));
 
       // Arrange
       var userService = new UserService(_context.Object, _passwordManager.Object);
@@ -150,7 +151,7 @@ namespace DemoProject.UnitTest
 
       // Assert
       Assert.NotNull(result);
-      Assert.Equal(ServiceResultKey.ModelCreated, result.Key);
+      Assert.Equal(ServiceResultKey.Success, result.Key);
       Assert.Empty(result.Errors);
     }
 
@@ -158,8 +159,8 @@ namespace DemoProject.UnitTest
     public async Task Add_ModelRole_NotNormalized_Result_EntityCreated()
     {
       _context
-        .Setup(x => x.SaveAsync(It.IsAny<string>(), Guid.Empty))
-        .Returns(Task.FromResult(ServiceResultFactory.EntityCreatedResult(Guid.Empty)));
+        .Setup(x => x.SaveAsync(It.IsAny<string>()))
+        .Returns(Task.FromResult(ServiceResultFactory.Success));
 
       // Arrange
       var userService = new UserService(_context.Object, _passwordManager.Object);
@@ -175,7 +176,7 @@ namespace DemoProject.UnitTest
 
       // Assert
       Assert.NotNull(result);
-      Assert.Equal(ServiceResultKey.ModelCreated, result.Key);
+      Assert.Equal(ServiceResultKey.Success, result.Key);
       Assert.Empty(result.Errors);
     }
 
@@ -183,7 +184,7 @@ namespace DemoProject.UnitTest
     public async Task Add_Model_Valid_Result_BadRequest()
     {
       _context
-        .Setup(x => x.SaveAsync(It.IsAny<string>(), Guid.Empty))
+        .Setup(x => x.SaveAsync(It.IsAny<string>()))
         .Returns(Task.FromResult(ServiceResultFactory.BadRequestResult(It.IsAny<string>(), It.IsAny<string>())));
 
       // Arrange
@@ -208,7 +209,7 @@ namespace DemoProject.UnitTest
     public async Task Add_Model_Valid_Result_InternalServerError()
     {
       _context
-        .Setup(x => x.SaveAsync(It.IsAny<string>(), Guid.Empty))
+        .Setup(x => x.SaveAsync(It.IsAny<string>()))
         .Returns(Task.FromResult(ServiceResultFactory.InternalServerErrorResult(It.IsAny<string>())));
 
       // Arrange

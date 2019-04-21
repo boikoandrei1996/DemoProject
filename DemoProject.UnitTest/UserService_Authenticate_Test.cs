@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DemoProject.BLL.Services;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
+using DemoProject.Shared;
 using DemoProject.Shared.Interfaces;
 using DemoProject.UnitTest.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -92,7 +93,9 @@ namespace DemoProject.UnitTest
       var result = await userService.AuthenticateAsync(Constants.USERNAME_INVALID, Constants.PASSWORD);
 
       // Assert
-      Assert.Null(result);
+      Assert.NotNull(result);
+      Assert.Equal(ServiceResultKey.BadRequest, result.Key);
+      Assert.NotEmpty(result.Errors);
     }
 
     [Fact]
@@ -126,7 +129,9 @@ namespace DemoProject.UnitTest
       var result = await userService.AuthenticateAsync(Constants.USERNAME_VALID, Constants.PASSWORD);
 
       // Assert
-      Assert.Null(result);
+      Assert.NotNull(result);
+      Assert.Equal(ServiceResultKey.BadRequest, result.Key);
+      Assert.NotEmpty(result.Errors);
     }
   }
 }
