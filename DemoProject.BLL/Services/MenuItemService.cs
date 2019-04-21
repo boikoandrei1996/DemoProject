@@ -65,11 +65,12 @@ namespace DemoProject.BLL.Services
     public async Task<ServiceResult> AddAsync(MenuItem model)
     {
       Check.NotNull(model, nameof(model));
+      Check.NotNullOrEmpty(model.Text, nameof(model.Text));
 
-      var menuItemExist = await this.ExistAsync(x => x.Text.ToLower() == model.Text.ToLower());
+      var menuItemExist = await this.ExistAsync(x => model.Text.Equals(x.Text, StringComparison.OrdinalIgnoreCase));
       if (menuItemExist)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), $"MenuItem already exist.");
+        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), $"MenuItem text already exist.");
       }
 
       _context.MenuItems.Add(model);
@@ -85,23 +86,61 @@ namespace DemoProject.BLL.Services
     {
       Check.NotNull(model, nameof(model));
 
-      if (await _context.MenuItems.AnyAsync(x => x.Id == model.Id) == false)
+      var menuItem = await _context.MenuItems.FirstOrDefaultAsync(x => x.Id == model.Id);
+      if (menuItem == null)
       {
         return ServiceResultFactory.NotFound;
       }
-      
-      _context.MenuItems.Update(model);
+
+      var changed = false;
+
+      // update text
+      if (Utility.IsModified(menuItem.Text, model.Text))
+      {
+        var menuItemTextExist = await _context.MenuItems.AnyAsync(x => model.Text.Equals(x.Text, StringComparison.OrdinalIgnoreCase));
+        if (menuItemTextExist)
+        {
+          return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), $"MenuItem text is already exist.");
+        }
+
+        menuItem.Text = model.Text;
+        changed = true;
+      }
+
+      // update order
+      if (Utility.IsModified(menuItem.Order, model.Order))
+      {
+        menuItem.Order = model.Order;
+        changed = true;
+      }
+
+      // update iconPath
+      if (Utility.IsModified(menuItem.IconPath, model.IconPath))
+      {
+        menuItem.IconPath = model.IconPath;
+        changed = true;
+      }
+
+      if (changed == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), "Nothing to update.");
+      }
+
+      _context.MenuItems.Update(menuItem);
       _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Modify));
 
-      return await _context.SaveAsync(nameof(UpdateAsync));
+      var result = await _context.SaveAsync(nameof(UpdateAsync));
+      result.SetModelIfSuccess(menuItem);
+
+      return result;
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await this.FindByAsync(x => x.Id == id);
+      var model = await _context.MenuItems.FirstOrDefaultAsync(x => x.Id == id);
       if (model == null)
       {
-        return ServiceResultFactory.Success;
+        return ServiceResultFactory.NotFound;
       }
       
       _context.MenuItems.Remove(model);

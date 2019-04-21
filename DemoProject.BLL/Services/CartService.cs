@@ -77,6 +77,25 @@ namespace DemoProject.BLL.Services
         .FirstOrDefaultAsync(filter);
     }
 
+    public Task<bool> ExistAsync(Expression<Func<Cart, bool>> filter)
+    {
+      Check.NotNull(filter, nameof(filter));
+
+      return _context.Carts.AnyAsync(filter);
+    }
+
+    public async Task<ServiceResult> AddAsync(Cart model)
+    {
+      Check.NotNull(model, nameof(model));
+
+      _context.Carts.Add(model);
+
+      var result = await _context.SaveAsync(nameof(AddAsync));
+      result.SetModelIfSuccess(model);
+
+      return result;
+    }
+
     public async Task<ServiceResult> AddItemToCartAsync(Guid cartId, Guid shopItemDetailId, int count)
     {
       Check.Positive(count, nameof(count));
@@ -84,13 +103,13 @@ namespace DemoProject.BLL.Services
       var cartExist = await this.ExistAsync(x => x.Id == cartId);
       if (cartExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
+        return ServiceResultFactory.NotFound;
       }
 
       var shopItemDetail = await _context.ShopItemDetails.FirstOrDefaultAsync(x => x.Id == shopItemDetailId);
       if (shopItemDetail == null)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(shopItemDetailId), $"ShopItemDetail not found with id: '{shopItemDetailId}'.");
+        return ServiceResultFactory.NotFound;
       }
 
       var oldCartShopItem = await _context.CartShopItems
@@ -106,7 +125,7 @@ namespace DemoProject.BLL.Services
           Price = shopItemDetail.Price,
           Count = count
         };
-        await _context.CartShopItems.AddAsync(newCartShopItem);
+        _context.CartShopItems.Add(newCartShopItem);
       }
       else
       {
@@ -128,21 +147,20 @@ namespace DemoProject.BLL.Services
       var cartExist = await this.ExistAsync(x => x.Id == cartId);
       if (cartExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(cartId), $"Cart not found with id: '{cartId}'.");
+        return ServiceResultFactory.NotFound;
       }
 
       var shopItemDetailExist = await _context.ShopItemDetails.AnyAsync(x => x.Id == shopItemDetailId);
       if (shopItemDetailExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(shopItemDetailId), $"ShopItemDetail not found with id: '{shopItemDetailId}'.");
+        return ServiceResultFactory.NotFound;
       }
 
       var oldCartShopItem = await _context.CartShopItems
         .FirstOrDefaultAsync(x => x.CartId == cartId && x.ShopItemDetailId == shopItemDetailId);
-
       if (oldCartShopItem == null)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(oldCartShopItem), $"CartShopItem not found with complex id: '{cartId}-{shopItemDetailId}'.");
+        return ServiceResultFactory.NotFound;
       }
 
       if (removeAllItems || oldCartShopItem.Count <= 1)
@@ -164,41 +182,22 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
-    public Task<bool> ExistAsync(Expression<Func<Cart, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.Carts.AnyAsync(filter);
-    }
-
-    public async Task<ServiceResult> AddAsync(Cart model)
-    {
-      Check.NotNull(model, nameof(model));
-
-      _context.Carts.Add(model);
-
-      var result = await _context.SaveAsync(nameof(AddAsync));
-      result.SetModelIfSuccess(model);
-
-      return result;
-    }
-
-    public Task<ServiceResult> UpdateAsync(Cart model)
-    {
-      throw new NotImplementedException();
-    }
-
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await this.FindByAsync(x => x.Id == id);
+      var model = await _context.Carts.FirstOrDefaultAsync(x => x.Id == id);
       if (model == null)
       {
-        return ServiceResultFactory.Success;
+        return ServiceResultFactory.NotFound;
       }
 
       _context.Carts.Remove(model);
 
       return await _context.SaveAsync(nameof(DeleteAsync));
+    }
+
+    public Task<ServiceResult> UpdateAsync(Cart model)
+    {
+      throw new NotImplementedException();
     }
 
     public void Dispose()

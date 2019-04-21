@@ -95,7 +95,7 @@ namespace DemoProject.BLL.Services
       var menuItemExist = await _context.MenuItems.AnyAsync(x => x.Id == model.MenuItemId);
       if (menuItemExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.MenuItemId), $"MenuItem not found with id: '{model.MenuItemId}'.");
+        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), $"MenuItem not found with id: '{model.MenuItemId}'.");
       }
 
       _context.ShopItems.Add(model);
@@ -106,17 +106,71 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
-    public Task<ServiceResult> UpdateAsync(ShopItem model)
+    public async Task<ServiceResult> UpdateAsync(ShopItem model)
     {
-      throw new NotImplementedException();
+      Check.NotNull(model, nameof(model));
+
+      var shopItem = await _context.ShopItems.FirstOrDefaultAsync(x => x.Id == model.Id);
+      if (shopItem == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      var changed = false;
+
+      // update menuItem
+      if (Utility.IsModified(shopItem.MenuItemId, model.MenuItemId))
+      {
+        var menuItemExist = await _context.MenuItems.AnyAsync(x => x.Id == model.MenuItemId);
+        if (menuItemExist == false)
+        {
+          return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), $"MenuItem not found with id: '{model.MenuItemId}'.");
+        }
+
+        shopItem.MenuItemId = model.MenuItemId;
+        changed = true;
+      }
+
+      // update title
+      if (Utility.IsModified(shopItem.Title, model.Title))
+      {
+        shopItem.Title = model.Title;
+        changed = true;
+      }
+
+      // update description
+      if (Utility.IsModified(shopItem.Description, model.Description))
+      {
+        shopItem.Description = model.Description;
+        changed = true;
+      }
+
+      // update imagepath
+      if (Utility.IsModified(shopItem.ImagePath, model.ImagePath))
+      {
+        shopItem.ImagePath = model.ImagePath;
+        changed = true;
+      }
+
+      if (changed == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), "Nothing to update.");
+      }
+
+      _context.ShopItems.Update(shopItem);
+
+      var result = await _context.SaveAsync(nameof(UpdateAsync));
+      result.SetModelIfSuccess(shopItem);
+
+      return result;
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await this.FindByAsync(x => x.Id == id);
+      var model = await _context.ShopItems.FirstOrDefaultAsync(x => x.Id == id);
       if (model == null)
       {
-        return ServiceResultFactory.Success;
+        return ServiceResultFactory.NotFound;
       }
 
       _context.ShopItems.Remove(model);

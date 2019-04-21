@@ -103,7 +103,7 @@ namespace DemoProject.BLL.Services
       var cartExist = await _context.Carts.AnyAsync(x => x.Id == model.CartId);
       if (cartExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.CartId), $"Cart not found with id: '{model.CartId}'.");
+        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), $"Cart not found with id: '{model.CartId}'.");
       }
 
       _context.Orders.Add(model);
@@ -114,17 +114,105 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
-    public Task<ServiceResult> UpdateAsync(Order model)
+    public async Task<ServiceResult> UpdateAsync(Order model)
     {
-      throw new NotImplementedException();
+      Check.NotNull(model, nameof(model));
+
+      var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == model.Id);
+      if (order == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      if (order.DateOfApproved.HasValue || order.DateOfRejected.HasValue || order.DateOfClosed.HasValue)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), $"Order is already proccessed.");
+      }
+
+      var changed = false;
+
+      // update name
+      if (Utility.IsModified(order.Name, model.Name))
+      {
+        order.Name = model.Name;
+        changed = true;
+      }
+
+      // update mobile
+      if (Utility.IsModified(order.Mobile, model.Mobile))
+      {
+        order.Mobile = model.Mobile;
+        changed = true;
+      }
+
+      // update address
+      if (Utility.IsModified(order.Address, model.Address))
+      {
+        order.Address = model.Address;
+        changed = true;
+      }
+
+      // update comment
+      if (Utility.IsModified(order.Comment, model.Comment))
+      {
+        order.Comment = model.Comment;
+        changed = true;
+      }
+
+      if (changed == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), "Nothing to update.");
+      }
+
+      _context.Orders.Update(order);
+
+      var result = await _context.SaveAsync(nameof(UpdateAsync));
+      result.SetModelIfSuccess(order);
+
+      return result;
+    }
+
+    public async Task<ServiceResult> ProccessOrderAsync(ProcessOrderType processOrder, Guid id, Guid userId)
+    {
+      var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
+      if (userExist == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(ProccessOrderAsync), "User not found.");
+      }
+
+      var order = await this.FindByAsync(x => x.Id == id);
+      if (order == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      ServiceResult result;
+      switch (processOrder)
+      {
+        case ProcessOrderType.Approve:
+          result = await this.ApproveAsync(order, userId);
+          break;
+        case ProcessOrderType.Reject:
+          result = await this.RejectAsync(order, userId);
+          break;
+        case ProcessOrderType.Close:
+          result = await this.CloseAsync(order, userId);
+          break;
+        default:
+          throw new NotImplementedException(nameof(ProcessOrderType));
+      }
+
+      result.SetModelIfSuccess(order);
+
+      return result;
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await this.FindByAsync(x => x.Id == id);
+      var model = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
       if (model == null)
       {
-        return ServiceResultFactory.Success;
+        return ServiceResultFactory.NotFound;
       }
 
       _context.Orders.Remove(model);
@@ -132,32 +220,11 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync(nameof(DeleteAsync));
     }
 
-    public Task<ServiceResult> ProccessOrderAsync(ProcessOrderType processOrder, Guid id, Guid userId)
+    private async Task<ServiceResult> ApproveAsync(Order order, Guid userId)
     {
-      switch (processOrder)
-      {
-        case ProcessOrderType.Approve:
-          return this.ApproveAsync(id, userId);
-        case ProcessOrderType.Reject:
-          return this.RejectAsync(id, userId);
-        case ProcessOrderType.Close:
-          return this.CloseAsync(id, userId);
-        default:
-          throw new NotImplementedException(nameof(ProcessOrderType));
-      }
-    }
-
-    private async Task<ServiceResult> ApproveAsync(Guid id, Guid userId)
-    {
-      var order = await this.FindByAsync(x => x.Id == id);
-      if (order == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
       if (order.DateOfApproved.HasValue)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "Order is already approved.");
+        return ServiceResultFactory.Success;
       }
 
       if (order.DateOfRejected.HasValue)
@@ -170,12 +237,6 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "Order is already closed.");
       }
 
-      var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
-      if (userExist == false)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(ApproveAsync), "User not found.");
-      }
-
       order.DateOfApproved = DateTime.UtcNow;
       order.ApproveUserId = userId;
 
@@ -184,12 +245,11 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync(nameof(ApproveAsync));
     }
 
-    private async Task<ServiceResult> RejectAsync(Guid id, Guid userId)
+    private async Task<ServiceResult> RejectAsync(Order order, Guid userId)
     {
-      var order = await this.FindByAsync(x => x.Id == id);
-      if (order == null)
+      if (order.DateOfRejected.HasValue)
       {
-        return ServiceResultFactory.NotFound;
+        return ServiceResultFactory.Success;
       }
 
       if (order.DateOfApproved.HasValue)
@@ -197,20 +257,9 @@ namespace DemoProject.BLL.Services
         return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already approved.");
       }
 
-      if (order.DateOfRejected.HasValue)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already rejected.");
-      }
-
       if (order.DateOfClosed.HasValue)
       {
         return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "Order is already closed.");
-      }
-
-      var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
-      if (userExist == false)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(RejectAsync), "User not found.");
       }
 
       order.DateOfRejected = DateTime.UtcNow;
@@ -221,28 +270,16 @@ namespace DemoProject.BLL.Services
       return await _context.SaveAsync(nameof(RejectAsync));
     }
 
-    private async Task<ServiceResult> CloseAsync(Guid id, Guid userId)
+    private async Task<ServiceResult> CloseAsync(Order order, Guid userId)
     {
-      var order = await this.FindByAsync(x => x.Id == id);
-      if (order == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
       if (order.DateOfClosed.HasValue)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "Order is already closed.");
+        return ServiceResultFactory.Success;
       }
       
       if (order.DateOfApproved.HasValue == false && order.DateOfRejected.HasValue == false)
       {
         return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "Order should be approved or rejected.");
-      }
-
-      var userExist = await _context.Users.AnyAsync(x => x.Id == userId);
-      if (userExist == false)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(CloseAsync), "User not found.");
       }
 
       order.DateOfClosed = DateTime.UtcNow;

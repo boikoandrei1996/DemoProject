@@ -25,26 +25,6 @@ namespace DemoProject.BLL.Services
       _passwordManager = passwordManager;
     }
 
-    public async Task<ServiceResult> AuthenticateAsync(string username, string password)
-    {
-      Check.NotNullOrEmpty(username, nameof(username));
-      Check.NotNullOrEmpty(password, nameof(password));
-
-      var user = await this.FindByAsync(x => x.Username == username);
-      if (user == null)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Username was not found.");
-      }
-
-      var success = _passwordManager.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
-      if (success == false)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Password is wrong.");
-      }
-
-      return ServiceResultFactory.SuccessResult(user);
-    }
-
     public async Task<Page<AppUser>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<AppUser, bool>> filter = null)
     {
       Check.Positive(pageIndex, nameof(pageIndex));
@@ -109,31 +89,49 @@ namespace DemoProject.BLL.Services
       return _context.Users.AnyAsync(filter);
     }
 
+    public async Task<ServiceResult> AuthenticateAsync(string username, string password)
+    {
+      Check.NotNullOrEmpty(username, nameof(username));
+      Check.NotNullOrEmpty(password, nameof(password));
+
+      var user = await this.FindByAsync(x => x.Username == username);
+      if (user == null)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Username was not found.");
+      }
+
+      var success = _passwordManager.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+      if (success == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Password is wrong.");
+      }
+
+      return ServiceResultFactory.SuccessResult(user);
+    }
+
     public async Task<ServiceResult> AddAsync(AppUser model, string password)
     {
       Check.NotNull(model, nameof(model));
+      Check.NotNullOrEmpty(model.Username, nameof(model.Username));
+      Check.NotNullOrEmpty(model.Email, nameof(model.Email));
       Check.NotNullOrEmpty(password, nameof(password));
 
-      var usernameExist = await this.ExistAsync(x => x.Username == model.Username);
+      var usernameExist = await this.ExistAsync(x => model.Username.Equals(x.Username, StringComparison.OrdinalIgnoreCase));
       if (usernameExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Username is already taken.");
       }
 
-      var emailExist = await this.ExistAsync(x => x.Email == model.Email);
+      var emailExist = await this.ExistAsync(x => model.Email.Equals(x.Email, StringComparison.OrdinalIgnoreCase));
       if (emailExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Email is already taken.");
       }
 
-      var role = Role.Normalize(model.Role);
-      if (string.IsNullOrEmpty(role))
+      model.Role = Role.Normalize(model.Role);
+      if (string.IsNullOrEmpty(model.Role))
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Incorrect role name.");
-      }
-      else
-      {
-        model.Role = role;
       }
 
       var (passwordHash, passwordSalt) = _passwordManager.CreatePasswordHash(password);
@@ -148,6 +146,27 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
+    public async Task<ServiceResult> ConfirmEmailAsync(string email)
+    {
+      Check.NotNullOrEmpty(email, nameof(email));
+
+      var user = await this.FindByAsync(x => email.Equals(x.Email, StringComparison.OrdinalIgnoreCase));
+      if (user == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      user.EmailConfirmed = true;
+      user.LastModified = DateTime.UtcNow;
+
+      _context.Users.Update(user);
+
+      var result = await _context.SaveAsync(nameof(UpdatePasswordAsync));
+      result.SetModelIfSuccess(user);
+
+      return result;
+    }
+
     public async Task<ServiceResult> UpdatePasswordAsync(Guid id, string newPassword)
     {
       Check.NotNullOrEmpty(newPassword, nameof(newPassword));
@@ -155,7 +174,7 @@ namespace DemoProject.BLL.Services
       var user = await this.FindByAsync(x => x.Id == id);
       if (user == null)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(UpdatePasswordAsync), $"User not found with id: {id}.");
+        return ServiceResultFactory.NotFound;
       }
 
       var (passwordHash, passwordSalt) = _passwordManager.CreatePasswordHash(newPassword);
@@ -167,21 +186,118 @@ namespace DemoProject.BLL.Services
       _context.Users.Update(user);
 
       var result = await _context.SaveAsync(nameof(UpdatePasswordAsync));
+      result.SetModelIfSuccess(user);
 
       return result;
     }
 
-    public Task<ServiceResult> UpdateAsync(AppUser model)
+    public async Task<ServiceResult> UpdateRoleAsync(Guid id, string newRole)
     {
-      throw new NotImplementedException();
+      Check.NotNullOrEmpty(newRole, nameof(newRole));
+
+      var user = await this.FindByAsync(x => x.Id == id);
+      if (user == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      newRole = Role.Normalize(newRole);
+      if (string.IsNullOrEmpty(newRole))
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(UpdateRoleAsync), "Incorrect role name.");
+      }
+
+      user.Role = newRole;
+      user.LastModified = DateTime.UtcNow;
+
+      _context.Users.Update(user);
+
+      var result = await _context.SaveAsync(nameof(UpdateRoleAsync));
+      result.SetModelIfSuccess(user);
+
+      return result;
+    }
+
+    public async Task<ServiceResult> UpdateAsync(AppUser model)
+    {
+      Check.NotNull(model, nameof(model));
+
+      var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.Id);
+      if (user == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      var changed = false;
+
+      // update username
+      if (Utility.IsModified(user.Username, model.Username))
+      {
+        var usernameExist = await this.ExistAsync(x => x.Username == model.Username);
+        if (usernameExist)
+        {
+          return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), "Username is already taken.");
+        }
+
+        user.Username = model.Username;
+        changed = true;
+      }
+
+      // update email
+      if (Utility.IsModified(user.Email, model.Email))
+      {
+        var emailExist = await this.ExistAsync(x => x.Email == model.Email);
+        if (emailExist)
+        {
+          return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), "Email is already taken.");
+        }
+
+        user.Email = model.Email;
+        user.EmailConfirmed = false;
+        changed = true;
+      }
+
+      // update firstname
+      if (Utility.IsModified(user.FirstName, model.FirstName))
+      {
+        user.FirstName = model.FirstName;
+        changed = true;
+      }
+
+      // update lastname
+      if (Utility.IsModified(user.LastName, model.LastName))
+      {
+        user.LastName = model.LastName;
+        changed = true;
+      }
+
+      // update phonenumber
+      if (Utility.IsModified(user.PhoneNumber, model.PhoneNumber))
+      {
+        user.PhoneNumber = model.PhoneNumber;
+        changed = true;
+      }
+
+      if (changed == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), "Nothing to update.");
+      }
+
+      user.LastModified = DateTime.UtcNow;
+      _context.Users.Update(user);
+
+      var result = await _context.SaveAsync(nameof(UpdateAsync));
+      result.SetModelIfSuccess(user);
+
+      return result;
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await this.FindByAsync(x => x.Id == id);
+      var model = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
       if (model == null)
       {
-        return ServiceResultFactory.Success;
+        return ServiceResultFactory.NotFound;
       }
 
       _context.Users.Remove(model);

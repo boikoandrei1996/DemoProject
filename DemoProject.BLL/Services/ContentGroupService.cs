@@ -115,15 +115,47 @@ namespace DemoProject.BLL.Services
     {
       Check.NotNull(model, nameof(model));
 
-      if (await _context.ContentGroups.AnyAsync(x => x.Id == model.Id) == false)
+      var contentGroup = await _context.ContentGroups.FirstOrDefaultAsync(x => x.Id == model.Id);
+      if (contentGroup == null)
       {
         return ServiceResultFactory.NotFound;
       }
 
-      _context.ContentGroups.Update(model);
+      var changed = false;
+
+      // update title
+      if (Utility.IsModified(contentGroup.Title, model.Title))
+      {
+        contentGroup.Title = model.Title;
+        changed = true;
+      }
+
+      // update order
+      if (Utility.IsModified(contentGroup.Order, model.Order))
+      {
+        contentGroup.Order = model.Order;
+        changed = true;
+      }
+
+      // update groupname
+      if (model.GroupName != contentGroup.GroupName)
+      {
+        contentGroup.GroupName = model.GroupName;
+        changed = true;
+      }
+
+      if (changed == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), "Nothing to update.");
+      }
+
+      _context.ContentGroups.Update(contentGroup);
       _context.History.Add(ChangeHistory.Create(model.GroupName, ActionType.Modify));
 
-      return await _context.SaveAsync(nameof(UpdateAsync));
+      var result = await _context.SaveAsync(nameof(UpdateAsync));
+      result.SetModelIfSuccess(contentGroup);
+
+      return result;
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -131,7 +163,7 @@ namespace DemoProject.BLL.Services
       var model = await _context.ContentGroups.FirstOrDefaultAsync(x => x.Id == id);
       if (model == null)
       {
-        return ServiceResultFactory.Success;
+        return ServiceResultFactory.NotFound;
       }
 
       _context.ContentGroups.Remove(model);

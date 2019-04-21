@@ -28,12 +28,11 @@ namespace DemoProject.BLL.Services
     public async Task<ServiceResult> AddAsync(ShopItemDetail model)
     {
       Check.NotNull(model, nameof(model));
-      Check.Positive(model.Price, nameof(model.Price));
 
       var shopItemExist = await _context.ShopItems.AnyAsync(x => x.Id == model.ShopItemId);
       if (shopItemExist == false)
       {
-        return ServiceResultFactory.BadRequestResult(nameof(model.ShopItemId), $"ShopItem not found with id: '{model.ShopItemId}'.");
+        return ServiceResultFactory.BadRequestResult(nameof(AddAsync), $"ShopItem not found with id: '{model.ShopItemId}'.");
       }
 
       _context.ShopItemDetails.Add(model);
@@ -44,9 +43,70 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
-    public Task<ServiceResult> UpdateAsync(ShopItemDetail model)
+    public async Task<ServiceResult> UpdateAsync(ShopItemDetail model)
     {
-      throw new NotImplementedException();
+      Check.NotNull(model, nameof(model));
+
+      var shopItemDetail = await _context.ShopItemDetails.FirstOrDefaultAsync(x => x.Id == model.Id);
+      if (shopItemDetail == null)
+      {
+        return ServiceResultFactory.NotFound;
+      }
+
+      var changed = false;
+
+      // update shopItem
+      if (Utility.IsModified(shopItemDetail.ShopItemId, model.ShopItemId))
+      {
+        var shopItemExist = await _context.ShopItems.AnyAsync(x => x.Id == model.ShopItemId);
+        if (shopItemExist == false)
+        {
+          return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), $"ShopItem not found with id: '{model.ShopItemId}'.");
+        }
+
+        shopItemDetail.ShopItemId = model.ShopItemId;
+        changed = true;
+      }
+
+      // update suborder
+      if (Utility.IsModified(shopItemDetail.SubOrder, model.SubOrder))
+      {
+        shopItemDetail.SubOrder = model.SubOrder;
+        changed = true;
+      }
+
+      // update price
+      if (Utility.IsModified(shopItemDetail.Price, model.Price))
+      {
+        shopItemDetail.Price = model.Price;
+        changed = true;
+      }
+
+      // update kind
+      if (Utility.IsModified(shopItemDetail.Kind, model.Kind))
+      {
+        shopItemDetail.Kind = model.Kind;
+        changed = true;
+      }
+
+      // update quantity
+      if (Utility.IsModified(shopItemDetail.Quantity, model.Quantity))
+      {
+        shopItemDetail.Quantity = model.Quantity;
+        changed = true;
+      }
+
+      if (changed == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), "Nothing to update.");
+      }
+
+      _context.ShopItemDetails.Update(shopItemDetail);
+
+      var result = await _context.SaveAsync(nameof(UpdateAsync));
+      result.SetModelIfSuccess(shopItemDetail);
+
+      return result;
     }
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
@@ -54,7 +114,7 @@ namespace DemoProject.BLL.Services
       var model = await _context.ShopItemDetails.FirstOrDefaultAsync(x => x.Id == id);
       if (model == null)
       {
-        return ServiceResultFactory.Success;
+        return ServiceResultFactory.NotFound;
       }
 
       _context.ShopItemDetails.Remove(model);
