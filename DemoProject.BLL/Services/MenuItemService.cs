@@ -12,13 +12,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
-  public class MenuItemService : IMenuItemService
+  public class MenuItemService : BaseService<MenuItem>, IMenuItemService
   {
-    private readonly IDbContext _context;
-
-    public MenuItemService(IDbContext context)
+    public MenuItemService(IDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public Task<ChangeHistory> GetHistoryRecordAsync()
@@ -53,13 +50,6 @@ namespace DemoProject.BLL.Services
       return _context.MenuItems.AsNoTracking()
         .Include(x => x.Items)
         .FirstOrDefaultAsync(filter);
-    }
-
-    public Task<bool> ExistAsync(Expression<Func<MenuItem, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.MenuItems.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(MenuItem model)
@@ -133,25 +123,6 @@ namespace DemoProject.BLL.Services
       result.SetModelIfSuccess(menuItem);
 
       return result;
-    }
-
-    public async Task<ServiceResult> DeleteAsync(Guid id)
-    {
-      var model = await _context.MenuItems.FirstOrDefaultAsync(x => x.Id == id);
-      if (model == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-      
-      _context.MenuItems.Remove(model);
-      _context.History.Add(ChangeHistory.Create(TableName.MenuItem, ActionType.Delete));
-
-      return await _context.SaveAsync(nameof(DeleteAsync));
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL;
 using DemoProject.DAL.Models;
@@ -9,20 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
-  public class ShopItemDetailService : IShopItemDetailService
+  public class ShopItemDetailService : BaseService<ShopItemDetail>, IShopItemDetailService
   {
-    private readonly IDbContext _context;
-
-    public ShopItemDetailService(IDbContext context)
+    public ShopItemDetailService(IDbContext context) : base(context)
     {
-      _context = context;
-    }
-
-    public Task<bool> ExistAsync(Expression<Func<ShopItemDetail, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.ShopItemDetails.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(ShopItemDetail model)
@@ -107,24 +95,6 @@ namespace DemoProject.BLL.Services
       result.SetModelIfSuccess(shopItemDetail);
 
       return result;
-    }
-
-    public async Task<ServiceResult> DeleteAsync(Guid id)
-    {
-      var model = await _context.ShopItemDetails.FirstOrDefaultAsync(x => x.Id == id);
-      if (model == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      _context.ShopItemDetails.Remove(model);
-
-      return await _context.SaveAsync(nameof(DeleteAsync));
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

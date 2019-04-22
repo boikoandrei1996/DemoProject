@@ -12,16 +12,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
-  public class UserService : IUserService
+  public sealed class UserService : BaseService<AppUser>, IUserService
   {
-    private readonly IDbContext _context;
     private readonly IPasswordManager _passwordManager;
 
     public UserService(
       IDbContext context,
-      IPasswordManager passwordManager)
+      IPasswordManager passwordManager) : base(context)
     {
-      _context = context;
       _passwordManager = passwordManager;
     }
 
@@ -80,13 +78,6 @@ namespace DemoProject.BLL.Services
         .Include(x => x.RejectedOrders)
         .Include(x => x.ClosedOrders)
         .FirstOrDefaultAsync(filter);
-    }
-
-    public Task<bool> ExistAsync(Expression<Func<AppUser, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.Users.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AuthenticateAsync(string username, string password)
@@ -292,27 +283,9 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
-    public async Task<ServiceResult> DeleteAsync(Guid id)
-    {
-      var model = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
-      if (model == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      _context.Users.Remove(model);
-
-      return await _context.SaveAsync(nameof(DeleteAsync));
-    }
-
     public Task<ServiceResult> AddAsync(AppUser model)
     {
       throw new NotImplementedException();
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

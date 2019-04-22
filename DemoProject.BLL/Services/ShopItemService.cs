@@ -11,13 +11,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
-  public class ShopItemService : IShopItemService
+  public class ShopItemService : BaseService<ShopItem>, IShopItemService
   {
-    private readonly IDbContext _context;
-
-    public ShopItemService(IDbContext context)
+    public ShopItemService(IDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public async Task<Page<ShopItem>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<ShopItem, bool>> filter = null)
@@ -79,13 +76,6 @@ namespace DemoProject.BLL.Services
       return _context.ShopItems.AsNoTracking()
         .Include(x => x.Details)
         .FirstOrDefaultAsync(filter);
-    }
-
-    public Task<bool> ExistAsync(Expression<Func<ShopItem, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.ShopItems.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(ShopItem model)
@@ -163,24 +153,6 @@ namespace DemoProject.BLL.Services
       result.SetModelIfSuccess(shopItem);
 
       return result;
-    }
-
-    public async Task<ServiceResult> DeleteAsync(Guid id)
-    {
-      var model = await _context.ShopItems.FirstOrDefaultAsync(x => x.Id == id);
-      if (model == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      _context.ShopItems.Remove(model);
-
-      return await _context.SaveAsync(nameof(DeleteAsync));
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

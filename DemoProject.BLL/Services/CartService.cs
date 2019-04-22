@@ -11,13 +11,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
-  public class CartService : ICartService
+  public class CartService : BaseService<Cart>, ICartService
   {
-    private readonly IDbContext _context;
-
-    public CartService(IDbContext context)
+    public CartService(IDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public async Task<Page<Cart>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Cart, bool>> filter = null)
@@ -75,13 +72,6 @@ namespace DemoProject.BLL.Services
           .ThenInclude(x => x.ShopItemDetail)
           .ThenInclude(x => x.ShopItem)
         .FirstOrDefaultAsync(filter);
-    }
-
-    public Task<bool> ExistAsync(Expression<Func<Cart, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.Carts.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(Cart model)
@@ -182,27 +172,9 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
-    public async Task<ServiceResult> DeleteAsync(Guid id)
-    {
-      var model = await _context.Carts.FirstOrDefaultAsync(x => x.Id == id);
-      if (model == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      _context.Carts.Remove(model);
-
-      return await _context.SaveAsync(nameof(DeleteAsync));
-    }
-
     public Task<ServiceResult> UpdateAsync(Cart model)
     {
       throw new NotImplementedException();
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

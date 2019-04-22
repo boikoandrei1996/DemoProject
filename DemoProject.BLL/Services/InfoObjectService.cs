@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL;
 using DemoProject.DAL.Enums;
@@ -10,20 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
-  public class InfoObjectService : IInfoObjectService
+  public class InfoObjectService : BaseService<InfoObject>, IInfoObjectService
   {
-    private readonly IDbContext _context;
-
-    public InfoObjectService(IDbContext context)
+    public InfoObjectService(IDbContext context) : base(context)
     {
-      _context = context;
-    }
-
-    public Task<bool> ExistAsync(Expression<Func<InfoObject, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.InfoObjects.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(InfoObject model)
@@ -103,25 +91,6 @@ namespace DemoProject.BLL.Services
       result.SetModelIfSuccess(infoObject);
 
       return result;
-    }
-
-    public async Task<ServiceResult> DeleteAsync(Guid id)
-    {
-      var model = await _context.InfoObjects.FirstOrDefaultAsync(x => x.Id == id);
-      if (model == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      _context.InfoObjects.Remove(model);
-      _context.History.Add(ChangeHistory.Create(TableName.InfoObject, ActionType.Delete));
-
-      return await _context.SaveAsync(nameof(DeleteAsync));
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

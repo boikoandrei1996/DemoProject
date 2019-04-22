@@ -11,13 +11,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
-  public class OrderService : IOrderService
+  public class OrderService : BaseService<Order>, IOrderService
   {
-    private readonly IDbContext _context;
-
-    public OrderService(IDbContext context)
+    public OrderService(IDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public async Task<Page<Order>> GetPageAsync(int pageIndex, int pageSize, Expression<Func<Order, bool>> filter = null)
@@ -87,13 +84,6 @@ namespace DemoProject.BLL.Services
         .Include(x => x.RejectUser)
         .Include(x => x.CloseUser)
         .FirstOrDefaultAsync(filter);
-    }
-
-    public Task<bool> ExistAsync(Expression<Func<Order, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.Orders.AnyAsync(filter);
     }
 
     public async Task<ServiceResult> AddAsync(Order model)
@@ -207,19 +197,6 @@ namespace DemoProject.BLL.Services
       return result;
     }
 
-    public async Task<ServiceResult> DeleteAsync(Guid id)
-    {
-      var model = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
-      if (model == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      _context.Orders.Remove(model);
-
-      return await _context.SaveAsync(nameof(DeleteAsync));
-    }
-
     private async Task<ServiceResult> ApproveAsync(Order order, Guid userId)
     {
       if (order.DateOfApproved.HasValue)
@@ -288,11 +265,6 @@ namespace DemoProject.BLL.Services
       _context.Orders.Update(order);
 
       return await _context.SaveAsync(nameof(CloseAsync));
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

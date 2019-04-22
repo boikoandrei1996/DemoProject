@@ -12,13 +12,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoProject.BLL.Services
 {
-  public class ContentGroupService : IContentGroupService
+  public class ContentGroupService : BaseService<ContentGroup>, IContentGroupService
   {
-    private readonly IDbContext _context;
-
-    public ContentGroupService(IDbContext context)
+    public ContentGroupService(IDbContext context) : base(context)
     {
-      _context = context;
     }
 
     public Task<ChangeHistory> GetHistoryRecordAsync(TableName table)
@@ -91,13 +88,6 @@ namespace DemoProject.BLL.Services
         .FirstOrDefaultAsync(filter);
     }
 
-    public Task<bool> ExistAsync(Expression<Func<ContentGroup, bool>> filter)
-    {
-      Check.NotNull(filter, nameof(filter));
-
-      return _context.ContentGroups.AnyAsync(filter);
-    }
-
     public async Task<ServiceResult> AddAsync(ContentGroup model)
     {
       Check.NotNull(model, nameof(model));
@@ -156,25 +146,6 @@ namespace DemoProject.BLL.Services
       result.SetModelIfSuccess(contentGroup);
 
       return result;
-    }
-
-    public async Task<ServiceResult> DeleteAsync(Guid id)
-    {
-      var model = await _context.ContentGroups.FirstOrDefaultAsync(x => x.Id == id);
-      if (model == null)
-      {
-        return ServiceResultFactory.NotFound;
-      }
-
-      _context.ContentGroups.Remove(model);
-      _context.History.Add(ChangeHistory.Create(model.GroupName, ActionType.Delete));
-
-      return await _context.SaveAsync(nameof(DeleteAsync));
-    }
-
-    public void Dispose()
-    {
-      _context.Dispose();
     }
   }
 }

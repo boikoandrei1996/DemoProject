@@ -34,13 +34,12 @@ namespace DemoProject.UnitTest
 
       _context = new Mock<IDbContext>();
       _context.Setup(x => x.Users).Returns(_dbSet.Object);
+      _context.Setup(x => x.Set<AppUser>()).Returns(_dbSet.Object);
     }
 
     [Fact]
     public async Task Delete_Id_Invalid_Result_Success()
     {
-      _context.Setup(x => x.Users).Returns(_dbSet.Object);
-
       // Arrange
       var userService = new UserService(_context.Object, null);
 

@@ -36,6 +36,7 @@ namespace DemoProject.UnitTest
 
       _context = new Mock<IDbContext>();
       _context.Setup(x => x.Users).Returns(_dbSet.Object);
+      _context.Setup(x => x.Set<AppUser>()).Returns(_dbSet.Object);
 
       _passwordManager = new Mock<IPasswordManager>();
       _passwordManager
