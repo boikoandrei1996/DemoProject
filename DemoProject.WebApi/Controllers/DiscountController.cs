@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Enums;
+using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.DiscountApiModels;
@@ -19,7 +20,7 @@ namespace DemoProject.WebApi.Controllers
   [ProducesResponseType(StatusCodes.Status404NotFound)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ServiceError>))]*/
-  public class DiscountController : Controller
+  public sealed class DiscountController : Controller
   {
     private readonly IContentGroupService _contentGroupService;
 
@@ -70,20 +71,32 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/discount
     [HttpPost]
-    public Task<ServiceResult> Add([FromBody]DiscountAddModel apiEntity)
+    public async Task<ServiceResult> Add([FromBody]DiscountAddModel apiEntity)
     {
       var entity = DiscountAddModel.Map(apiEntity);
 
-      return _contentGroupService.AddAsync(entity);
+      var result = await _contentGroupService.AddAsync(entity);
+      if (result.TryCastModel(out ContentGroup contentGroup))
+      {
+        result.ViewModel = DiscountViewModel.Map(contentGroup);
+      }
+
+      return result;
     }
 
     // PUT api/discount/{id}
     [HttpPut("{id:guid}")]
-    public Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
+    public async Task<ServiceResult> Edit(Guid id, [FromBody]DiscountEditModel apiEntity)
     {
       var entity = DiscountEditModel.Map(apiEntity, id);
 
-      return _contentGroupService.UpdateAsync(entity);
+      var result = await _contentGroupService.UpdateAsync(entity);
+      if (result.TryCastModel(out ContentGroup contentGroup))
+      {
+        result.ViewModel = DiscountViewModel.Map(contentGroup);
+      }
+
+      return result;
     }
 
     // DELETE api/discount/{id}

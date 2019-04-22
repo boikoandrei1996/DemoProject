@@ -6,7 +6,7 @@ using DemoProject.WebApi.Models.OrderApiModels;
 
 namespace DemoProject.WebApi.Models.UserApiModels
 {
-  public class UserViewModel
+  public sealed class UserViewModel
   {
     public Guid Id { get; set; }
     public string Username { get; set; }

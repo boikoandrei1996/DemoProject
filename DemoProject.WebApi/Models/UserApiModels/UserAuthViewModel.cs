@@ -2,14 +2,14 @@
 
 namespace DemoProject.WebApi.Models.UserApiModels
 {
-  public class UserAuthResponseModel
+  public sealed class UserAuthViewModel
   {
     public UserViewModel User { get; set; }
     public string Token { get; set; }
 
-    public static UserAuthResponseModel Map(AppUser model, string token)
+    public static UserAuthViewModel Map(AppUser model, string token)
     {
-      return new UserAuthResponseModel
+      return new UserAuthViewModel
       {
         User = UserViewModel.Map(model),
         Token = token

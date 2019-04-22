@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
+using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.MenuItemApiModels;
@@ -14,7 +15,7 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  public class MenuItemController : Controller
+  public sealed class MenuItemController : Controller
   {
     private readonly IMenuItemService _menuItemService;
 
@@ -53,20 +54,32 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/menuitem
     [HttpPost]
-    public Task<ServiceResult> Add([FromBody]MenuItemAddModel apiEntity)
+    public async Task<ServiceResult> Add([FromBody]MenuItemAddModel apiEntity)
     {
       var entity = MenuItemAddModel.Map(apiEntity);
 
-      return _menuItemService.AddAsync(entity);
+      var result = await _menuItemService.AddAsync(entity);
+      if (result.TryCastModel(out MenuItem menuItem))
+      {
+        result.ViewModel = MenuItemViewModel.Map(menuItem);
+      }
+
+      return result;
     }
 
     // PUT api/menuitem/{id}
     [HttpPut("{id:guid}")]
-    public Task<ServiceResult> Edit(Guid id, [FromBody]MenuItemEditModel apiEntity)
+    public async Task<ServiceResult> Edit(Guid id, [FromBody]MenuItemEditModel apiEntity)
     {
       var entity = MenuItemEditModel.Map(apiEntity, id);
 
-      return _menuItemService.UpdateAsync(entity);
+      var result = await _menuItemService.UpdateAsync(entity);
+      if (result.TryCastModel(out MenuItem menuItem))
+      {
+        result.ViewModel = MenuItemViewModel.Map(menuItem);
+      }
+
+      return result;
     }
 
     // DELETE api/menuitem/{id}

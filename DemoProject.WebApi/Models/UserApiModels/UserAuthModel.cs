@@ -2,7 +2,7 @@
 
 namespace DemoProject.WebApi.Models.UserApiModels
 {
-  public class UserAuthRequestModel
+  public sealed class UserAuthModel
   {
     [Required]
     [StringLength(100, MinimumLength = 5)]

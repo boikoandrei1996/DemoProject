@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
+using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.Shared;
@@ -14,7 +15,7 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  public class ShopItemController : Controller
+  public sealed class ShopItemController : Controller
   {
     private readonly IShopItemService _shopItemService;
 
@@ -56,20 +57,32 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/shopitem
     [HttpPost]
-    public Task<ServiceResult> Add([FromBody]ShopItemAddModel apiEntity)
+    public async Task<ServiceResult> Add([FromBody]ShopItemAddModel apiEntity)
     {
       var entity = ShopItemAddModel.Map(apiEntity);
 
-      return _shopItemService.AddAsync(entity);
+      var result = await _shopItemService.AddAsync(entity);
+      if (result.TryCastModel(out ShopItem shopItem))
+      {
+        result.ViewModel = ShopItemViewModel.Map(shopItem);
+      }
+
+      return result;
     }
 
     // PUT api/shopitem/{id}
     [HttpPut("{id:guid}")]
-    public Task<ServiceResult> Edit(Guid id, [FromBody]ShopItemEditModel apiEntity)
+    public async Task<ServiceResult> Edit(Guid id, [FromBody]ShopItemEditModel apiEntity)
     {
       var entity = ShopItemEditModel.Map(apiEntity, id);
 
-      return _shopItemService.UpdateAsync(entity);
+      var result = await _shopItemService.UpdateAsync(entity);
+      if (result.TryCastModel(out ShopItem shopItem))
+      {
+        result.ViewModel = ShopItemViewModel.Map(shopItem);
+      }
+
+      return result;
     }
 
     // DELETE api/shopitem/{id}

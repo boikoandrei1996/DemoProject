@@ -80,24 +80,23 @@ namespace DemoProject.BLL.Services
         .FirstOrDefaultAsync(filter);
     }
 
+    public async Task<ServiceResult> AuthenticateAsync(Guid id, string password)
+    {
+      Check.NotNullOrEmpty(password, nameof(password));
+
+      var user = await this.FindByAsync(x => x.Id == id);
+
+      return this.AuthUser(user, password);
+    }
+
     public async Task<ServiceResult> AuthenticateAsync(string username, string password)
     {
       Check.NotNullOrEmpty(username, nameof(username));
       Check.NotNullOrEmpty(password, nameof(password));
 
       var user = await this.FindByAsync(x => x.Username == username);
-      if (user == null)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Username was not found.");
-      }
 
-      var success = _passwordManager.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
-      if (success == false)
-      {
-        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Password is wrong.");
-      }
-
-      return ServiceResultFactory.SuccessResult(user);
+      return this.AuthUser(user, password);
     }
 
     public async Task<ServiceResult> AddAsync(AppUser model, string password)
@@ -286,6 +285,22 @@ namespace DemoProject.BLL.Services
     public Task<ServiceResult> AddAsync(AppUser model)
     {
       throw new NotImplementedException();
+    }
+
+    private ServiceResult AuthUser(AppUser user, string password)
+    {
+      if (user == null)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Username was not found.");
+      }
+
+      var success = _passwordManager.VerifyPassword(password, user.PasswordHash, user.PasswordSalt);
+      if (success == false)
+      {
+        return ServiceResultFactory.BadRequestResult(nameof(AuthenticateAsync), "Password is wrong.");
+      }
+
+      return ServiceResultFactory.SuccessResult(user);
     }
   }
 }

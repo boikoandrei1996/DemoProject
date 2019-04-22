@@ -4,7 +4,6 @@ using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.ImageApiModels;
 using DemoProject.WebApi.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoProject.WebApi.Controllers
@@ -12,7 +11,7 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  public class ImageController : Controller
+  public sealed class ImageController : Controller
   {
     private readonly ImageService _imageService;
 

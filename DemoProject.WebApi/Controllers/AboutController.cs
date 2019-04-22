@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Enums;
+using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.AboutUsApiModels;
@@ -16,7 +17,7 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  public class AboutController : Controller
+  public sealed class AboutController : Controller
   {
     private readonly IContentGroupService _contentGroupService;
 
@@ -72,21 +73,33 @@ namespace DemoProject.WebApi.Controllers
     // POST api/about
     [HttpPost]
     [ProducesResponseType(typeof(ServiceResult), StatusCodes.Status200OK)]
-    public Task<ServiceResult> Add([FromBody]AboutUsAddModel apiEntity)
+    public async Task<ServiceResult> Add([FromBody]AboutUsAddModel apiEntity)
     {
       var entity = AboutUsAddModel.Map(apiEntity);
 
-      return _contentGroupService.AddAsync(entity);
+      var result = await _contentGroupService.AddAsync(entity);
+      if (result.TryCastModel(out ContentGroup contentGroup))
+      {
+        result.ViewModel = AboutUsViewModel.Map(contentGroup);
+      }
+
+      return result;
     }
 
     // PUT api/about/{id}
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(ServiceResult), StatusCodes.Status200OK)]
-    public Task<ServiceResult> Edit(Guid id, [FromBody]AboutUsEditModel apiEntity)
+    public async Task<ServiceResult> Edit(Guid id, [FromBody]AboutUsEditModel apiEntity)
     {
       var entity = AboutUsEditModel.Map(apiEntity, id);
 
-      return _contentGroupService.UpdateAsync(entity);
+      var result = await _contentGroupService.UpdateAsync(entity);
+      if (result.TryCastModel(out ContentGroup contentGroup))
+      {
+        result.ViewModel = AboutUsViewModel.Map(contentGroup);
+      }
+
+      return result;
     }
 
     // DELETE api/about/{id}

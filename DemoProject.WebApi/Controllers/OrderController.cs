@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL;
 using DemoProject.BLL.Interfaces;
+using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.OrderApiModels;
@@ -15,7 +16,7 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  public class OrderController : Controller
+  public sealed class OrderController : Controller
   {
     private readonly IOrderService _orderService;
 
@@ -56,38 +57,62 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/order
     [HttpPost]
-    public Task<ServiceResult> Add([FromBody]OrderAddModel apiEntity)
+    public async Task<ServiceResult> Add([FromBody]OrderAddModel apiEntity)
     {
       var entity = OrderAddModel.Map(apiEntity);
 
-      return _orderService.AddAsync(entity);
+      var result = await _orderService.AddAsync(entity);
+      if (result.TryCastModel(out Order order))
+      {
+        result.ViewModel = OrderViewModel.Map(order);
+      }
+
+      return result;
     }
 
     // POST api/order/{id}/approve
     [HttpPost("{id:guid}/approve")]
-    public Task<ServiceResult> ApproveOrder(Guid id)
+    public async Task<ServiceResult> ApproveOrder(Guid id)
     {
       var userId = Guid.Empty;
 
-      return _orderService.ProccessOrderAsync(ProcessOrderType.Approve, id, userId) ;
+      var result = await _orderService.ProccessOrderAsync(ProcessOrderType.Approve, id, userId);
+      if (result.TryCastModel(out Order order))
+      {
+        result.ViewModel = OrderViewModel.Map(order);
+      }
+
+      return result;
     }
 
     // POST api/order/{id}/reject
     [HttpPost("{id:guid}/reject")]
-    public Task<ServiceResult> RejectOrder(Guid id)
+    public async Task<ServiceResult> RejectOrder(Guid id)
     {
       var userId = Guid.Empty;
 
-      return _orderService.ProccessOrderAsync(ProcessOrderType.Reject, id, userId);
+      var result = await _orderService.ProccessOrderAsync(ProcessOrderType.Reject, id, userId);
+      if (result.TryCastModel(out Order order))
+      {
+        result.ViewModel = OrderViewModel.Map(order);
+      }
+
+      return result;
     }
 
     // POST api/order/{id}/close
     [HttpPost("{id:guid}/close")]
-    public Task<ServiceResult> CloseOrder(Guid id)
+    public async Task<ServiceResult> CloseOrder(Guid id)
     {
       var userId = Guid.Empty;
 
-      return _orderService.ProccessOrderAsync(ProcessOrderType.Close, id, userId);
+      var result = await _orderService.ProccessOrderAsync(ProcessOrderType.Close, id, userId);
+      if (result.TryCastModel(out Order order))
+      {
+        result.ViewModel = OrderViewModel.Map(order);
+      }
+
+      return result;
     }
 
     // DELETE api/order/{id}

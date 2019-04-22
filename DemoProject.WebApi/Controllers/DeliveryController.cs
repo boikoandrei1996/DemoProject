@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Enums;
+using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.DeliveryApiModels;
@@ -15,7 +16,7 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  public class DeliveryController : Controller
+  public sealed class DeliveryController : Controller
   {
     private readonly IContentGroupService _contentGroupService;
 
@@ -66,20 +67,32 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/delivery
     [HttpPost]
-    public Task<ServiceResult> Add([FromBody]DeliveryAddModel apiEntity)
+    public async Task<ServiceResult> Add([FromBody]DeliveryAddModel apiEntity)
     {
       var entity = DeliveryAddModel.Map(apiEntity);
 
-      return _contentGroupService.AddAsync(entity);
+      var result = await _contentGroupService.AddAsync(entity);
+      if (result.TryCastModel(out ContentGroup contentGroup))
+      {
+        result.ViewModel = DeliveryViewModel.Map(contentGroup);
+      }
+
+      return result;
     }
 
     // PUT api/delivery/{id}
     [HttpPut("{id:guid}")]
-    public Task<ServiceResult> Edit(Guid id, [FromBody]DeliveryEditModel apiEntity)
+    public async Task<ServiceResult> Edit(Guid id, [FromBody]DeliveryEditModel apiEntity)
     {
       var entity = DeliveryEditModel.Map(apiEntity, id);
 
-      return _contentGroupService.UpdateAsync(entity);
+      var result = await _contentGroupService.UpdateAsync(entity);
+      if (result.TryCastModel(out ContentGroup contentGroup))
+      {
+        result.ViewModel = DeliveryViewModel.Map(contentGroup);
+      }
+
+      return result;
     }
 
     // DELETE api/delivery/{id}

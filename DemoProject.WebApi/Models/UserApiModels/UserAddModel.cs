@@ -3,7 +3,7 @@ using DemoProject.DAL.Models;
 
 namespace DemoProject.WebApi.Models.UserApiModels
 {
-  public class UserAddModel
+  public sealed class UserAddModel
   {
     [Required]
     [StringLength(100, MinimumLength = 5)]

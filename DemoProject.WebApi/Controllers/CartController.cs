@@ -15,7 +15,7 @@ namespace DemoProject.WebApi.Controllers
   [Route("api/[controller]")]
   [HandleServiceResult]
   [ValidateModelState]
-  public class CartController : Controller
+  public sealed class CartController : Controller
   {
     private readonly ICartService _cartService;
 
@@ -56,11 +56,17 @@ namespace DemoProject.WebApi.Controllers
 
     // POST api/cart
     [HttpPost]
-    public Task<ServiceResult> CreateNew([FromBody]CartAddModel apiEntity)
+    public async Task<ServiceResult> CreateNew([FromBody]CartAddModel apiEntity)
     {
       var entity = CartAddModel.Map(apiEntity);
 
-      return _cartService.AddAsync(entity);
+      var result = await _cartService.AddAsync(entity);
+      if (result.TryCastModel(out Cart cart))
+      {
+        result.ViewModel = CartViewModel.Map(cart);
+      }
+
+      return result;
     }
 
     // DELETE api/cart/{id}
@@ -75,12 +81,11 @@ namespace DemoProject.WebApi.Controllers
     public async Task<ServiceResult> AddItemToCart(Guid id, [FromBody]AddItemToCartModel apiEntity)
     {
       var result = await _cartService.AddItemToCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.Count ?? 1);
-      
-      if (result.HasModel)
+      if (result.TryCastModel(out Cart cart))
       {
-        result.ViewModel = CartViewModel.Map(result.Model as Cart);
+        result.ViewModel = CartViewModel.Map(cart);
       }
-      
+
       return result;
     }
 
@@ -89,12 +94,11 @@ namespace DemoProject.WebApi.Controllers
     public async Task<ServiceResult> RemoveItemFromCart(Guid id, [FromBody]RemoveItemFromCartModel apiEntity)
     {
       var result = await _cartService.RemoveItemFromCartAsync(id, apiEntity.ShopItemDetailId, apiEntity.ShouldBeRemovedAllItems ?? false);
-
-      if (result.HasModel)
+      if (result.TryCastModel(out Cart cart))
       {
-        result.ViewModel = CartViewModel.Map(result.Model as Cart);
+        result.ViewModel = CartViewModel.Map(cart);
       }
-      
+
       return result;
     }
 

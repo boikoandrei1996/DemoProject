@@ -94,7 +94,6 @@ function resetRegisterUserForm() {
 
 function loginUser(username, password) {
   const toastErrorMessage = `Login is failed!`;
-  const loginFailMessage = 'Username or password are wrong!';
 
   return dispatch => {
     dispatch(request());
@@ -102,15 +101,9 @@ function loginUser(username, password) {
     userService.login(username, password)
       .then(
         user => {
-          if (user) {
-            userService.setCurrentUser(user);
-            dispatch(success());
-            // history.push('/');
-          }
-          else {
-            dispatch(failure([loginFailMessage]));
-            toast.error(toastErrorMessage);
-          }
+          userService.setCurrentUser(user);
+          dispatch(success());
+          // history.push('/');
         },
         errors => {
           dispatch(failure(errors));

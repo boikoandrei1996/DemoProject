@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using DemoProject.BLL.Interfaces;
 using DemoProject.DAL.Enums;
+using DemoProject.DAL.Models;
 using DemoProject.Shared;
 using DemoProject.Shared.Attributes;
 using DemoProject.WebApi.Models.InfoObjectApiModels;
@@ -17,7 +18,7 @@ namespace DemoProject.WebApi.Controllers
   [ProducesResponseType(StatusCodes.Status404NotFound)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ServiceError>))]*/
-  public class InfoObjectController : Controller
+  public sealed class InfoObjectController : Controller
   {
     private readonly IInfoObjectService _infoObjectService;
 
@@ -45,7 +46,13 @@ namespace DemoProject.WebApi.Controllers
 
       var entity = InfoObjectAddModel.Map(apiEntity);
 
-      return await _infoObjectService.AddAsync(entity);
+      var result = await _infoObjectService.AddAsync(entity);
+      if (result.TryCastModel(out InfoObject infoObject))
+      {
+        result.ViewModel = InfoObjectViewModel.Map(infoObject);
+      }
+
+      return result;
     }
 
     // PUT api/infoobject/{id}
@@ -65,7 +72,13 @@ namespace DemoProject.WebApi.Controllers
 
       var entity = InfoObjectEditModel.Map(apiEntity, id);
 
-      return await _infoObjectService.UpdateAsync(entity);
+      var result = await _infoObjectService.UpdateAsync(entity);
+      if (result.TryCastModel(out InfoObject infoObject))
+      {
+        result.ViewModel = InfoObjectViewModel.Map(infoObject);
+      }
+
+      return result;
     }
 
     // DELETE api/infoobject/{id}
