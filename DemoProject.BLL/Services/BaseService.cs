@@ -27,13 +27,15 @@ namespace DemoProject.BLL.Services
 
     public async Task<ServiceResult> DeleteAsync(Guid id)
     {
-      var model = await _context.Set<TModel>().FirstOrDefaultAsync(x => x.Id == id);
+      var models = _context.Set<TModel>();
+
+      var model = await models.FirstOrDefaultAsync(x => x.Id == id);
       if (model == null)
       {
         return ServiceResultFactory.NotFound;
       }
 
-      _context.Set<TModel>().Remove(model);
+      models.Remove(model);
 
       return await _context.SaveAsync(nameof(DeleteAsync));
     }
