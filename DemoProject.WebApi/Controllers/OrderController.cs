@@ -70,8 +70,8 @@ namespace DemoProject.WebApi.Controllers
       return result;
     }
 
-    // POST api/order/{id}/approve
-    [HttpPost("{id:guid}/approve")]
+    // PUT api/order/{id}/approve
+    [HttpPut("{id:guid}/approve")]
     public async Task<ServiceResult> ApproveOrder(Guid id)
     {
       var userId = Guid.Empty;
@@ -85,8 +85,8 @@ namespace DemoProject.WebApi.Controllers
       return result;
     }
 
-    // POST api/order/{id}/reject
-    [HttpPost("{id:guid}/reject")]
+    // PUT api/order/{id}/reject
+    [HttpPut("{id:guid}/reject")]
     public async Task<ServiceResult> RejectOrder(Guid id)
     {
       var userId = Guid.Empty;
@@ -100,8 +100,8 @@ namespace DemoProject.WebApi.Controllers
       return result;
     }
 
-    // POST api/order/{id}/close
-    [HttpPost("{id:guid}/close")]
+    // PUT api/order/{id}/close
+    [HttpPut("{id:guid}/close")]
     public async Task<ServiceResult> CloseOrder(Guid id)
     {
       var userId = Guid.Empty;

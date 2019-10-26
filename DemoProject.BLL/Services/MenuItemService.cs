@@ -57,7 +57,8 @@ namespace DemoProject.BLL.Services
       Check.NotNull(model, nameof(model));
       Check.NotNullOrEmpty(model.Text, nameof(model.Text));
 
-      var menuItemExist = await this.ExistAsync(x => model.Text.Equals(x.Text, StringComparison.OrdinalIgnoreCase));
+      // Doesn't supported StringComparison.OrdinalIgnoreCase by SQL
+      var menuItemExist = await this.ExistAsync(x => model.Text.ToLower() == x.Text.ToLower());
       if (menuItemExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), $"MenuItem text already exist.");
@@ -87,7 +88,8 @@ namespace DemoProject.BLL.Services
       // update text
       if (Utility.IsModified(menuItem.Text, model.Text))
       {
-        var menuItemTextExist = await _context.MenuItems.AnyAsync(x => model.Text.Equals(x.Text, StringComparison.OrdinalIgnoreCase));
+        // Doesn't supported StringComparison.OrdinalIgnoreCase by SQL
+        var menuItemTextExist = await _context.MenuItems.AnyAsync(x => model.Text.ToLower() == x.Text.ToLower());
         if (menuItemTextExist)
         {
           return ServiceResultFactory.BadRequestResult(nameof(UpdateAsync), $"MenuItem text is already exist.");

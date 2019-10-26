@@ -3,23 +3,19 @@ using System.ComponentModel.DataAnnotations;
 using DemoProject.DAL.Enums;
 using DemoProject.DAL.Models;
 using DemoProject.Shared.Attributes;
+using DemoProject.Shared.Extensions;
 
 namespace DemoProject.WebApi.Models.InfoObjectApiModels
 {
   public class InfoObjectEditModel
   {
-    [Required]
     public string Content { get; set; }
 
-    [Required]
-    [EnumRangeValidation(typeof(InfoObjectType))]
+    // [EnumRangeValidation(typeof(InfoObjectType))]
     public string Type { get; set; }
 
-    [Required]
-    [MinimumValueValidation]
     public int SubOrder { get; set; }
 
-    [Required]
     public Guid ContentGroupId { get; set; }
 
     public static InfoObject Map(InfoObjectEditModel model, Guid id)
@@ -29,22 +25,28 @@ namespace DemoProject.WebApi.Models.InfoObjectApiModels
         return null;
       }
 
-      var type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true);
-
-      var content = model.Content;
-      if (type == InfoObjectType.Image)
-      {
-        content = Constants.GetRelativePathToImage(model.Content);
-      }
-
-      return new InfoObject
+      var result =  new InfoObject
       {
         Id = id,
-        Content = content,
-        Type = type,
         SubOrder = model.SubOrder,
         ContentGroupId = model.ContentGroupId
       };
+
+      if (model.Type.IsNotNullOrEmpty())
+      {
+        var type = Enum.Parse<InfoObjectType>(model.Type, ignoreCase: true);
+
+        var content = model.Content;
+        if (type == InfoObjectType.Image)
+        {
+          content = Constants.GetRelativePathToImage(model.Content);
+        }
+
+        result.Type = type;
+        result.Content = content;
+      }
+
+      return result;
     }
   }
 }

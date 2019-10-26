@@ -106,13 +106,14 @@ namespace DemoProject.BLL.Services
       Check.NotNullOrEmpty(model.Email, nameof(model.Email));
       Check.NotNullOrEmpty(password, nameof(password));
 
-      var usernameExist = await this.ExistAsync(x => model.Username.Equals(x.Username, StringComparison.OrdinalIgnoreCase));
+      // Doesn't supported StringComparison.OrdinalIgnoreCase by SQL
+      var usernameExist = await this.ExistAsync(x => model.Username.ToLower() == x.Username.ToLower());
       if (usernameExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Username is already taken.");
       }
 
-      var emailExist = await this.ExistAsync(x => model.Email.Equals(x.Email, StringComparison.OrdinalIgnoreCase));
+      var emailExist = await this.ExistAsync(x => model.Email.ToLower() == x.Email.ToLower());
       if (emailExist)
       {
         return ServiceResultFactory.BadRequestResult(nameof(AddAsync), "Email is already taken.");
@@ -140,7 +141,8 @@ namespace DemoProject.BLL.Services
     {
       Check.NotNullOrEmpty(email, nameof(email));
 
-      var user = await this.FindByAsync(x => email.Equals(x.Email, StringComparison.OrdinalIgnoreCase));
+      // Doesn't supported StringComparison.OrdinalIgnoreCase by SQL
+      var user = await this.FindByAsync(x => email.ToLower() == x.Email.ToLower());
       if (user == null)
       {
         return ServiceResultFactory.NotFound;

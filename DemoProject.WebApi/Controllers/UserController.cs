@@ -101,9 +101,9 @@ namespace DemoProject.WebApi.Controllers
 
     // PUT api/user/{id}
     [HttpPut("{id:guid}")]
-    public async Task<ServiceResult> Edit(Guid id, [FromBody]UserUpdateModel apiEntity)
+    public async Task<ServiceResult> Edit(Guid id, [FromBody]UserEditModel apiEntity)
     {
-      var entity = UserUpdateModel.Map(id, apiEntity);
+      var entity = UserEditModel.Map(id, apiEntity);
 
       var result = await _userService.UpdateAsync(entity);
       if (result.TryCastModel(out AppUser user))
