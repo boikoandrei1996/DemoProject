@@ -173,7 +173,7 @@ namespace DemoProject.WebApi
 
       app.UseElmah();
 
-      app.ApplyMigrationAndDatabaseSeed(appSettings.Value, logger);
+      // app.ApplyMigrationAndDatabaseSeed(appSettings.Value, logger);
 
       app.UseMvc();
       app.UseFileServer();
